@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
+use App\Models\Category;
+use App\Observers\CategoryObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +18,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Schema::defaultStringLength(191);
+        $countCate = Category::count();
+        View::share('countCate',$countCate);
+        //đăng ký observe trong AppServiceProvider
+        Category::observe(CategoryObserver::class);
     }
 
     /**
@@ -25,4 +34,5 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
 }
