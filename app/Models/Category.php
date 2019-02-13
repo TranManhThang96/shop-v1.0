@@ -11,4 +11,9 @@ class Category extends Model
     protected $fillable = ['name','alias','parent_id','active','order'];
     //protected $guarded = ['order'];
     protected $timestamp = true;
+
+    public function product()
+    {
+        return $this->hasMany('App\Models\Product','cat_id','id');
+    }
 }

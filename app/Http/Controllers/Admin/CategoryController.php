@@ -151,9 +151,13 @@ class CategoryController extends Controller
     public function test()
     {
         $model = new Category();
-        $cate = $model->avg('active');
-        return $cate;
+        $all = $model->find(2)->product;
+        foreach($all as $pro) {
+            echo $pro->name;
+        }
     }
+
+
 
 
 }
