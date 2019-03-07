@@ -23,9 +23,10 @@ class CreateCustomersTable extends Migration
             $table->string('user_name')->nullable()->comment('ten dang nhap');
             $table->string('password')->nullable()->comment('mat khau');
             $table->string('phone')->nullable()->comment('so dien thoai khach hang');
-            $table->integer('province')->nullable()->comment('tinh/thanh');
-            $table->integer('district')->nullable()->comment('quan/huyen');
-            $table->integer('ward')->nullable()->comment('xa/phuong');
+            $table->string('address',255)->nullable()->comment('dia chi day du');
+            $table->integer('province_id')->nullable()->comment('tinh/thanh');
+            $table->integer('district_id')->nullable()->comment('quan/huyen');
+            $table->integer('ward_id')->nullable()->comment('xa/phuong');
             $table->string('street')->nullable()->comment('thon/xom/sonha');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

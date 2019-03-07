@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\Discount;
 use App\Observers\CategoryObserver;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,7 +23,16 @@ class AppServiceProvider extends ServiceProvider
         //
         Schema::defaultStringLength(191);
         $countCate = Category::count();
-        View::share('countCate',$countCate);
+        $countPro  = Product::count();
+        $countCustomer = Customer::count();
+        $countDiscount = Discount::count();
+        $shareData = [
+            'countCate' => $countCate,
+            'countPro' => $countPro,
+            'countCustomer' => $countCustomer,
+            'countDiscount' => $countDiscount
+        ];
+        View::share('shareData',$shareData);
         //đăng ký observe trong AppServiceProvider
         Category::observe(CategoryObserver::class);
     }

@@ -2,17 +2,24 @@
 @section('title','Category')
 @section('module','Danh Mục')
 @section('content')
-    <form class="form-inline" method="post" action="{{route('admin.categories.index')}}">
-        @csrf
-        <div class="form-group">
-            <input type="text" class="form-control" id="keyword-search" placeholder="Tìm kiếm...."
-                   name="keyword" value="{{$keyword}}">
-        </div>
-        <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+
+    <div class="col-md-2">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-category"><i
                     class="glyphicon glyphicon-plus"></i> Thêm mới
         </button>
-    </form>
+    </div>
+
+    <div class="col-md-9 col-md-offset-1">
+        <form class="form-inline" method="post" action="{{route('admin.category.list')}}">
+            @csrf
+            <div class="form-group">
+                <input type="text" class="form-control" id="keyword-search" placeholder="Tìm kiếm...."
+                       name="keyword" value="{{$keyword}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+
+        </form>
+    </div>
 
     {{--form add category--}}
     <div class="modal fade" id="modal-category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -23,7 +30,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Thêm mới</h4>
                 </div>
-                <form method="post" action="{{route('admin.categories.save')}}" id="frm-category">
+                <form method="post" action="{{route('admin.category.save')}}" id="frm-category">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
@@ -32,7 +39,8 @@
 
                         <div class="form-group">
                             <label for="category-name">Tên danh mục</label>
-                            <input type="text" class="form-control" name="name" id="category-name" value="{{$model->name}}">
+                            <input type="text" class="form-control" name="name" id="category-name"
+                                   value="{{$model->name}}">
                             @if($errors)
                                 <span class="text-danger">{{$errors->first('name')}}</span>
                             @endif
@@ -59,7 +67,8 @@
 
                         <div class="form-group">
                             <label for="category-order">Thứ tự</label>
-                            <input type="text" class="form-control" placeholder="Mặc định" name="order" id="category-order" value="{{$model->order}}">
+                            <input type="text" class="form-control" placeholder="Mặc định" name="order"
+                                   id="category-order" value="{{$model->order}}">
                             @if($errors)
                                 <span class="text-danger">{{$errors->first('order')}}</span>
                             @endif
@@ -91,7 +100,7 @@
         <tbody>
         @foreach($listCategories as $category)
             <tr>
-                <td>{{$loop->iteration}}</td>
+                <td>{{($page - 1) * $limit + $loop->iteration}}</td>
                 <td>{{$category->name}}</td>
                 <td>{{$category->alias}}</td>
                 <td>{{getParent('',$category->id,'')}}</td>
@@ -102,9 +111,12 @@
                     {{$category->order}}
                 </td>
                 <td>
-                    <span class="col-md-4 cursor category-edit" data-toggle="modal" data-target="#frm-category"><i class="glyphicon glyphicon-pencil"></i></span>
-                    <a class="col-md-offset-2 col-md-4 cursor category-remove" href="{{route('admin.categories.remove',$category->id)}}"
-                          onclick="return window.confirm('Bạn có chắc chắn muốn xóa?')"> <i class="glyphicon glyphicon-trash"></i></a>
+                    <span class="col-md-4 cursor category-edit" data-toggle="modal" data-target="#frm-category"><i
+                                class="glyphicon glyphicon-pencil"></i></span>
+                    <a class="col-md-offset-2 col-md-4 cursor category-remove"
+                       href="{{route('admin.category.remove',$category->id)}}"
+                       onclick="return window.confirm('Bạn có chắc chắn muốn xóa?')"> <i
+                                class="glyphicon glyphicon-trash"></i></a>
                 </td>
             </tr>
         @endforeach
@@ -127,25 +139,25 @@
 @section('script')
     <script>
         $(document).ready(function () {
-            $('.status-category').on('click',function () {
+            $('.status-category').on('click', function () {
                 let id = $(this).data('id');
                 let active = 0;
-                if($(this).find('input').is(':checked')) {
+                if ($(this).find('input').is(':checked')) {
                     active = 1;
                 } else {
                     active = 0;
                 }
                 $.ajax({
-                    url:"{{route('admin.categories.changeStatus')}}",
+                    url: "{{route('admin.category.changeStatus')}}",
                     method: 'post',
-                    dataType:'json',
+                    dataType: 'json',
                     data: {
                         id: id,
-                        active:active,
+                        active: active,
                         _token: "{{csrf_token()}}"
                     },
-                    success(res){
-                       console.log('danh mục chuyển trạng thái sang ',active)
+                    success(res) {
+                        console.log('danh mục chuyển trạng thái sang ', active)
                     }
 
                 })
@@ -155,7 +167,7 @@
                     name: {
                         required: true,
                         remote: {
-                            url: "{{route('admin.categories.checkExist')}}",
+                            url: "{{route('admin.category.checkExist')}}",
                             type: "post",
                             data: {
                                 name: function () {
@@ -168,9 +180,9 @@
                         }
                     },
                     order: {
-                        required:false,
-                        number:true,
-                        min:0
+                        required: false,
+                        number: true,
+                        min: 0
                     }
                 },
                 messages: {

@@ -22,10 +22,10 @@ class CreateProductsTable extends Migration
             $table->string('alias')->nullable()->comment('ten chuan seo');
             $table->double('price',10,2)->nullable()->comment('gia niem yet');
             $table->double('iprice',10,2)->nullable()->comment('gia nhap');
-            $table->integer('discount')->default(0)->nullable()->comment('giam gia theo bang sales');
+            $table->integer('discount_id')->default(0)->nullable()->comment('giam gia theo bang discount');
             $table->text('img_link')->nullable()->comment('anh chinh de hien thi');
             $table->text('img_list')->nullable()->comment('anh di kem');
-            $table->float('view',8,2)->nullable()->comment('luot xem');
+            $table->integer('view')->nullable()->default(0)->comment('luot xem');
             $table->string('brand')->nullable()->comment('thuong hieu');
             $table->string('short_description')->nullable()->comment('mo ta ngan');
             $table->text('description')->nullable()->comment('mo ta day du');
@@ -38,7 +38,7 @@ class CreateProductsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations
      *
      * @return void
      */

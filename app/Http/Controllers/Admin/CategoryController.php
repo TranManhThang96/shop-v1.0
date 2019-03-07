@@ -10,24 +10,25 @@ class CategoryController extends Controller
 {
     public $strGlobal;
 
-    public function index(Request $request)
+    public function list(Request $request)
     {
         $model = new Category();
         $keyword = '';
-        $limit = 10;
+        $limit = 5;
+        $page = isset($request->page) ? $request->page : 1;
         if (isset($request->limit)) {
             $limit = $request->limit;
         }
         if (isset($request->keyword)) {
             $keyword = $request->keyword;
-            $listCategories = $model->where('name', 'LIKE', '%' . $request->keyword . '%')->orderBy('id', 'desc')->paginate($limit);
-            $listCategories->withPath("?keyword = $request->keyword"); //dùng để hiển thị keyword khi phân trang sang page thứ 2
+            $listCategories = $model->where('name', 'LIKE', '%' . $keyword . '%')->orderBy('id', 'desc')->paginate($limit);
+            $listCategories->withPath("?keyword = $keyword"); //dùng để hiển thị keyword khi phân trang sang page thứ 2
         } else {
             $listCategories = $model->orderBy('id', 'desc')->paginate($limit);
         }
 
         $allCategories = $model->all();
-        return view('admin.categories.index', compact('listCategories', 'allCategories','model','keyword'));
+        return view('admin.category.list', compact('listCategories', 'allCategories', 'model', 'keyword','page','limit'));
     }
 
     public function save(Request $request)
@@ -36,7 +37,7 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'bail|required|unique:categories',
             'order' => 'bail|nullable|numeric|min:0'
-        ],[
+        ], [
             'name.required' => 'bắt buộc phải nhập tên danh mục',
             'name.unique' => 'danh mục đã tồn tại',
             'order.min' => 'Giá trị nhỏ nhất là 0',
@@ -44,17 +45,17 @@ class CategoryController extends Controller
         ]);
         $model->alias = str_slug($request->name);
         $model->fill($request->all());
-        if($request->order == null)
+        if ($request->order == null)
             $model->order = 0;
         $model->save();
-        return redirect(route('admin.categories.index'));
+        return redirect(route('admin.category.list'));
     }
 
     public function remove(Request $request)
     {
         $model = Category::find($request->id);
         $model->delete();
-        return redirect(route('admin.categories.index'));
+        return redirect(route('admin.category.list'));
     }
 
     public function changeStatus(Request $request)
@@ -89,7 +90,7 @@ class CategoryController extends Controller
         if ($currentCate->parent_id == 0) {
             return $str;
         } else {
-            $str.= $this->getParent($str,$currentCate->parent_id,'-->');
+            $str .= $this->getParent($str, $currentCate->parent_id, '-->');
         }
         return $str;
     }
@@ -114,17 +115,17 @@ class CategoryController extends Controller
     }
 
     //in ra menu theo kiểu trả về chuỗi option
-    public function showCate($categories, $parent_id, $symbol,$select=0)
+    public function showCate($categories, $parent_id, $symbol, $select = 0)
     {
         foreach ($categories as $key => $item) {
             if ($item->parent_id == $parent_id) {
-                if($select == $item->id) {
-                    $this->strGlobal .= "<option value='{$item->id}' selected>"  . $symbol . $item->name . "</option>";
+                if ($select == $item->id) {
+                    $this->strGlobal .= "<option value='{$item->id}' selected>" . $symbol . $item->name . "</option>";
                 } else {
                     $this->strGlobal .= "<option value='{$item->id}'>" . $symbol . $item->name . "</option>";
                 }
                 unset($categories[$key]);
-                $this->showCate($categories, $item->id, $symbol . '|--',$select);
+                $this->showCate($categories, $item->id, $symbol . '|--', $select);
             }
         }
 
@@ -134,15 +135,14 @@ class CategoryController extends Controller
     public function checkExist(Request $request)
     {
         $model = new Category();
-        if(isset($request->id)) {
-            $cate = $model->where('name','=',$request->name)->where('id','<>',$request->id)->get();
-        }
-        else {
-            $cate = $model->where('name','=',$request->name)->get();
+        if (isset($request->id)) {
+            $cate = $model->where('name', '=', $request->name)->where('id', '<>', $request->id)->get();
+        } else {
+            $cate = $model->where('name', '=', $request->name)->get();
         }
 
-        if(count($cate) > 0) {
-           echo json_encode(false);
+        if (count($cate) > 0) {
+            echo json_encode(false);
         } else {
             echo json_encode(true);
         }
@@ -152,12 +152,9 @@ class CategoryController extends Controller
     {
         $model = new Category();
         $all = $model->find(2)->product;
-        foreach($all as $pro) {
+        foreach ($all as $pro) {
             echo $pro->name;
         }
     }
-
-
-
 
 }

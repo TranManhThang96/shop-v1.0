@@ -37,29 +37,43 @@
                     <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>lorem4</span>
-                    <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                    <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                    <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                    <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-                </ul>
-            </li>
+
             <li>
-                <a href="{{route('admin.categories.index')}}">
+                <a href="{{route('admin.category.list')}}">
                     <i class="fa fa-th"></i> <span>Danh Mục</span>
                     <span class="pull-right-container">
-              <small class="label pull-right bg-green">{{$countCate}}</small>
+              <small class="label pull-right bg-green">{{$shareData['countCate']}}</small>
             </span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{route('admin.product.list')}}">
+                    <i class="fa fa-th"></i> <span>Sản phẩm</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countPro']}}</small>
+            </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{route('admin.customer.list')}}">
+                    <i class="fa fa-th"></i> <span>Khách hàng</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countCustomer']}}</small>
+            </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{route('admin.discount.list')}}">
+                    <i class="fa fa-th"></i> <span>Chương trình khuyến mại</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countDiscount']}}</small>
+            </span>
+                </a>
+            </li>
+
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-pie-chart"></i>
@@ -191,8 +205,6 @@
             <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
             <li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
         </ul>
     </section>
     <!-- /.sidebar -->
