@@ -20,10 +20,11 @@ Route::group(['prefix'=>'category'],function (){
 });
 
 Route::group(['prefix'=>'product'],function (){
-    Route::any('list','ProductController@list')->name('admin.product.list');
-    Route::get('add','ProductController@add')->name('admin.product.add');
-    Route::get('edit/{id}','ProductController@edit')->name('admin.product.edit');
-    Route::post('save','ProductController@save')->name('admin.product.save');
+    Route::get('index','ProductController@index')->name('admin.product.index');
+    Route::get('create','ProductController@create')->name('admin.product.create');
+    Route::get('/{id}/edit','ProductController@edit')->name('admin.product.edit');
+    Route::delete('/destroy','ProductController@destroy')->name('admin.product.destroy');
+    Route::post('store','ProductController@store')->name('admin.product.store');
 });
 
 Route::group(['prefix'=>'customer'],function (){
@@ -54,4 +55,14 @@ Route::group(['prefix' => 'ward'],function (){
 
 Route::get('/test',function (){
     return response()->file('web.config');
+});
+
+
+Route::group(['prefix'=>'DB'],function (){
+    Route::get('/raw-index','DBController@rawIndex')->name('admin.db.raw.index');
+    Route::get('/raw-insert','DBController@rawInsert')->name('admin.db.raw.insert');
+    Route::get('/raw-update','DBController@rawUpdate')->name('admin.db.raw.update');
+    Route::get('/raw-transaction','DBController@transaction')->name('admin.db.raw.transaction');
+    Route::get('/test-queryBuilder','DBController@testQueryBuilder')->name('admin.db.testQueryBuilder');
+
 });

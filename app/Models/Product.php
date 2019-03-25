@@ -6,16 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    const PER_PAGE = 10;
+
+    const ACTIVE = 1;
+
+    const NOT_ACTIVE = 0;
+
     protected $table = 'products';
 
     protected $fillable = [
         'cat_id',
         'name',
         'sku',
-        'barcode',
         'price',
         'iprice',
-        'discount',
+        'barcode',
+        'discount_id',
         'img_link',
         'img_list',
         'brand',
@@ -40,7 +46,7 @@ class Product extends Model
 
     public function discount()
     {
-        return $this->belongsTo('App\Models\Discount','id','discount_id');
+        return $this->belongsTo('App\Models\Discount','discount_id','id');
     }
 
     public function productItem()

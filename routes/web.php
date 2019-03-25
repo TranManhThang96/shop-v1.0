@@ -21,3 +21,5 @@ Route::group(['prefix'=>'admin'],function (){
     Route::get('dep',function (Request $request){return $request->query('q');});
     Route::get('/zai',function (){return 'zai';});
 });
+
+Route::resource('test','TestController');

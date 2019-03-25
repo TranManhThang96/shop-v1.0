@@ -133,7 +133,7 @@
             <option value="100">100</option>
         </select>
     </div>
-    <div class="text-center">{{ $listCategories->links() }}</div>
+    <div class="text-center">{{ $listCategories->onEachSide(5)->links() }}</div>
 @endsection
 
 @section('script')

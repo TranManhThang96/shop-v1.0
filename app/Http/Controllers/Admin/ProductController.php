@@ -4,37 +4,92 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
-    public function list()
+
+    protected $repository;
+
+    public function __construct(ProductRepositoryInterface $repository)
     {
-        $keyword = '';
-        return view('admin.product.list',compact('keyword'));
+        $this->repository = $repository;
     }
 
-    public function add()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        return view('admin.product.form');
+        $products = $this->repository->getProductByRequest($request->all());
+        return view('admin.product.index',compact('products'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
-        $model = new Product();
-
-        $product = $model->find($id);
-
-        return view('admin.product.form',compact('product'));
+        //
     }
 
-    public function remove()
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-
+        //
     }
 
-    public function save()
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-
+        //
     }
 }

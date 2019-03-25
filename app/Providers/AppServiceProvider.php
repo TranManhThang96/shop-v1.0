@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Discount;
 use App\Observers\CategoryObserver;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +37,14 @@ class AppServiceProvider extends ServiceProvider
         View::share('shareData',$shareData);
         //đăng ký observe trong AppServiceProvider
         Category::observe(CategoryObserver::class);
+        DB::listen(function ($query){
+            Log::info('thực thi câu lệnh '.$query->sql. ' mất '.$query->time);
+        });
+
+        $this->app->singleton(
+            \App\Repositories\Product\ProductRepositoryInterface::class,
+            \App\Repositories\Product\ProductRepository::class
+        );
     }
 
     /**

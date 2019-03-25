@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -140,7 +141,7 @@ class CategoryController extends Controller
         } else {
             $cate = $model->where('name', '=', $request->name)->get();
         }
-
+        Log::info('đã vào đây request',['id'=> $request->id]);
         if (count($cate) > 0) {
             echo json_encode(false);
         } else {

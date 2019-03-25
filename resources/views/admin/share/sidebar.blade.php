@@ -48,7 +48,7 @@
             </li>
 
             <li>
-                <a href="{{route('admin.product.list')}}">
+                <a href="{{route('admin.product.index')}}">
                     <i class="fa fa-th"></i> <span>Sản phẩm</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countPro']}}</small>

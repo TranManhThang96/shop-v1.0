@@ -26,3 +26,39 @@
 .cursor {
     cursor: pointer;
 }
+
+#form-search {
+    width: 100%;
+    margin: 10px 0;
+    min-height: 50px;
+    line-height: 50px;
+}
+
+.pro-col3, .pro-col9 {
+    padding: 0;
+}
+
+.discount-tooltip {
+    position: relative;
+    cursor: pointer;
+}
+
+.show-tooltip {
+    position: absolute;
+    top:10px;
+    right: 20px;
+    display: none;
+    padding: 5px;
+    background: #0a0a0a;
+    border-radius: 5px;
+    color: white;
+    z-index: 9999;
+    width: auto;
+}
+
+.discount-tooltip:hover .show-tooltip {
+    display: block;
+}
+
+
+

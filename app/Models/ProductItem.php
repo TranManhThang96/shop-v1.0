@@ -10,7 +10,11 @@ class ProductItem extends Model
 
     protected $fillable = [
         'product_id',
+        'sku_item',
         'quantity',
+        'price',
+        'iprice',
+        'discount_id',
         'length',
         'width',
         'height',
