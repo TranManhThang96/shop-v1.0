@@ -6,27 +6,22 @@
  * Time: 12:33 AM
  */
 
-namespace App\Repositories\Product;
-
+namespace App\Repositories\ProductItem;
 use App\Repositories\RepositoryAbstract;
-use Illuminate\Support\Facades\Storage;
-use File;
-use Validator;
-use DB;
-use App\Models\Product;
+use App\Models\ProductItem;
 
-class ProductRepository extends RepositoryAbstract implements ProductRepositoryInterface
+class ProductItemRepository extends RepositoryAbstract implements ProductItemRepositoryInterface
 {
     /**
      * Construct
      *
      * @return void
      */
-    public function __construct(Product $product)
+    public function __construct(ProductItem $productItem)
     {
         parent::__construct();
-        $this->model = $product;
-        $this->table = 'products';
+        $this->model = $productItem;
+        $this->table = 'product_item';
     }
 
     /**
@@ -35,17 +30,10 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
      * @param $filter
      * @return array object
      */
-    public function getProductByRequest($request)
+    public function getProductItemsByProductId($id)
     {
-        $products = $this->model->orderBy('id', 'desc');
-
-        if (!empty($request['search'])) {
-            $products->where('name', 'LIKE', '%' . $request['search'] . '%')
-                ->orWhere('code', 'LIKE', '%' . $request['search'] . '%')
-                ->orWhere('barcode', 'LIKE', '%' . $request['search'] . '%');
-        }
-        $per = isset($request['per']) ? $request['per'] : Product::PER_PAGE;
-        return $products->paginate($per)->appends($request);
+        $productItems = $this->model->where('product_id', $id)->get();
+        return $productItems;
     }
 
     /**

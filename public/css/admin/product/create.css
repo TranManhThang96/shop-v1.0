@@ -1,0 +1,36 @@
+.label-upload {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+}
+.label-upload img {
+    max-width: 100px;
+    max-height: 100px;
+}
+.label-upload:after {
+    content: 'x';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+}
+
+#tr-hidden {
+    display: none;
+}
+
+.plus-quantity, .sub-quantity {
+    cursor: pointer;
+}
+
+.select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}

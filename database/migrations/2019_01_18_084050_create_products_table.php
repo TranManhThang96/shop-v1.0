@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('alias')->nullable()->comment('ten chuan seo');
             $table->double('price',10,2)->nullable()->comment('gia niem yet');
             $table->double('iprice',10,2)->nullable()->comment('gia nhap');
-            $table->integer('discount_id')->default(0)->nullable()->comment('giam gia theo bang discount');
+            $table->integer('discount_id')->nullable()->comment('giam gia theo bang discount');
             $table->text('img_link')->nullable()->comment('anh chinh de hien thi');
             $table->text('img_list')->nullable()->comment('anh di kem');
             $table->integer('view')->nullable()->default(0)->comment('luot xem');
