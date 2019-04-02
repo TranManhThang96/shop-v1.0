@@ -64,10 +64,11 @@
                 <td class="discount-tooltip">
                     {{$product->discount->name}}
                     <div class="show-tooltip">
-                        <p>Giảm giá: {{number_format($product->discount->discount)}} {{$product->discount->type == 1 ? '$' : '%'}}</p>
+                        <p>Giảm
+                            giá: {{number_format($product->discount->discount)}} {{$product->discount->type == 1 ? '$' : '%'}}</p>
                         <p>Áp dụng cho: {{$product->discount->type_by == 1 ? 'ĐH' : 'SP'}}</p>
                         <p>Thời gian: {{formatDate("d/m/",$product->discount->created_at,"Y-m-d H:i:s")}}
-                        - {{formatDate("d/m",$product->discount->updated_at,"Y-m-d H:i:s")}}</p>
+                            - {{formatDate("d/m",$product->discount->updated_at,"Y-m-d H:i:s")}}</p>
                     </div>
                 </td>
                 <td>
@@ -82,17 +83,44 @@
                 </td>
             </tr>
             <tr class="display-none">
-                <td colspan="10">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <p>Mã KH: {{$product->code}}</p>
-                        <p>Tên KH: {{$product->name}}</p>
-                        <p>SĐT: {{$product->phone}}</p>
-                        <p>Giới tính: {{$product->sex == 1 ? 'Nam' : 'Nữ' }}</p>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <p>Email: {{$product->email}}</p>
-                        <p>Địa chỉ: {{$product->address}}</p>
-                        <p>Tạo bởi: {{$product->name}}</p>
+                <td colspan="12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Chi Tiết</div>
+                        <div class="panel-body">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <p>Mã KH: {{$product->code}}</p>
+                                <p>Tên KH: {{$product->name}}</p>
+                                <p>SĐT: {{$product->phone}}</p>
+                                <p>Giới tính: {{$product->sex == 1 ? 'Nam' : 'Nữ' }}</p>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <p>Email: {{$product->email}}</p>
+                                <p>Địa chỉ: {{$product->address}}</p>
+                                <p>Tạo bởi: {{$product->name}}</p>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Sản Phẩm Con</div>
+                                <div class="panel-body">
+                                    <table>
+                                        @foreach ($product->productItem as $productItem)
+                                            <tr>
+                                                <td><input type="text" class="form-control" value="{{$productItem->sku_item}}"></td>
+                                                <td><input type="text" class="form-control" value="{{$productItem->color}}"></td>
+                                                <td><input type="text" class="form-control" value="{{$productItem->size}}"></td>
+                                                <td><input type="text" class="form-control" value="{{$productItem->price}}"></td>
+                                                <td><input type="text" class="form-control" value="{{$productItem->iprice}}"></td>
+                                                <td><input type="text" class="form-control" value="{{$productItem->quantity}}"></td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>

@@ -7,9 +7,14 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-     @include('admin.share.css')
+    @include('admin.share.css')
 
-<!-- Google Font -->
+    <!-- admin.css -->
+    <link rel="stylesheet" href="{{asset('css/admin/admin.css')}}">
+
+    {{--css element--}}
+    @yield('css')
+    <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -243,6 +248,7 @@
 </div>
 <!-- ./wrapper -->
 @include('admin.share.script')
+<script src="{{asset('js/admin/admin.js')}}"></script>
 @yield('script')
 </body>
 </html>

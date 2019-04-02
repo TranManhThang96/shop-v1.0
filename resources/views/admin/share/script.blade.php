@@ -48,5 +48,3 @@ $.widget.bridge('uibutton', $.ui.button);
 
 <!--jquery validate-->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
-
-<script src="{{asset('js/admin.js')}}"></script>

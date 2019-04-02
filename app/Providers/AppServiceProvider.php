@@ -40,11 +40,6 @@ class AppServiceProvider extends ServiceProvider
         DB::listen(function ($query){
             Log::info('thực thi câu lệnh '.$query->sql. ' mất '.$query->time);
         });
-
-        $this->app->singleton(
-            \App\Repositories\Product\ProductRepositoryInterface::class,
-            \App\Repositories\Product\ProductRepository::class
-        );
     }
 
     /**

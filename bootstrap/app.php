@@ -41,6 +41,11 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton(
+    \App\Repositories\Product\ProductRepositoryInterface::class,
+    \App\Repositories\Product\ProductRepository::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
