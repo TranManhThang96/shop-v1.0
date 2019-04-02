@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use App\Models\District;
+use App\Models\Ward;
+use App\Models\Province;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 class TestController extends Controller
 {
@@ -14,9 +21,19 @@ class TestController extends Controller
      */
     public function index()
     {
-        $arr = ['name'=> 'Thắng','age' => 23,'sex' =>'name'];
-        $result = Arr::only($arr,['name','age']);
-        dd($result);
+        //$value  = Cache::put('user','Mạnh Thắng',1);
+        $value = Cache::add('user','Tao tên là thắng',5);
+//        if(Cache::has('user')) {
+//            dd('key vẫn tồn tại');
+//        } else {
+//            dd('cache đã hết hạn nhé');
+//        }
+        //Storage::disk('local')->put('filea.txt','Contents');
+        Storage::putFile('photos', new File('/storage'));
+        //return Storage::download('file.txt','dulieu.txt',['abc']);
+//        $url = Storage::url('file.txt');
+//        dd($url);
+
     }
 
     /**

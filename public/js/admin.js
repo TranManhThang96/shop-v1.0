@@ -74,6 +74,7 @@ $('#district').select2();
 $('#ward').select2();
 
 $('.show-detail').on('click', function () {
+    console.log($(this).parent().next());
     $(this).parent().next().toggle();
 })
 

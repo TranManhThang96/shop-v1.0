@@ -6,6 +6,8 @@
  * Time: 10:15 AM
  */
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 
 //Danh muc con
 function getChild($str = '', $id, $symbol = '')
@@ -61,9 +63,28 @@ function showCategories($categories, $parent_id = 0, $symbol = '',$select = 0)
  * 3/7/2019 3:17PM format date
  */
 
-function formatDate($format="d/m/Y",$input,$inputFormat) {
+function formatDate($format="d/m/Y",$input,$inputFormat)
+{
     if($input != null && $input != '') {
         $date = DateTime::createFromFormat($inputFormat, $input);
         return $date->format($format);
     }
+}
+
+function getProvinces()
+{
+    $arr = DB::table('provinces')->select('id')->get()->toArray();
+    return Arr::pluck($arr,'id');
+}
+
+function getDistrict()
+{
+    $arr = DB::table('districts')->select('id')->get()->toArray();
+    return Arr::pluck($arr,'id');
+}
+
+function getWards()
+{
+    $arr = DB::table('wards')->select('id')->get()->toArray();
+    return Arr::pluck($arr,'id');
 }
