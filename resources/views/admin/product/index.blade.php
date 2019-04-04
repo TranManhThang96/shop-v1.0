@@ -60,15 +60,15 @@
                 <td>{{$product->barcode}}</td>
                 <td>{{$product->name}}</td>
                 <td>{{$product->category->name}}</td>
-                <td>{{0}}</td>
+                <td>{{$product->productItem->sum->quantity}}</td>
                 <td class="discount-tooltip">
                     {{$product->discount->name}}
                     <div class="show-tooltip">
                         <p>Giảm
                             giá: {{number_format($product->discount->discount)}} {{$product->discount->type == 1 ? '$' : '%'}}</p>
                         <p>Áp dụng cho: {{$product->discount->type_by == 1 ? 'ĐH' : 'SP'}}</p>
-                        <p>Thời gian: {{formatDate("d/m/",$product->discount->created_at,"Y-m-d H:i:s")}}
-                            - {{formatDate("d/m",$product->discount->updated_at,"Y-m-d H:i:s")}}</p>
+                        <p>Thời gian: {{formatDate("d/m/",$product->discount->start,"Y-m-d H:i:s")}}
+                            - {{formatDate("d/m",$product->discount->end,"Y-m-d H:i:s")}}</p>
                     </div>
                 </td>
                 <td>
@@ -106,7 +106,7 @@
                             <div class="panel panel-primary">
                                 <div class="panel-heading">Sản Phẩm Con</div>
                                 <div class="panel-body">
-                                    <table>
+                                    <table class="table table-responsive">
                                         @foreach ($product->productItem as $productItem)
                                             <tr>
                                                 <td><input type="text" class="form-control" value="{{$productItem->sku_item}}"></td>

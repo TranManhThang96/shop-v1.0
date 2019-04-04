@@ -33,7 +33,9 @@ class CreateOrderTable extends Migration
             $table->string('discount_id')->nullable()->default(0)->comment('giam gia theo bang discount');
             $table->integer('province_id')->nullable()->comment('tinh/thanh');
             $table->integer('district_id')->nullable()->comment('quan/huyen');
-            $table->integer('created_by')->nullable()->comment('duoc tao boi ai');
+            $table->integer('created_by')->nullable()->comment('tao boi ai');
+            $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
+            $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

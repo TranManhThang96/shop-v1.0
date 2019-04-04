@@ -30,7 +30,9 @@ class CreateProductsTable extends Migration
             $table->string('short_description')->nullable()->comment('mo ta ngan');
             $table->text('description')->nullable()->comment('mo ta day du');
             $table->integer('status')->default(1)->nullable()->comment('trang thai (1 active, 0 notactive)');
-            $table->integer('created_by')->nullable()->comment('duoc tao boi ai');
+            $table->integer('created_by')->nullable()->comment('tao boi ai');
+            $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
+            $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
