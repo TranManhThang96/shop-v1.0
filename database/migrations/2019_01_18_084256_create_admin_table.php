@@ -19,6 +19,9 @@ class CreateAdminTable extends Migration
             $table->string('user_name')->nullable()->comment('ten dang nhap');
             $table->string('password')->nullable()->comment('mat khau');
             $table->integer('role')->nullable()->comment('quyen');
+            $table->integer('created_by')->nullable()->comment('tao boi ai');
+            $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
+            $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

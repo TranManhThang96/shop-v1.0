@@ -21,6 +21,8 @@ class CreateDiscountTable extends Migration
             $table->integer('type_by')->default(1)->comment('1 la theo san pham,2 la theo don hang');
             $table->double('discount')->default(0)->comment('khuyen mai');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
+            $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
+            $table->softDeletes();
             $table->timestamp('start')->nullable()->comment('thoi gian bat dau');
             $table->timestamp('end')->nullable()->comment('thoi gian ket thuc');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

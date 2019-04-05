@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateExportInvoiceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('export_invoice', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->comment('ten the loai');
-            $table->string('alias')->nullable()->comment('ten chuan seo');
-            $table->integer('parent_id')->default(0)->nullable()->comment('danh muc cha');
-            $table->integer('active')->nullable()->comment('trang thai kich hoat (1 active,0 not active)');
-            $table->integer('sort')->nullable()->comment('uu tien hien thi tren menu');
+            $table->string('code',32)->comment('ma hoa don tu sinh');
+            $table->double('money_total')->default(0)->comment('tong tien');
+            $table->integer('quantity_total')->default(0)->comment('so luong');
+            $table->string('note',255)->nullable()->comment('ghi chu');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
             $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
             $table->softDeletes();
@@ -35,6 +34,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('export_invoice');
     }
 }

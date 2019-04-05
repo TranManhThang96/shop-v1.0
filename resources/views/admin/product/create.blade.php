@@ -27,6 +27,22 @@
             </div>
 
             <div class="form-group">
+                <label for="brand">Thương Hiệu</label>
+                <select class="form-control" id="brand" name="brand">
+                    <option></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="short_description">Mô tả ngắn</label>
+               <textarea rows="5" name="short_description" class="form-control" id="short_description">Mô tả ngắn</textarea>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+            <div class="form-group">
                 <label for="iprice">Giá Nhập <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="iprice" placeholder="Giá nhập" name="iprice">
             </div>
@@ -35,23 +51,12 @@
                 <label for="price">Giá Niêm Yết <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="price" placeholder="Giá niêm yết" name="price">
             </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <div class="form-group">
-                <label for="discount_id">Chương Trình khuyến mại</label>
-                <input type="text" class="form-control" id="discount_id" placeholder="Nhập barcode để quet"
-                       name="discount_id">
-            </div>
 
             <div class="form-group">
-                <label for="barcode">Thương Hiệu</label>
-                <input type="text" class="form-control" id="barcode" placeholder="Nhập barcode để quet" name="barcode">
-            </div>
-
-            <div class="form-group">
-                <label for="barcode">Mô tả ngắn</label>
-                <input type="text" class="form-control" id="barcode" placeholder="Nhập barcode để quet" name="barcode">
+                <label for="discount">Chương Trình khuyến mại</label>
+                <select class="form-control" id="discount" name="discount_id">
+                    <option></option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -62,89 +67,99 @@
                 <input id="img-link" type="file" style="display: none" name="img_link"/>
             </div>
 
-            <div class="form-group">
-                <label for="img-list[0]" class="label-upload">
-                    <img src="{{ asset('svg/upload.svg') }}" width="100%"/>
-                </label>
+            <div class="row">
+                <div class="col-md-3 form-group img-list-item" data-id="0">
+                    <label for="img-list[0]" class="label-upload">
+                        <img src="{{ asset('svg/upload.svg') }}" width="100%"/>
+                    </label>
 
-                <input class="img-list" id="img-list[0]" type="file" style="display: none" name="img_list[]"
-                       data-id="0"/>
+                    <input class="img-list" id="img-list[0]" type="file" style="display: none" name="img_list[]"
+                           data-id="0"/>
+                    <i class="glyphicon glyphicon-remove-circle remove-img-item"></i>
+                </div>
+
+                <input type="hidden" id="img-list-last" value="0"/>
             </div>
 
-            <input type="hidden" id="img-list-last" value="0"/>
         </div>
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  panel panel-primary">
-            <div class="panel-heading">Sản phẩm con</div>
-            <div class="panel-body">
-                <table class="table table-striped table-bordered table-active">
-                    <thead>
-                    <th>STT</th>
-                    <th>Giá Nhập</th>
-                    <th>Giá Niêm Yết</th>
-                    <th>Khuyến Mại</th>
-                    <th>Chiều dài (cm)</th>
-                    <th>Chiều rộng (cm)</th>
-                    <th>Chiều cao (cm)</th>
-                    <th>Cân nặng (g)</th>
-                    <th>Màu sắc</th>
-                    <th>Kích cỡ</th>
-                    <th>Số Lượng</th>
-                    <th></th>
-                    </thead>
-                    <tbody id="product-item">
-                    <tr data-id="idx" id="tr-hidden">
-                        <td>idx</td>
-                        <td><input type="text" class="form-control item-price" name="item_price"/></td>
-                        <td><input type="text" class="form-control item-iprice" name="item_iprice"/></td>
-                        <td><input type="text" class="form-control item-discount_id" name="item_discount_id"/></td>
-                        <td><input type="text" class="form-control item-length" name="item_length"/></td>
-                        <td><input type="text" class="form-control item-width" name="item_width"/></td>
-                        <td><input type="text" class="form-control item-height" name="item_height"/></td>
-                        <td><input type="text" class="form-control item-weight" name="item_weight"/></td>
-                        <td><input type="text" class="form-control item-color" name="item_color"/></td>
-                        <td><input type="text" class="form-control item-size" name="item_size"/></td>
-                        <td>
-                            <div class="input-group">
-                                <div class="input-group-addon sub-quantity"> -</div>
-                                <input type="text" class="form-control item-quantity" name="item_quantity" value="0"/>
-                                <div class="input-group-addon plus-quantity"> +</div>
-                            </div>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger remove-item"> -</button>
-                            <button type="button" class="btn btn-success add-item"> +</button>
-                        </td>
-                    </tr>
-                    <tr data-id="1">
-                        <td>1</td>
-                        <td><input type="text" class="form-control item-price" name="item_price"/></td>
-                        <td><input type="text" class="form-control item-iprice" name="item_iprice"/></td>
-                        <td><input type="text" class="form-control item-discount_id" name="item_discount_id"/></td>
-                        <td><input type="text" class="form-control item-length" name="item_length"/></td>
-                        <td><input type="text" class="form-control item-width" name="item_width"/></td>
-                        <td><input type="text" class="form-control item-height" name="item_height"/></td>
-                        <td><input type="text" class="form-control item-weight" name="item_weight"/></td>
-                        <td><input type="text" class="form-control item-color" name="item_color"/></td>
-                        <td><input type="text" class="form-control item-size" name="item_size"/></td>
-                        <td>
-                            <div class="input-group">
-                                <div class="input-group-addon sub-quantity"> -</div>
-                                <input type="text" class="form-control item-quantity" name="item_quantity" value="0"/>
-                                <div class="input-group-addon plus-quantity"> +</div>
-                            </div>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger remove-item"> -</button>
-                            <button type="button" class="btn btn-success add-item"> +</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Sản phẩm con</div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-active table-responsive">
+                        <thead>
+                        <th>STT</th>
+                        <th>Giá Nhập</th>
+                        <th>Giá Niêm Yết</th>
+                        <th>Khuyến Mại</th>
+                        <th>Chiều dài (cm)</th>
+                        <th>Chiều rộng (cm)</th>
+                        <th>Chiều cao (cm)</th>
+                        <th>Cân nặng (g)</th>
+                        <th>Màu sắc</th>
+                        <th>Kích cỡ</th>
+                        <th>Số Lượng</th>
+                        <th></th>
+                        </thead>
+                        <tbody id="product-item">
+                        <tr data-id="idx" id="tr-hidden">
+                            <td>idx</td>
+                            <td><input type="text" class="form-control item-price" name="item_price"/></td>
+                            <td><input type="text" class="form-control item-iprice" name="item_iprice"/></td>
+                            <td><input type="text" class="form-control item-discount_id" name="item_discount_id"/></td>
+                            <td><input type="text" class="form-control item-length" name="item_length"/></td>
+                            <td><input type="text" class="form-control item-width" name="item_width"/></td>
+                            <td><input type="text" class="form-control item-height" name="item_height"/></td>
+                            <td><input type="text" class="form-control item-weight" name="item_weight"/></td>
+                            <td><input type="text" class="form-control item-color" name="item_color"/></td>
+                            <td><input type="text" class="form-control item-size" name="item_size"/></td>
+                            <td>
+                                <div class="input-group">
+                                    <div class="input-group-addon sub-quantity"> -</div>
+                                    <input type="text" class="form-control item-quantity" name="item_quantity" value="0"/>
+                                    <div class="input-group-addon plus-quantity"> +</div>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger remove-item"> -</button>
+                                <button type="button" class="btn btn-success add-item"> +</button>
+                            </td>
+                        </tr>
+                        <tr data-id="1">
+                            <td>1</td>
+                            <td><input type="text" class="form-control item-price" name="item_price"/></td>
+                            <td><input type="text" class="form-control item-iprice" name="item_iprice"/></td>
+                            <td><input type="text" class="form-control item-discount_id" name="item_discount_id"/></td>
+                            <td><input type="text" class="form-control item-length" name="item_length"/></td>
+                            <td><input type="text" class="form-control item-width" name="item_width"/></td>
+                            <td><input type="text" class="form-control item-height" name="item_height"/></td>
+                            <td><input type="text" class="form-control item-weight" name="item_weight"/></td>
+                            <td><input type="text" class="form-control item-color" name="item_color"/></td>
+                            <td><input type="text" class="form-control item-size" name="item_size"/></td>
+                            <td>
+                                <div class="input-group">
+                                    <div class="input-group-addon sub-quantity"> -</div>
+                                    <input type="text" class="form-control item-quantity" name="item_quantity" value="0"/>
+                                    <div class="input-group-addon plus-quantity"> +</div>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger remove-item"> -</button>
+                                <button type="button" class="btn btn-success add-item"> +</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="text-center">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <textarea name="description"></textarea>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
             <button type="submit" class="btn btn-primary">Lưu</button>
             <button type="reset" class="btn btn-default">Reset</button>
         </div>
@@ -152,8 +167,11 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
     <script src="{{ asset('js/admin/product/create.js') }}"></script>
     <script>
+        CKEDITOR.replace( 'description' );
+
         $('#img-link').on('change', function (event) {
             $(this).prev().find('img').attr('src', URL.createObjectURL(event.target.files[0]));
         })
@@ -164,12 +182,21 @@
 
             if ($(this).data('id') == lastId) {
                 lastId = parseInt(lastId) + 1;
-                let html = '<div class="form-group">';
+                let html = ' <div class="col-md-3 form-group img-list-item" data-id="'+ lastId +'">';
                 html += '<label for="img-list[' + lastId + ']" class="label-upload">';
                 html += '<img src="{{ asset('svg/upload.svg') }}" width="100%"/></label>';
-                html += '<input class="img-list" id="img-list[' + lastId + ']" type="file"  style="display: none" name="img_list[]" data-id="' + lastId + '" /></div>';
+                html += '<input class="img-list" id="img-list[' + lastId + ']" type="file"  style="display: none" name="img_list[]" data-id="' + lastId + '" />';
+                html += '<i class="glyphicon glyphicon-remove-circle remove-img-item"></i></div>';
                 $(this).parent().after(html);
                 $('#img-list-last').val(lastId);
+            }
+        })
+
+        $(document).on('click','.remove-img-item',function () {
+            let lastId = $('#img-list-last').val();
+            let parent = $(this).parent();
+            if (lastId != parent.data('id')) {
+                parent.remove();
             }
         })
 

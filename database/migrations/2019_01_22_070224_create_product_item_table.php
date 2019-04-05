@@ -23,7 +23,9 @@ class CreateProductItemTable extends Migration
             $table->integer('weight')->nullable()->comment('can nang (gam)');
             $table->string('color')->nullable()->comment('màu sắc');
             $table->string('size')->nullable()->comment('kích cỡ (M,L,31,32)');
-            $table->integer('created_by')->nullable()->comment('được tạo bởi ai');
+            $table->integer('created_by')->nullable()->comment('tao boi ai');
+            $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
+            $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

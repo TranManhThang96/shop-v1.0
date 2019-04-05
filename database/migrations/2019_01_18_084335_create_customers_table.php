@@ -21,7 +21,7 @@ class CreateCustomersTable extends Migration
             $table->integer('sex')->nullable()->comment('gioi tinh (1 nam,2 nu)');
             $table->integer('age')->nullable()->comment('tuoi');
             $table->string('user_name')->nullable()->comment('ten dang nhap');
-            $table->string('password')->nullable()->comment('mat khau');
+            $table->text('password')->nullable()->comment('mat khau');
             $table->string('phone')->nullable()->comment('so dien thoai khach hang');
             $table->string('address',255)->nullable()->comment('dia chi day du');
             $table->integer('province_id')->nullable()->comment('tinh/thanh');
@@ -29,6 +29,8 @@ class CreateCustomersTable extends Migration
             $table->integer('ward_id')->nullable()->comment('xa/phuong');
             $table->string('street')->nullable()->comment('thon/xom/sonha');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
+            $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
+            $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

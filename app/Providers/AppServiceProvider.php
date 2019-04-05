@@ -24,17 +24,17 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
-        // $countCate = Category::count();
-        // $countPro  = Product::count();
-        // $countCustomer = Customer::count();
-        // $countDiscount = Discount::count();
-        // $shareData = [
-        //     'countCate' => $countCate,
-        //     'countPro' => $countPro,
-        //     'countCustomer' => $countCustomer,
-        //     'countDiscount' => $countDiscount
-        // ];
-        // View::share('shareData',$shareData);
+        $countCate = Category::count() ?? 0;
+        $countPro  = Product::count() ?? 0;
+        $countCustomer = Customer::count() ?? 0;
+        $countDiscount = Discount::count() ?? 0;
+        $shareData = [
+            'countCate' => $countCate,
+            'countPro' => $countPro,
+            'countCustomer' => $countCustomer,
+            'countDiscount' => $countDiscount
+        ];
+        View::share('shareData',$shareData);
         //đăng ký observe trong AppServiceProvider
         Category::observe(CategoryObserver::class);
         DB::listen(function ($query){
