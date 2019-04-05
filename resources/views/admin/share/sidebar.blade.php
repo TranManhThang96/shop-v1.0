@@ -74,6 +74,15 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{route('brands.index')}}">
+                    <i class="fa fa-th"></i> <span>Thương hiệu</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>
+            </span>
+                </a>
+            </li>
+
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-pie-chart"></i>

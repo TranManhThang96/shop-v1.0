@@ -64,5 +64,10 @@ Route::group(['prefix'=>'DB'],function (){
     Route::get('/raw-update','DBController@rawUpdate')->name('admin.db.raw.update');
     Route::get('/raw-transaction','DBController@transaction')->name('admin.db.raw.transaction');
     Route::get('/test-queryBuilder','DBController@testQueryBuilder')->name('admin.db.testQueryBuilder');
-
 });
+
+Route::resources([
+    'brands' => 'BrandController',
+    'posts' => 'PostController',
+    'suppliers' => 'SupplierController'
+]);

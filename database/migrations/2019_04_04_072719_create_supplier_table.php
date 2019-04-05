@@ -13,7 +13,7 @@ class CreateSupplierTable extends Migration
      */
     public function up()
     {
-        Schema::create('supplier', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code',32)->comment('ma nha cung cap');
             $table->string('name',255)->comment('ten nha cung cap');

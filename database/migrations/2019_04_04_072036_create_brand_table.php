@@ -13,7 +13,7 @@ class CreateBrandTable extends Migration
      */
     public function up()
     {
-        Schema::create('brand', function (Blueprint $table) {
+        Schema::create('brands', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',255)->comment('thuong hieu');
             $table->string('image',255)->comment('hinh anh')->nullable();

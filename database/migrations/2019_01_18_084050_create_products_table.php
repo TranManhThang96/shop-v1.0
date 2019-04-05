@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $table->text('img_link')->nullable()->comment('anh chinh de hien thi');
             $table->text('img_list')->nullable()->comment('anh di kem');
             $table->integer('view')->nullable()->default(0)->comment('luot xem');
-            $table->string('brand')->nullable()->comment('thuong hieu');
+            $table->integer('brand_id')->nullable()->comment('thuong hieu');
             $table->string('short_description')->nullable()->comment('mo ta ngan');
             $table->text('description')->nullable()->comment('mo ta day du');
             $table->integer('status')->default(1)->nullable()->comment('trang thai (1 active, 0 notactive)');

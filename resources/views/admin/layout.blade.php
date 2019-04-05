@@ -29,6 +29,13 @@
 
     {{--content--}}
     <div class="content-wrapper">
+        <div class="flash-message">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(Session::has('alert-' . $msg))
+                    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                @endif
+            @endforeach
+        </div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -250,5 +257,8 @@
 @include('admin.share.script')
 <script src="{{asset('js/admin/admin.js')}}"></script>
 @yield('script')
+<script>
+    $('.flash-message').show().delay(2000).fadeOut();
+</script>
 </body>
 </html>

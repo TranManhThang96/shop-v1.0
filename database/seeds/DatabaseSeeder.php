@@ -15,7 +15,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             //UsersTableSeeder::class,
             CategoriesTableSeeder::class,
-            ProductTableSeeder::class
+            DiscountTableSeeder::class,
+            ProductTableSeeder::class,
+            ProductItemTableSeeder::class,
+            CustomerTableSeeder::class
+
         ]);
         //cach viet 2
 //        $this->call(UsersTableSeeder::class);

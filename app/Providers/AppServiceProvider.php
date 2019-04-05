@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Discount;
+use App\Models\Brand;
 use App\Observers\CategoryObserver;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -28,11 +29,13 @@ class AppServiceProvider extends ServiceProvider
         $countPro  = Product::count() ?? 0;
         $countCustomer = Customer::count() ?? 0;
         $countDiscount = Discount::count() ?? 0;
+        $countBrand = Brand::count() ?? 0;
         $shareData = [
             'countCate' => $countCate,
             'countPro' => $countPro,
             'countCustomer' => $countCustomer,
-            'countDiscount' => $countDiscount
+            'countDiscount' => $countDiscount,
+            'countBrand' => $countBrand
         ];
         View::share('shareData',$shareData);
         //đăng ký observe trong AppServiceProvider
