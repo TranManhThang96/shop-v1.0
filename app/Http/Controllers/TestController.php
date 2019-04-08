@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
+use App\Models\ProductCategory;
+use App\Models\Product;
 
 class TestController extends Controller
 {
@@ -21,10 +23,10 @@ class TestController extends Controller
      */
     public function index()
     {
-        $a = request();
-        $b = request('key','abd');
-        dd($a,$b);
-
+        $test = Product::find(1);
+        foreach ($test->categories as $cate) {
+            echo $cate->pivot;
+        }
     }
 
     /**

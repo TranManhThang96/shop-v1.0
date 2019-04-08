@@ -94,6 +94,13 @@ class BrandRepository extends RepositoryAbstract implements BrandRepositoryInter
         return $this->model->save();
     }
 
+    /**
+     * Update brand.
+     *
+     * @param array|int $request
+     * @param array $id
+     * @return void
+     */
     public function update($request, $id)
     {
         $brand = $this->model->find($id);
@@ -102,10 +109,8 @@ class BrandRepository extends RepositoryAbstract implements BrandRepositoryInter
         if (!empty($request->image)) {
             $exist = Storage::exists('brands/' . $request->image->getClientOriginalName());
             // neu file chua ton tai thi them file moi vao, xoa file cu.
-            // neu ton tai thi cap nhat
+            // neu ton tai thi cap nhat lai link anh
             if (!$exist) {
-                //xoa file cu, check xem co brand nao su dung image nay ko. ko brand nao su dung thi xoa
-                dd($this->model->where('image', $brand->image)->where('id', '<>', $id)->count());
                 if ($this->model->where('image', $brand->image)->where('id', '<>', $id)->count() == 0) {
                     Storage::delete($brand->image);
                 }
@@ -121,4 +126,5 @@ class BrandRepository extends RepositoryAbstract implements BrandRepositoryInter
         return $brand->save();
 
     }
+
 }

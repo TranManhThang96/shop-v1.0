@@ -53,4 +53,14 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\ProductItem','product_id','id');
     }
+
+    public function brand()
+    {
+        return $this->belongsTo('App\Models\Brand','brand_id','id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category','product_category','product_id','category_id')->withPivot('pivot');
+    }
 }

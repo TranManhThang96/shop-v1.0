@@ -25,19 +25,30 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
-        $countCate = Category::count() ?? 0;
-        $countPro  = Product::count() ?? 0;
-        $countCustomer = Customer::count() ?? 0;
-        $countDiscount = Discount::count() ?? 0;
-        $countBrand = Brand::count() ?? 0;
-        $shareData = [
-            'countCate' => $countCate,
-            'countPro' => $countPro,
-            'countCustomer' => $countCustomer,
-            'countDiscount' => $countDiscount,
-            'countBrand' => $countBrand
-        ];
-        View::share('shareData',$shareData);
+        if(!app()->runningInConsole() ){
+//            $setting = Cache::rememberForever('website_name', function() {
+//                return Setting::where('name', 'website_name')->first();
+//            });
+//
+//            $pages = Cache::rememberForever('pages', function() {
+//                return Page::active()->get();
+//            });
+//            View::share('pages', $pages);
+            $countCate = Category::count() ?? 0;
+            $countPro  = Product::count() ?? 0;
+            $countCustomer = Customer::count() ?? 0;
+            $countDiscount = Discount::count() ?? 0;
+            $countBrand = Brand::count() ?? 0;
+            $shareData = [
+                'countCate' => $countCate,
+                'countPro' => $countPro,
+                'countCustomer' => $countCustomer,
+                'countDiscount' => $countDiscount,
+                'countBrand' => $countBrand
+            ];
+            View::share('shareData',$shareData);
+        }
+
         //đăng ký observe trong AppServiceProvider
         Category::observe(CategoryObserver::class);
         DB::listen(function ($query){

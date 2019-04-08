@@ -11,7 +11,7 @@ class DiscountTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('discount')->insert([
+        DB::table('discounts')->insert([
             [
                 'id' => 1,
                 'name' => 'Khuyến mại tháng 01',
