@@ -11,25 +11,25 @@ class CategoryController extends Controller
 {
     public $strGlobal;
 
-    public function list(Request $request)
+    public function index(Request $request)
     {
         $model = new Category();
-        $keyword = '';
-        $limit = 5;
+        $search = '';
+        $per = 10;
         $page = isset($request->page) ? $request->page : 1;
-        if (isset($request->limit)) {
-            $limit = $request->limit;
+        if (isset($request->per)) {
+            $per = $request->per;
         }
-        if (isset($request->keyword)) {
-            $keyword = $request->keyword;
-            $listCategories = $model->where('name', 'LIKE', '%' . $keyword . '%')->orderBy('id', 'desc')->paginate($limit);
-            $listCategories->withPath("?keyword = $keyword"); //dùng để hiển thị keyword khi phân trang sang page thứ 2
+        if (isset($request->search)) {
+            $search = $request->search;
+            $listCategories = $model->where('name', 'LIKE', '%' . $search . '%')->orderBy('id', 'desc')->paginate($per);
+            $listCategories->withPath("?search = $search"); //dùng để hiển thị keyword khi phân trang sang page thứ 2
         } else {
-            $listCategories = $model->orderBy('id', 'desc')->paginate($limit);
+            $listCategories = $model->orderBy('id', 'desc')->paginate($per);
         }
 
         $allCategories = $model->all();
-        return view('admin.category.list', compact('listCategories', 'allCategories', 'model', 'keyword','page','limit'));
+        return view('admin.category.list', compact('listCategories', 'allCategories', 'model', 'search','page','per'));
     }
 
     public function save(Request $request)
@@ -141,21 +141,10 @@ class CategoryController extends Controller
         } else {
             $cate = $model->where('name', '=', $request->name)->get();
         }
-        Log::info('đã vào đây request',['id'=> $request->id]);
         if (count($cate) > 0) {
             echo json_encode(false);
         } else {
             echo json_encode(true);
         }
     }
-
-    public function test()
-    {
-        $model = new Category();
-        $all = $model->find(2)->product;
-        foreach ($all as $pro) {
-            echo $pro->name;
-        }
-    }
-
 }

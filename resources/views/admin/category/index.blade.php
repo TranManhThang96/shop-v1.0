@@ -3,23 +3,32 @@
 @section('module','Danh Mục')
 @section('content')
 
-    <div class="col-md-2">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-category"><i
-                    class="glyphicon glyphicon-plus"></i> Thêm mới
-        </button>
-    </div>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-category"> Thêm mới</button>
 
-    <div class="col-md-9 col-md-offset-1">
-        <form class="form-inline" method="post" action="{{route('admin.category.list')}}">
-            @csrf
+    <form class="form-inline" method="get" action="{{route('admin.category.list')}}" id="form-search">
+        <div class="col-md-3 pro-col3">
             <div class="form-group">
-                <input type="text" class="form-control" id="keyword-search" placeholder="Tìm kiếm...."
-                       name="keyword" value="{{$keyword}}">
+                <label for="per-page">Show:</label>
+                <select class="form-control" name="per" id="per-page">
+                    <option value="10" {{app('request')->get('per') == 10 ? 'selected' : ''}}>10</option>
+                    <option value="25" {{app('request')->get('per') == 25 ? 'selected' : ''}}>25</option>
+                    <option value="50" {{app('request')->get('per') == 50 ? 'selected' : ''}}>50</option>
+                    <option value="100" {{app('request')->get('per') == 100 ? 'selected' : ''}}>100</option>
+                    <option value="200" {{app('request')->get('per') == 200 ? 'selected' : ''}}>200</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-9 text-right pro-col9">
+            <div class="form-group">
+                <label></label>
+                <input type="text" class="form-control" id="search" placeholder="Tìm kiếm...."
+                       name="search" value="{{ app('request')->get('search') }}">
             </div>
             <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+        </div>
 
-        </form>
-    </div>
+    </form>
 
     {{--form add category--}}
     <div class="modal fade" id="modal-category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

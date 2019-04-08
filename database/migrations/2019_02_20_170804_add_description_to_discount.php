@@ -13,7 +13,7 @@ class AddDescriptionToDiscount extends Migration
      */
     public function up()
     {
-        Schema::table('discount', function (Blueprint $table) {
+        Schema::table('discounts', function (Blueprint $table) {
             $table->string('description')->after('end')->nullable()->comment('mo ta ngan gon');
             $table->integer('limit')->after('discount')->nullable()->comment('gioi han khuyen mai');
         });

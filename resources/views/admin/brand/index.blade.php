@@ -61,14 +61,18 @@
                 <td>{!! $brand->content !!}</td>
                 <td>{{$brand->product->count()}}</td>
                 <td>
-
-                    <a class="col-md-4 customer-edit"
+                    <a class="col-md-4 customer-edit btn btn-info"
                        href="{{route('brands.edit',['id' => $brand->id])}}"> <i
                                 class="glyphicon glyphicon-pencil" title="Sửa"></i></a>
-                    {{--<a class="col-md-offset-2 col-md-4 customer-remove"--}}
-                    {{--href="{{route('admin.product.destroy',$product->id)}}"--}}
-                    {{--onclick="return window.confirm('Bạn có chắc chắn muốn xóa?')" title="Xóa"> <i--}}
-                    {{--class="glyphicon glyphicon-trash"></i></a>--}}
+                    <form action="{{ route('brands.destroy', ['id' => $brand->id]) }}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button class="btn btn-danger btn-delete" type="submit"
+                                onclick="return window.confirm('Bạn có muốn xóa không?')">
+                            <i class="glyphicon glyphicon-trash" title="Xóa"></i>
+                        </button>
+
+                    </form>
                 </td>
             </tr>
             <tr class="display-none">
@@ -91,5 +95,6 @@
 @endsection
 
 @section('script')
-
+    <script>
+    </script>
 @endsection

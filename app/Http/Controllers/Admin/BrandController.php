@@ -97,7 +97,7 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        if($this->repository->store($id)) {
+        if($this->repository->destroy($id)) {
             return redirect(route('brands.index'))->with('alert-success', 'Xóa brand thành công');
         };
     }

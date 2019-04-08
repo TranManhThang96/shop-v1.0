@@ -13,7 +13,7 @@ class CreateDiscountTable extends Migration
      */
     public function up()
     {
-        Schema::create('discount', function (Blueprint $table) {
+        Schema::create('discounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable()->comment('ten chuong trinh khuyen mai');
             $table->string('code',32)->nullable()->comment('ma chuong trinh khuyen mai');

@@ -60,7 +60,7 @@
                 <td>{{$product->barcode}}</td>
                 <td>{{$product->name}}</td>
                 <td>{{$product->category->name}}</td>
-                <td>{{$product->productItem->sum->quantity}}</td>
+                <td>{{$product->productItem->sum('quantity')}}</td>
                 <td class="discount-tooltip">
                     {{$product->discount->name}}
                     <div class="show-tooltip">
