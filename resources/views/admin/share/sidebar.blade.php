@@ -112,7 +112,7 @@
             </li>
 
             <li>
-                <a href="{{route('admin.customer.list')}}">
+                <a href="{{route('suppliers.index')}}">
                     <i class="fa fa-th"></i> <span>Nhà cung cấp</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countCustomer']}}</small>
@@ -121,7 +121,7 @@
             </li>
 
             <li>
-                <a href="{{route('admin.discount.list')}}">
+                <a href="{{route('posts.index')}}">
                     <i class="fa fa-th"></i> <span>Bài viết</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countDiscount']}}</small>

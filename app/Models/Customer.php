@@ -47,5 +47,8 @@ class Customer extends Model
         return $this->belongsTo('App\Models\Ward','ward_id','id');
     }
 
-
+    public function image()
+    {
+        return $this->morphOne('App\Models\Image','imageable');
+    }
 }

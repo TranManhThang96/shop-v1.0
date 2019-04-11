@@ -61,6 +61,11 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('App\Models\Category','product_category','product_id','category_id')->withPivot('pivot');
+        return $this->belongsToMany('App\Models\Category', 'product_category', 'product_id', 'category_id')->withPivot('pivot');
+    }
+
+    public function image()
+    {
+        return $this->morphMany(\App\Models\Image::class,'imageable');
     }
 }
