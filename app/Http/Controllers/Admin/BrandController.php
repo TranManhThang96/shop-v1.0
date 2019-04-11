@@ -48,8 +48,10 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         if($this->repository->store($request)) {
-            return redirect(route('brands.index'))->with('alert-success', 'Thêm brand thành công');
-        };
+            return redirect(route('brands.index'))->with('alert-success', 'Thêm thương hiệu thành công');
+        } else {
+            return redirect(route('brands.index'))->with('alert-success', 'Thêm thương hiệu không thành công');
+        }
     }
 
     /**
@@ -85,8 +87,10 @@ class BrandController extends Controller
     public function update(Request $request, $id)
     {
         if($this->repository->update($request,$id)) {
-            return redirect(route('brands.index'))->with('alert-success', 'Sửa brand thành công');
-        };
+            return redirect(route('brands.index'))->with('alert-success', 'Sửa thương hiệu thành công');
+        } else {
+            return redirect(route('brands.index'))->with('alert-success', 'Sửa thương hiệu không thành công');
+        }
     }
 
     /**
@@ -98,7 +102,7 @@ class BrandController extends Controller
     public function destroy($id)
     {
         if($this->repository->destroy($id)) {
-            return redirect(route('brands.index'))->with('alert-success', 'Xóa brand thành công');
+            return redirect(route('brands.index'))->with('alert-success', 'Xóa thương hiệu thành công');
         };
     }
 }

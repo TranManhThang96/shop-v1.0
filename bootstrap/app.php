@@ -41,16 +41,6 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
-$app->singleton(
-    \App\Repositories\Product\ProductRepositoryInterface::class,
-    \App\Repositories\Product\ProductRepository::class
-);
-
-$app->singleton(
-    \App\Repositories\Brand\BrandRepositoryInterface::class,
-    \App\Repositories\Brand\BrandRepository::class
-);
-
 /*
 |--------------------------------------------------------------------------
 | Return The Application

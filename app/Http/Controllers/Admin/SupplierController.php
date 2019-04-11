@@ -2,18 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SupplierRequest;
+use App\Repositories\Supplier\SupplierRepositoryInterface;
 class SupplierController extends Controller
 {
+
+    protected $supplierRepository;
+
+    public function __construct(SupplierRepositoryInterface $supplierRepository)
+    {
+        $this->supplierRepository = $supplierRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $suppliers = $this->supplierRepository->getSuppliers($request->all());
+        return view('admin.supplier.index',compact('suppliers'));
     }
 
     /**
@@ -23,7 +35,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.supplier.create');
     }
 
     /**
@@ -32,9 +44,13 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SupplierRequest $request)
     {
-        //
+        if ($this->supplierRepository->store($request)) {
+            return redirect()->route('suppliers.index')->with('alert-success', 'Thêm nhà cung cấp thành công');
+        } else {
+            return redirect()->route('suppliers.index')->with('alert-danger', 'Không thể thêm nhà cung cấp');
+        }
     }
 
     /**
@@ -56,7 +72,8 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        //
+        $supplier = $this->supplierRepository->getSupplierById($id);
+        return view('admin.supplier.edit',compact('supplier'));
     }
 
     /**
@@ -68,7 +85,11 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($this->supplierRepository->update($request,$id)) {
+            return redirect()->route('suppliers.index')->with('alert-success', 'Sửa nhà cung cấp thành công');
+        } else {
+            return redirect()->route('suppliers.index')->with('alert-danger', 'Không thể sửa nhà cung cấp');
+        }
     }
 
     /**
@@ -79,6 +100,10 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($this->supplierRepository->destroy($id)) {
+            return redirect()->route('suppliers.index')->with('alert-success', 'Xóa nhà cung cấp thành công');
+        } else {
+            return redirect()->route('suppliers.index')->with('alert-danger', 'Không thể xóa nhà cung cấp');
+        }
     }
 }

@@ -88,3 +88,11 @@ function getWards()
     $arr = DB::table('wards')->select('id')->get()->toArray();
     return Arr::pluck($arr,'id');
 }
+
+function substringIfLength($str, $len = 100) {
+    if (strlen($str) > 100) {
+        $pos = strrpos(substr($str,0,100),' ');
+        return substr($str,0,$pos).' .....';
+    }
+    return $str;
+}
