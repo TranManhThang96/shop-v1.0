@@ -35,6 +35,7 @@
             <th>#</th>
             <th>STT</th>
             <th>Tiêu đề</th>
+            <th>SEO</th>
             <th>Mô tả ngắn</th>
             <th>Thời gian tạo</th>
             <th>Thời gian cập nhật</th>
@@ -53,6 +54,7 @@
                     @endif
                 </td>
                 <td>{{$post->title}}</td>
+                <td>{{$post->slug}}</td>
                 <td>
                     {{substringIfLength($post->short_description)}}
                 </td>

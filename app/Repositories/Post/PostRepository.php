@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 use Validator;
 use DB;
 use App\Models\Post;
+use Illuminate\Support\Str;
 
 class PostRepository extends RepositoryAbstract implements PostRepositoryInterface
 {
@@ -81,6 +82,7 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
     public function store($request)
     {
         $this->model->fill($request->all());
+        $this->model->slug = Str::slug($this->model->title);
         return $this->model->save();
     }
 
