@@ -106,4 +106,18 @@ class SupplierController extends Controller
             return redirect()->route('suppliers.index')->with('alert-danger', 'Không thể xóa nhà cung cấp');
         }
     }
+
+    /**
+     * Check exist supplier.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkExist(Request $request)
+    {
+        if ($this->supplierRepository->checkExist($request->type,$request->value,$request->supplierId)) {
+            return Response()->json(true);
+        }
+        return Response()->json(false);
+    }
 }

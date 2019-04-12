@@ -139,11 +139,15 @@
                                                 <tbody>
                                                 @foreach($supplier->importInvoice as $importInvoice)
                                                     <tr>
-                                                        <td>{{$importInvoice->code}}</td>
-                                                        <td>{{formatDate("d/m/Y H:i:s",$importInvoice->created_at,"Y-m-d H:i:s")}}</td>
+                                                        <td >
+                                                            <span data-toggle="modal" data-target="#myModal" class="invoice-code">{{$importInvoice->code}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{formatDate("d/m/Y H:i:s",$importInvoice->created_at,"Y-m-d H:i:s")}}</span>
+                                                        </td>
                                                         <td></td>
-                                                        <td>{{$importInvoice->quantity_total}}</td>
-                                                        <td>{{number_format($importInvoice->money_total,0,',','.')}}</td>
+                                                        <td><span>{{$importInvoice->quantity_total}}</span></td>
+                                                        <td><span>{{number_format($importInvoice->money_total,0,',','.')}}</span></td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -162,5 +166,25 @@
     </table>
 
     <div class="text-center">{{ $suppliers->links() }}</div>
-
+@include('admin.supplier.invoiceModal')
 @endsection
+
+{{--@section('script')--}}
+    {{--<script>--}}
+        {{--$('.invoice-code').on('click',function () {--}}
+            {{--$.ajax({--}}
+                {{--url: "{{route()}}",--}}
+                {{--type: 'POST',--}}
+                {{--data: {--}}
+                    {{--_token: "{{csrf_token()}}"--}}
+                {{--},--}}
+                {{--success: {--}}
+                    {{----}}
+                {{--}--}}
+            {{--})--}}
+        {{--})--}}
+    {{--</script>--}}
+{{--@endsection--}}
+
+
+

@@ -11,14 +11,6 @@ Route::get('/',function (){
     return view('admin.dashboard');
 })->name('admin.dashboard');
 
-Route::group(['prefix'=>'category'],function (){
-    Route::any('list','CategoryController@list')->name('admin.category.list');
-    Route::any('add','CategoryController@save')->name('admin.category.save');
-    Route::get('remove/{id}','CategoryController@remove')->name('admin.category.remove');
-    Route::post('change-status','CategoryController@changeStatus')->name('admin.category.changeStatus');
-    Route::post('checkExist','CategoryController@checkExist')->name('admin.category.checkExist');
-});
-
 Route::group(['prefix'=>'product'],function (){
     Route::get('index','ProductController@index')->name('admin.product.index');
     Route::get('create','ProductController@create')->name('admin.product.create');
@@ -67,9 +59,14 @@ Route::group(['prefix'=>'DB'],function (){
 });
 
 Route::post('/posts/checkExist','PostController@checkExist')->name('posts.checkExist');
+Route::post('/suppliers/checkExist','SupplierController@checkExist')->name('suppliers.checkExist');
+Route::post('/brands/checkExist','BrandController@checkExist')->name('brands.checkExist');
+Route::post('/categories/changeStatus','CategoryController@changeStatus')->name('categories.changeStatus');
+Route::post('/categories/checkExist','CategoryController@checkExist')->name('categories.checkExist');
 
 Route::resources([
     'brands' => 'BrandController',
     'posts' => 'PostController',
-    'suppliers' => 'SupplierController'
+    'suppliers' => 'SupplierController',
+    'categories' => 'CategoryController'
 ]);

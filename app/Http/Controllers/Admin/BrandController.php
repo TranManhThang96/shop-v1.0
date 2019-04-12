@@ -6,6 +6,8 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Brand\BrandRepositoryInterface;
+use Nexmo\Response;
+
 class BrandController extends Controller
 {
 
@@ -104,5 +106,13 @@ class BrandController extends Controller
         if($this->repository->destroy($id)) {
             return redirect(route('brands.index'))->with('alert-success', 'Xóa thương hiệu thành công');
         };
+    }
+
+    public function checkExist(Request $request)
+    {
+        if($this->repository->checkExist($request->name,$request->id)) {
+            return Response()->json(true);
+        }
+        return Response()->json(false);
     }
 }

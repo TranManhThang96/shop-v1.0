@@ -82,7 +82,7 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
     public function store($request)
     {
         $this->model->fill($request->all());
-        $this->model->slug = Str::slug($this->model->title);
+        $this->model->slug = Str::slug($request->title);
         return $this->model->save();
     }
 
@@ -98,6 +98,7 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
         $post = $this->model->find($id);
         if (!empty($post)) {
             $post->fill($request->all());
+            $post->slug = Str::slug($request->title);
             return $post->save();
         }
         return false;

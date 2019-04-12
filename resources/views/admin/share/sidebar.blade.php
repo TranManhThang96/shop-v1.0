@@ -39,7 +39,7 @@
             </li>
 
             <li>
-                <a href="{{route('admin.category.list')}}">
+                <a href="{{route('categories.index')}}">
                     <i class="fa fa-th"></i> <span>Danh Mục</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countCate']}}</small>
@@ -115,7 +115,7 @@
                 <a href="{{route('suppliers.index')}}">
                     <i class="fa fa-th"></i> <span>Nhà cung cấp</span>
                     <span class="pull-right-container">
-              <small class="label pull-right bg-green">{{$shareData['countCustomer']}}</small>
+              <small class="label pull-right bg-green">{{$shareData['countSupplier']}}</small>
             </span>
                 </a>
             </li>

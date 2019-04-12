@@ -7,6 +7,7 @@
     <form action="{{route('brands.update',['id' => $brand->id])}}" method="post" id="frm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <input type="hidden" id="id" value="{{$brand->id}}">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
             <div class="form-group">
                 <label for="name">Tên thương hiệu</label>
@@ -42,9 +43,38 @@
 @section('script')
     <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace( 'content' );
+        CKEDITOR.replace('content');
         $('#image').on('change', function (event) {
             $(this).prev().find('img').attr('src', URL.createObjectURL(event.target.files[0]));
         })
+        $('#frm').validate({
+            rules: {
+                name: {
+                    required: true,
+                    remote: {
+                        url: "{{route('brands.checkExist')}}",
+                        type: "post",
+                        data: {
+                            name: function () {
+                                return $('#name').val()
+                            },
+                            id: function () {
+                                return $('#id').val()
+                            },
+                            _token: function () {
+                                return "{{csrf_token()}}"
+                            }
+                        }
+                    }
+                },
+            },
+            messages: {
+                name: {
+                    required: 'Vui lòng nhập tên thương hiệu',
+                    remote: 'Thương hiệu đã tồn tại'
+                },
+
+            }
+        });
     </script>
 @endsection

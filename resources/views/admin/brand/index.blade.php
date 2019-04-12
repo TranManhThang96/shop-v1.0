@@ -37,7 +37,6 @@
             <th></th>
             <th>Thương hiệu</th>
             <th>Hình ảnh</th>
-            <th>Mô tả</th>
             <th>Sản Phẩm</th>
             <th>Chức năng</th>
         </tr>
@@ -58,7 +57,6 @@
                 <td>
                     <img src="{{asset('storage/'.$brand->image)}}" width="100">
                 </td>
-                <td>{!! $brand->content !!}</td>
                 <td>{{$brand->product->count()}}</td>
                 <td>
                     <a class="col-md-4 customer-edit btn btn-info"
@@ -92,9 +90,4 @@
 
     <div class="text-center">{{ $brands->links() }}</div>
 
-@endsection
-
-@section('script')
-    <script>
-    </script>
 @endsection

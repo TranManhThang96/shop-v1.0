@@ -8,6 +8,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
             @csrf
             @method('PUT')
+            <input type="hidden" value="{{$supplier->id}}" id="id">
             <div class="form-group">
                 <label for="name">Tên NCC <span class="text text-danger"
                                                 title="Trường này bắt buộc phải điền"> (*) </span></label>
@@ -65,3 +66,86 @@
         </div>
     </form>
 @endsection
+
+@section('script')
+    <script>
+        $('#frm').validate({
+            rules: {
+                name: {
+                    required:true,
+                    maxlength: 255,
+                    remote: {
+                        url: "{{route('suppliers.checkExist')}}",
+                        type: "post",
+                        data: {
+                            type: function () {
+                                return 'name'
+                            },
+                            value: function(){
+                                return $('#name').val()
+                            },
+                            supplierId: function(){
+                                return $('#id').val()
+                            },
+                            _token: function () {
+                                return "{{csrf_token()}}"
+                            }
+                        }
+                    }
+                },
+                phone: {
+                    required:true,
+                    remote: {
+                        url: "{{route('suppliers.checkExist')}}",
+                        type: "post",
+                        data: {
+                            type: function () {
+                                return 'phone'
+                            },
+                            value: function(){
+                                return $('#phone').val()
+                            },
+                            supplierId: function(){
+                                return $('#id').val()
+                            },
+                            _token: function () {
+                                return "{{csrf_token()}}"
+                            }
+                        }
+                    }
+                },
+                email: {
+                    required:false,
+                    email:true,
+                },
+                address: {
+                    required:true,
+                    maxlength:255
+                }
+            },
+            messages: {
+                name: {
+                    required: 'Vui lòng nhập tên nhà cung cấp',
+                    maxlength: 'Vui lòng nhập không quá 255 ký tự',
+                    remote: 'Nhà cung cấp đã tồn tại'
+                },
+                phone: {
+                    required: 'Vui lòng nhập số điện thoại',
+                    remote: 'Số điện thoại nhà cung cấp đã tồn tại'
+                },
+                email: {
+                    required: 'Vui lòng nhập email',
+                    email: 'Email chưa đúng định dạng'
+                },
+                address: {
+                    required: 'Vui lòng nhập địa chỉ nhà cung cấp',
+                    maxlength: 'Vui lòng nhập không quá 255 ký tự'
+                }
+            }
+        });
+    </script>
+@endsection
+
+
+
+

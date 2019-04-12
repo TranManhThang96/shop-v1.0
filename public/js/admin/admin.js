@@ -72,6 +72,7 @@ $('#district').on('change', function () {
 $('#province').select2();
 $('#district').select2();
 $('#ward').select2();
+$('#category-parent').select2();
 
 $('.show-detail').on('click', function () {
     console.log($(this).parent().next());

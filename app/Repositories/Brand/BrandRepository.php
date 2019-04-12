@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
 use Validator;
 use DB;
 use App\Models\Brand;
-
+use Illuminate\Support\Str;
 class BrandRepository extends RepositoryAbstract implements BrandRepositoryInterface
 {
     /**
@@ -81,6 +81,7 @@ class BrandRepository extends RepositoryAbstract implements BrandRepositoryInter
     public function store($request)
     {
         $this->model->fill($request->all());
+        $this->model->slug = Str::slug($request->name);
         if (!empty ($request->image)) {
             $exist = Storage::exists('brands/' . $request->image->getClientOriginalName());
             //neu chua ton tai thi upload, neu ton tai roi thi cap nhat link anh bang link da ton tai
@@ -105,6 +106,7 @@ class BrandRepository extends RepositoryAbstract implements BrandRepositoryInter
     {
         $brand = $this->model->find($id);
         $brand->name = $request->name;
+        $brand->slug = Str::slug($request->name);
         $brand->content = $request->content;
         if (!empty($request->image)) {
             $exist = Storage::exists('brands/' . $request->image->getClientOriginalName());
@@ -125,6 +127,25 @@ class BrandRepository extends RepositoryAbstract implements BrandRepositoryInter
         }
         return $brand->save();
 
+    }
+
+    /**
+     * Check brand exist.
+     *
+     * @param $name
+     * @param null $brandId
+     * @return bool
+     */
+    public function checkExist($name, $brandId = null)
+    {
+        $brands = $this->model->where('name',$name);
+        if(!empty($brandId)) {
+            $brands = $brands->where('id','<>',$brandId);
+        }
+        if($brands->count() > 0) {
+            return false;
+        }
+        return true;
     }
 
 }

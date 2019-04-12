@@ -101,4 +101,24 @@ class SupplierRepository extends RepositoryAbstract implements SupplierRepositor
         }
         return false;
     }
+
+    /**
+     * Check exist supplier.
+     *
+     * @param string $type
+     * @param $value
+     * @param $supplierId
+     * @return bool
+     */
+    public function checkExist($type = 'name',$value,$supplierId)
+    {
+        $suppliers = $this->model->where($type,$value);
+        if( !empty($supplierId)) {
+            $suppliers = $suppliers->where('id','<>',$supplierId);
+        }
+        if($suppliers->count() > 0) {
+            return false;
+        }
+        return true;
+    }
 }

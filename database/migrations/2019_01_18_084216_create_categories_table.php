@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->comment('ten the loai');
-            $table->string('alias')->nullable()->comment('ten chuan seo');
+            $table->string('slug')->nullable()->comment('ten chuan seo');
             $table->integer('parent_id')->default(0)->nullable()->comment('danh muc cha');
             $table->integer('active')->nullable()->comment('trang thai kich hoat (1 active,0 not active)');
             $table->integer('sort')->nullable()->comment('uu tien hien thi tren menu');

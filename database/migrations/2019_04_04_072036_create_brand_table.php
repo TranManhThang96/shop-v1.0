@@ -16,6 +16,7 @@ class CreateBrandTable extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',255)->comment('thuong hieu');
+            $table->string('slug',255)->nullable()->comment('SEO');
             $table->string('image',255)->comment('hinh anh')->nullable();
             $table->text('content')->nullable()->comment('mo ta thuong hieu');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
