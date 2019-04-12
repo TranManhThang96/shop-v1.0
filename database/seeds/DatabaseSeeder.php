@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             DiscountTableSeeder::class,
             ProductTableSeeder::class,
             ProductItemTableSeeder::class,
-            CustomerTableSeeder::class
+            CustomerTableSeeder::class,
+            PostTableSeeder::class
 
         ]);
         //cach viet 2

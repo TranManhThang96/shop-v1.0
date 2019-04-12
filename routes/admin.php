@@ -66,6 +66,8 @@ Route::group(['prefix'=>'DB'],function (){
     Route::get('/test-queryBuilder','DBController@testQueryBuilder')->name('admin.db.testQueryBuilder');
 });
 
+Route::post('/posts/checkExist','PostController@checkExist')->name('posts.checkExist');
+
 Route::resources([
     'brands' => 'BrandController',
     'posts' => 'PostController',

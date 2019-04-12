@@ -62,7 +62,7 @@
                     {{$supplier->name}}
                 </td>
                 <td>{{$supplier->phone}}</td>
-                <td>{{$supplier->importInvoice_count ?? 0}}</td>
+                <td>{{$supplier->import_invoice_count ?? 0}}</td>
                 <td>{{number_format($supplier->importInvoice->sum('money_total'),0,',','.')}}</td>
                 <td>{{formatDate("d/m/Y H:i:s",$supplier->created_at,"Y-m-d H:i:s")}}</td>
                 <td>{{formatDate("d/m/Y H:i:s",$supplier->updated_at,"Y-m-d H:i:s")}}</td>
@@ -125,28 +125,30 @@
                                     </div>
 
                                     <div role="tabpanel" class="tab-pane" id="history-import-invoice{{$supplier->id}}">
-                                        <table class="table table-bordered table-responsive">
-                                            <thead>
-                                            <tr>
-                                                <th>Mã phiếu</th>
-                                                <th>Thời gian</th>
-                                                <th>Người tạo</th>
-                                                <th>Số Sp</th>
-                                                <th>Tổng tiền</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($supplier->importInvoice as $importInvoice)
+                                        @if($supplier->importInvoice->count() > 0)
+                                            <table class="table table-bordered table-responsive">
+                                                <thead>
                                                 <tr>
-                                                    <td>{{$importInvoice->code}}</td>
-                                                    <td>{{formatDate("d/m/Y H:i:s",$importInvoice->created_at,"Y-m-d H:i:s")}}</td>
-                                                    <td></td>
-                                                    <td>{{$importInvoice->quantity_total}}</td>
-                                                    <td>{{number_format($importInvoice->money_total,0,',','.')}}</td>
+                                                    <th>Mã phiếu</th>
+                                                    <th>Thời gian</th>
+                                                    <th>Người tạo</th>
+                                                    <th>Số Sp</th>
+                                                    <th>Tổng tiền</th>
                                                 </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($supplier->importInvoice as $importInvoice)
+                                                    <tr>
+                                                        <td>{{$importInvoice->code}}</td>
+                                                        <td>{{formatDate("d/m/Y H:i:s",$importInvoice->created_at,"Y-m-d H:i:s")}}</td>
+                                                        <td></td>
+                                                        <td>{{$importInvoice->quantity_total}}</td>
+                                                        <td>{{number_format($importInvoice->money_total,0,',','.')}}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endif
                                     </div>
                                 </div>
 

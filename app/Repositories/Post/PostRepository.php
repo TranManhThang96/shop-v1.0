@@ -102,4 +102,17 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
         }
         return false;
     }
+
+    public function checkExist($title, $postId = null)
+    {
+        $posts = $this->model->where('title',$title);
+        if (!empty($postId)) {
+            $posts = $posts->where('id','<>',$postId);
+        }
+        if ($posts->count() > 0) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PostRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'short_description' => 'required',
+            'title' => ['required', 'max:255', Rule::unique('posts')->ignore($this->title)],
+            'short_description' => 'required|max:255',
             'content' => 'required'
         ];
     }
@@ -34,7 +35,10 @@ class PostRequest extends FormRequest
     {
         return [
             'title.required' => 'Vui lòng nhập tiêu đề bài viết',
+            'title.max' => 'Vui lòng nhập không quá 255 ký tự',
+            'title.unique' => 'Bài viết đã tồn tại',
             'short_description.required' => 'Vui lòng nhập mô tả ngắn cho bài viết',
+            'short_description.max' => 'Vui lòng nhập không quá 255 ký tự',
             'content.required' => 'Vui lòng nhập nội dung cho bài viết'
         ];
     }

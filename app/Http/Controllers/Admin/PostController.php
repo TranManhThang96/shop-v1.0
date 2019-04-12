@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Post\PostRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use Nexmo\Response;
 
 class PostController extends Controller
 {
@@ -103,6 +104,21 @@ class PostController extends Controller
             return redirect()->route('posts.index')->with('alert-success', 'Xóa bài viết thành công');
         } else {
             return redirect()->route('posts.index')->with('alert-danger', 'Không thể xóa bài viết');
+        }
+    }
+
+    /**
+     * Check post exist.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkExist(Request $request)
+    {
+        if ($this->postRepository->checkExist($request->title, $request->postId)) {
+            return Response()->json(true);
+        } else {
+            return Response()->json(false);
         }
     }
 }

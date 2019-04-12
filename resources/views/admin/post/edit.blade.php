@@ -8,6 +8,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
             @csrf
             @method('PUT')
+            <input type="hidden" value="{{$post->id}}" id="id">
             <div class="form-group">
                 <label for="title">Tiêu đề <span class="text text-danger"
                                                  title="Trường này bắt buộc phải điền"> (*) </span></label>
@@ -58,5 +59,52 @@
     <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'content' );
+        $('#frm').validate({
+            ignore: [],
+            rules: {
+                title: {
+                    required: true,
+                    maxlength: 255,
+                    remote: {
+                        url: "{{route('posts.checkExist')}}",
+                        type: "post",
+                        data: {
+                            title: function () {
+                                return $('#title').val()
+                            },
+                            postId: function(){
+                                return $('#id').val();
+                            },
+                            _token: function () {
+                                return "{{csrf_token()}}"
+                            }
+                        }
+                    }
+                },
+                short_description: {
+                    required: true,
+                    maxlength: 255
+                },
+                content: {
+                    required: true
+                }
+            },
+
+            messages: {
+                title: {
+                    required: 'Vui lòng nhập tiêu đề',
+                    maxlength: 'Vui lòng không nhập quá 255 ký tự',
+                    remote: 'Tiêu đề đã tồn tại'
+                },
+                short_description: {
+                    required: 'Vui lòng nhập mô tả ngắn',
+                    maxlength: 'Vui lòng không nhập quá 255 ký tự'
+                },
+                content: {
+                    required: 'Vui lòng nhập nội dung'
+                }
+
+            }
+        })
     </script>
 @endsection

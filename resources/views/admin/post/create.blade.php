@@ -9,7 +9,7 @@
             @csrf
             <div class="form-group">
                 <label for="title">Tiêu đề <span class="text text-danger"
-                                                title="Trường này bắt buộc phải điền"> (*) </span></label>
+                                                 title="Trường này bắt buộc phải điền"> (*) </span></label>
                 <input class="form-control" id="title" name="title" value="{{old('title')}}"
                        placeholder="Vui lòng nhập tiêu đề bài viết">
 
@@ -21,7 +21,8 @@
             </div>
 
             <div class="form-group">
-                <label for="short_description">Mô tả ngắn <span class="text text-danger" title="Trường này bắt buộc phải điền"> (*) </span></label>
+                <label for="short_description">Mô tả ngắn <span class="text text-danger"
+                                                                title="Trường này bắt buộc phải điền"> (*) </span></label>
                 <textarea class="form-control" rows="5" id="short_description" name="short_description"
                           placeholder="Vui lòng nhập mô tả ngắn (dưới 255 ký tự)">{{old('short_description')}}</textarea>
                 @if($errors->has('short_description'))
@@ -33,7 +34,7 @@
 
             <div class="form-group">
                 <label for="content">Nội dung <span class="text text-danger"
-                                                   title="Trường này bắt buộc phải điền"> (*) </span></label>
+                                                    title="Trường này bắt buộc phải điền"> (*) </span></label>
                 <textarea class="form-control" rows="5" id="content" name="content"
                           placeholder="Nội dung bài viết">{{old('content')}}</textarea>
                 @if($errors->has('content'))
@@ -56,6 +57,50 @@
 @section('script')
     <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace( 'content' );
+        CKEDITOR.replace('content');
+        $('#frm').validate({
+            ignore: [],
+            rules: {
+                title: {
+                    required: true,
+                    maxlength: 255,
+                    remote: {
+                        url: "{{route('posts.checkExist')}}",
+                        type: "post",
+                        data: {
+                            title: function () {
+                                return $('#title').val()
+                            },
+                            _token: function () {
+                                return "{{csrf_token()}}"
+                            }
+                        }
+                    }
+                },
+                short_description: {
+                    required: true,
+                    maxlength: 255
+                },
+                content: {
+                    required: true
+                }
+            },
+
+            messages: {
+                title: {
+                    required: 'Vui lòng nhập tiêu đề',
+                    maxlength: 'Vui lòng không nhập quá 255 ký tự',
+                    remote: 'Tiêu đề đã tồn tại'
+                },
+                short_description: {
+                    required: 'Vui lòng nhập mô tả ngắn',
+                    maxlength: 'Vui lòng không nhập quá 255 ký tự'
+                },
+                content: {
+                    required: 'Vui lòng nhập nội dung'
+                }
+
+            }
+        })
     </script>
 @endsection
