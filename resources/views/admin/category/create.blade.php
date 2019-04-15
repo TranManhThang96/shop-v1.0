@@ -26,13 +26,8 @@
             </div>
 
             <div class="form-group">
-                <label for="category-active">Kích hoạt</label>
-                <input type="checkbox" value="1" name="active">
-            </div>
-
-            <div class="form-group">
                 <label for="category-order">Thứ tự</label>
-                <input type="text" class="form-control" name="order" id="category-order" value="0">
+                <input type="text" class="form-control" name="order" id="category-order" value="0" >
                 @if($errors)
                     <span class="text-danger">{{$errors->first('order')}}</span>
                 @endif

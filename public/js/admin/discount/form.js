@@ -83,4 +83,37 @@ $(document).ready(function () {
             }
         }
     })
+
+    // $('#frm').validate({
+    //     rules: {
+    //         name: {
+    //             required: true
+    //         },
+    //         discount: {
+    //             required: true
+    //         },
+    //
+    //         start: {
+    //             required: true
+    //         },
+    //         end: {
+    //             required:true
+    //         }
+    //     },
+    //     messages: {
+    //         name: {
+    //             required: 'Vui lòng nhập tên chương trình khuyến mại'
+    //         },
+    //         discount: {
+    //             required: 'Vui lòng nhập giá trị khuyến mại'
+    //         },
+    //
+    //         start: {
+    //             required: 'Vui lòng chọn thời gian bắt đầu'
+    //         },
+    //         end: {
+    //             required: 'Vui lòng chọn thời gian kết thúc'
+    //         }
+    //     }
+    // })
 })

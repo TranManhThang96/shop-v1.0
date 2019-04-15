@@ -37,7 +37,7 @@
             <th>STT</th>
             <th></th>
             <th>Tên Danh Mục</th>
-            <th>Alias</th>
+            <th>SEO</th>v
             <th>Danh mục cha</th>
             <th>Trạng Thái</th>
             <th>Thứ tự</th>
@@ -57,7 +57,7 @@
                 </td>
                 <td class="show-detail cursor"><i class="glyphicon glyphicon-option-horizontal"></i></td>
                 <td>{{$category->name}}</td>
-                <td>{{$category->alias}}</td>
+                <td>{{$category->slug}}</td>
                 <td>{{getParent('',$category->id,'')}}</td>
                 <td class="status-category" data-id="{{$category->id}}">
                     <input type="checkbox" value="{{$category->active}}" {{$category->active == 1 ? 'checked' : ''}}>

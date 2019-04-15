@@ -29,11 +29,11 @@ function getParent($str = '', $id, $symbol = '')
 {
     $model = new Category();
     $currentCate = $model->find($id);
-    $str = $symbol . $currentCate->name;
+    $str = $currentCate->name. $symbol;
     if ($currentCate->parent_id == 0) {
         return $str;
     } else {
-        $str.= getParent($str,$currentCate->parent_id,'-->');
+        $str = getParent($str,$currentCate->parent_id,'-->').$str;
     }
     return $str;
 }

@@ -6,7 +6,7 @@
  * Time: 12:33 AM
  */
 
-namespace App\Repositories\category;
+namespace App\Repositories\Category;
 
 use App\Repositories\RepositoryAbstract;
 use Illuminate\Support\Facades\Storage;

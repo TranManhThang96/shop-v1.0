@@ -28,7 +28,7 @@ class CategoryRequest extends FormRequest
             'name' => [
                 'bail',
                 'required',
-                Rule::unique('categories')->ignore($this->name)
+                Rule::unique('categories')->ignore($this->id)
             ],
             'order' => 'bail|nullable|numeric|min:0'
         ];

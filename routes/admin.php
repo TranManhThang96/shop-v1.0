@@ -29,14 +29,6 @@ Route::group(['prefix'=>'customer'],function (){
     Route::post('check-email-exist','CustomerController@checkEmailExist')->name('admin.customer.checkEmailExist');
 });
 
-Route::group(['prefix'=>'discount'],function (){
-    Route::any('list','DiscountController@list')->name('admin.discount.list');
-    Route::get('add','DiscountController@add')->name('admin.discount.add');
-    Route::get('edit/{id}','DiscountController@edit')->name('admin.discount.edit');
-    Route::get('remove/{id}','DiscountController@remove')->name('admin.discount.remove');
-    Route::post('save','DiscountController@save')->name('admin.discount.save');
-});
-
 Route::group(['prefix' => 'district'],function (){
    Route::get('get-list-district-by-province','DistrictController@getListDistrictByProvince')->name('admin.district.getListDistrictByProvince');
 });
@@ -68,5 +60,6 @@ Route::resources([
     'brands' => 'BrandController',
     'posts' => 'PostController',
     'suppliers' => 'SupplierController',
-    'categories' => 'CategoryController'
+    'categories' => 'CategoryController',
+    'discounts' => 'DiscountController'
 ]);

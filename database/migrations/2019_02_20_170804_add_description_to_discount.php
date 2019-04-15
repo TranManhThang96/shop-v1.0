@@ -26,7 +26,7 @@ class AddDescriptionToDiscount extends Migration
      */
     public function down()
     {
-        Schema::table('discount', function (Blueprint $table) {
+        Schema::table('discounts', function (Blueprint $table) {
             $table->dropColumn('description');
             $table->dropColumn('limit');
 

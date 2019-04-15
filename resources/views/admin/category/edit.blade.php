@@ -8,7 +8,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
             @csrf
             @method('PUT')
-            <input type="hidden" value="{{$category->id}}" id="id">
+            <input type="hidden" value="{{$category->id}}" id="id" name="id">
             <div class="form-group">
                 <label for="category-name">Tên danh mục</label>
                 <input type="text" class="form-control" name="name" id="category-name"
@@ -22,14 +22,9 @@
                 <label for="category-parent">Danh mục cha</label>
                 <select class="form-control category-parent" name="parent_id" id="category-parent">
                     <option value="0">--Không có danh mục cha--</option>
-                    {!!showCategories($allCategories,0,'',0,$category->parent_id)!!}
+                    {!!showCategories($allCategories,0,'',$category->parent_id)!!}
                 </select>
 
-            </div>
-
-            <div class="form-group">
-                <label for="category-active">Kích hoạt</label>
-                <input type="checkbox" value="1" name="active" {{$category->active == 1 ? 'checked' : ''}}>
             </div>
 
             <div class="form-group">
@@ -62,7 +57,7 @@
                             name: function () {
                                 return $('#category-name').val()
                             },
-                            id: function () {
+                            categoryId: function () {
                                 return $('#id').val()
                             },
                             _token: function () {

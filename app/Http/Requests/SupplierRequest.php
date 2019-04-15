@@ -24,8 +24,8 @@ class SupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('suppliers')->ignore($this->name)],
-            'phone' => ['required','numeric',Rule::unique('suppliers')->ignore($this->phone)],
+            'name' => ['required', Rule::unique('suppliers')->ignore($this->id)],
+            'phone' => ['required','numeric',Rule::unique('suppliers')->ignore($this->id)],
             'email' => 'nullable|email',
             'address' => 'required'
         ];

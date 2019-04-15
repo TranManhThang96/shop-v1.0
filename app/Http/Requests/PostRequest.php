@@ -25,7 +25,7 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'max:255', Rule::unique('posts')->ignore($this->title)],
+            'title' => ['required', 'max:255', Rule::unique('posts')->ignore($this->id)],
             'short_description' => 'required|max:255',
             'content' => 'required'
         ];

@@ -7,7 +7,7 @@
     <form action="{{route('brands.update',['id' => $brand->id])}}" method="post" id="frm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <input type="hidden" id="id" value="{{$brand->id}}">
+        <input type="hidden" id="id" value="{{$brand->id}}" name="id">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
             <div class="form-group">
                 <label for="name">Tên thương hiệu</label>

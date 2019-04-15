@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-class BrandRequest extends FormRequest
+
+class DiscountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +24,20 @@ class BrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required',
-                Rule::unique('brands')->ignore($this->id)
-            ]
+            'name' => 'required',
+            'discount' => 'required',
+            'start' => 'required',
+            'end' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên thương hiệu',
-            'name.unique' => 'Tên thương hiệu đã tồn tại'
+            'name.required' => 'Vui lòng nhập tên chương trình khuyến mại',
+            'discount.required' => 'Vui lòng nhập giá trị khuyến mại',
+            'start.required' => 'Chọn thời gian bắt đầu',
+            'end.required' => 'Chọn thời gian kết thúc'
         ];
     }
 }

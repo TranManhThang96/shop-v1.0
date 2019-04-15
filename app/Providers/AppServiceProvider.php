@@ -69,6 +69,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Category\CategoryRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\Discount\DiscountRepositoryInterface::class,
+            \App\Repositories\Discount\DiscountRepository::class
+        );
+
     }
 
 }

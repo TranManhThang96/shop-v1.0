@@ -8,7 +8,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
             @csrf
             @method('PUT')
-            <input type="hidden" value="{{$post->id}}" id="id">
+            <input type="hidden" value="{{$post->id}}" id="id" name="id">
             <div class="form-group">
                 <label for="title">Tiêu đề <span class="text text-danger"
                                                  title="Trường này bắt buộc phải điền"> (*) </span></label>

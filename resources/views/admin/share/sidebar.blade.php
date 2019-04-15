@@ -94,8 +94,8 @@
             </li>
 
             <li>
-                <a href="{{route('admin.discount.list')}}">
-                    <i class="fa fa-th"></i> <span>Chương trình khuyến mại</span>
+                <a href="{{route('discounts.index')}}">
+                    <i class="fa fa-th"></i> <span>Khuyến mại</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countDiscount']}}</small>
             </span>
