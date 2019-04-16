@@ -75,10 +75,20 @@ $('#ward').select2();
 $('#category-parent').select2();
 
 $('.show-detail').on('click', function () {
-    console.log($(this).parent().next());
     $(this).parent().next().toggle();
 })
 
 $('#per-page').on('change',function () {
     $('#form-search').submit();
 })
+
+function _formatNumber(event) {
+    let str = event.target.value;
+    str = str.replace('.', '').trim();
+    if (str == '0') {
+        str = '1'
+    }
+    let value = str.replace(/ |\D/gi, '');
+    let format = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+    event.target.value = format;
+}

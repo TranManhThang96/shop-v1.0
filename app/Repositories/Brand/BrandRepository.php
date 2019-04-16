@@ -148,4 +148,14 @@ class BrandRepository extends RepositoryAbstract implements BrandRepositoryInter
         return true;
     }
 
+    /**
+     * Get all brands.
+     *
+     * @return Collection
+     */
+    public function getAllBrands()
+    {
+        return $this->model->all();
+    }
+
 }

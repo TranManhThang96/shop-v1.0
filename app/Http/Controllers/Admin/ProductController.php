@@ -2,18 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Category;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Discount\DiscountRepositoryInterface;
 
 class ProductController extends Controller
 {
 
-    protected $repository;
+    protected $productRepository;
+    protected $categoryRepository;
+    protected $brandRepository;
+    protected $discountRepository;
 
-    public function __construct(ProductRepositoryInterface $repository)
+    public function __construct(
+        ProductRepositoryInterface $productRepository,
+        CategoryRepositoryInterface $categoryRepository,
+        BrandRepositoryInterface $brandRepository,
+        DiscountRepositoryInterface $discountRepository
+    )
     {
-        $this->repository = $repository;
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->brandRepository = $brandRepository;
+        $this->discountRepository = $discountRepository;
     }
 
     /**
@@ -23,7 +39,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = $this->repository->getProductByRequest($request->all());
+        $products = $this->productRepository->getProductByRequest($request->all());
         return view('admin.product.index',compact('products'));
     }
 
@@ -34,7 +50,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.product.create');
+        $categories = $this->categoryRepository->getAllCategories();
+        $brands = $this->brandRepository->getAllBrands();
+        $discounts = $this->discountRepository->getDiscountsAvailable(Discount::TYPE_BY_PRODUCT);
+        return view('admin.product.create',compact('categories','brands','discounts'));
     }
 
     /**
@@ -45,6 +64,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
     }
 
     /**

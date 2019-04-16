@@ -8,6 +8,9 @@ class Discount extends Model
 {
     protected $table = 'discounts';
 
+    const TYPE_BY_PRODUCT = 1;
+    const TYPE_BY_ORDER = 2;
+
     protected $fillable = [
         'name',
         'code',

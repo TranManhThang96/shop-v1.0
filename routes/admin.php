@@ -11,13 +11,6 @@ Route::get('/',function (){
     return view('admin.dashboard');
 })->name('admin.dashboard');
 
-Route::group(['prefix'=>'product'],function (){
-    Route::get('index','ProductController@index')->name('admin.product.index');
-    Route::get('create','ProductController@create')->name('admin.product.create');
-    Route::get('/{id}/edit','ProductController@edit')->name('admin.product.edit');
-    Route::delete('/destroy','ProductController@destroy')->name('admin.product.destroy');
-    Route::post('store','ProductController@store')->name('admin.product.store');
-});
 
 Route::group(['prefix' => 'district'],function (){
    Route::get('get-list-district-by-province','DistrictController@getListDistrictByProvince')->name('admin.district.getListDistrictByProvince');
@@ -54,5 +47,6 @@ Route::resources([
     'suppliers' => 'SupplierController',
     'categories' => 'CategoryController',
     'discounts' => 'DiscountController',
-    'customers' => 'CustomerController'
+    'customers' => 'CustomerController',
+    'products' => 'ProductController'
 ]);

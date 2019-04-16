@@ -1,4 +1,4 @@
-var form = $('#form-create');
+var form = $('#frm');
 form.validate();
 $.getScript('../../js/admin/product/validation.js',function () {
     for(key in validation ) {
@@ -7,3 +7,5 @@ $.getScript('../../js/admin/product/validation.js',function () {
 });
 
 $('#category').select2();
+$('#brand').select2();
+$('#discount').select2();

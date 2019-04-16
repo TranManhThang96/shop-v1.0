@@ -2,9 +2,9 @@
 @section('title','Product')
 @section('module','Sản Phẩm')
 @section('content')
-    <a href="{{route('admin.product.create')}}" class="btn btn-success">Thêm mới</a>
+    <a href="{{route('products.create')}}" class="btn btn-success">Thêm mới</a>
 
-    <form class="form-inline" method="get" action="{{route('admin.product.index')}}" id="form-search">
+    <form class="form-inline" method="get" action="{{route('products.index')}}" id="form-search">
         <div class="col-md-3 pro-col3">
             <div class="form-group">
                 <label for="per-page">Show:</label>
@@ -74,7 +74,7 @@
                 <td>
 
                     <a class="col-md-4 customer-edit"
-                       href="{{route('admin.product.edit',$product->id)}}"> <i
+                       href="{{route('products.edit',$product->id)}}"> <i
                                 class="glyphicon glyphicon-pencil" title="Sửa"></i></a>
                     {{--<a class="col-md-offset-2 col-md-4 customer-remove"--}}
                     {{--href="{{route('admin.product.destroy',$product->id)}}"--}}

@@ -58,20 +58,9 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
         return $this->model->find($id);
     }
 
-    /**
-     * destroy relationship product set.
-     * @param $id
-     * @return bool
-     */
-    public function destroy($id)
+
+    public function store($request)
     {
-        $product = $this->model->find($id);
-        $product->set_product_id = null;
-        $product->note = '';
-        if ($product->save()) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->model->fill($request->all());
     }
 }

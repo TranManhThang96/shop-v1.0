@@ -136,4 +136,17 @@ class DiscountRepository extends RepositoryAbstract implements DiscountRepositor
         return false;
     }
 
+    public function getDiscountsAvailable($type_by=0,$discountId = null)
+    {
+       $discounts =  $this->model->where('start','<=',date('Y-m-d H:i:s'))->where('end','>=',date('Y-m-d H:i:s'));
+       if ($type_by != 0) {
+           $discounts = $discounts->where('type_by',$type_by);
+       }
+       if (!empty($id)) {
+           $discounts = $discounts->orWhere('id',$discountId);
+       }
+       return $discounts->get();
+
+    }
+
 }

@@ -16,5 +16,12 @@ var validation = {
         messages : {
             required : 'bắt buộc phải điền giá nhập để tính lợi nhuận'
         }
+    },
+
+    category: {
+        min: 1,
+        messages: {
+            min: 'Vui lòng chọn danh mục'
+        }
     }
 };

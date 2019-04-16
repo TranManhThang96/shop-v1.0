@@ -41,7 +41,6 @@ function getParent($str = '', $id, $symbol = '')
 //hien thi menu
 function showCategories($categories, $parent_id = 0, $symbol = '',$select = 0)
 {
-
     foreach ($categories as $key => $item) {
         // Nếu là chuyên mục cha thì hiển thị
         if ($item->parent_id == $parent_id) {
