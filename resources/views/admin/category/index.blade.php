@@ -37,7 +37,7 @@
             <th>STT</th>
             <th></th>
             <th>Tên Danh Mục</th>
-            <th>SEO</th>v
+            <th>SEO</th>
             <th>Danh mục cha</th>
             <th>Trạng Thái</th>
             <th>Thứ tự</th>

@@ -4,147 +4,162 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
-use App\Models\Province;
-use App\Models\District;
-use App\Models\Ward;
-use App\Http\Requests\CustomerRequest;
+use App\Repositories\Customer\CustomerRepositoryInterface;
+use App\Repositories\Province\ProvinceRepositoryInterface;
+use App\Repositories\District\DistrictRepositoryInterface;
+use App\Repositories\Ward\WardRepositoryInterface;
+use Illuminate\Support\Facades\Redirect;
 
 class CustomerController extends Controller
 {
-    public function list(Request $request)
+
+    protected $customerRepository;
+    protected $provinceRepository;
+    protected $districtRepository;
+    protected $wardRepository;
+
+
+    /**
+     * CustomerController constructor.
+     *
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param ProvinceRepositoryInterface $provinceRepository
+     * @param DistrictRepositoryInterface $districtRepository
+     * @param WardRepositoryInterface $wardRepository
+     */
+    public function __construct(
+        CustomerRepositoryInterface $customerRepository,
+        ProvinceRepositoryInterface $provinceRepository,
+        DistrictRepositoryInterface $districtRepository,
+        WardRepositoryInterface $wardRepository
+    )
     {
-        $model = new Customer();
-        $allProvince = Province::all();
-        $keyword = '';
-        $limit = 10;
-        $page = isset($request->page) ? $request->page : 1;
-        if (isset($request->limit)) {
-            $limit = $request->limit;
-        }
-        $listCustomers = $model->orderBy('id', 'DESC');
-        if (isset($request->keyword)) {
-            $keyword = $request->keyword;
-            $listCustomers = $model->where('name', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('code', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('phone', 'LIKE', '%' . $keyword . '%');
-        }
-
-        $dataAddress = [
-            'province_id' => 0,
-            'district_id' => 0,
-            'ward_id' => 0,
-            'allProvince' => $allProvince,
-        ];
-        if ($request->province_id > 0) {
-            $dataAddress['province_id'] = $request->province_id;
-            $dataAddress['listDistrict'] = District::where('province_id', $dataAddress['province_id'])->get();
-            $listCustomers = $listCustomers->where('province_id', $dataAddress['province_id']);
-        }
-        if ($request->district_id > 0) {
-            $dataAddress['district_id'] = $request->district_id;
-            $dataAddress['listWard'] = Ward::where('district_id', $dataAddress['district_id'])->get();
-            $listCustomers = $listCustomers->where('district_id', $dataAddress['district_id']);
-        }
-        if ($request->ward_id > 0) {
-            $dataAddress['ward_id'] = $request->ward_id;
-            $listCustomers = $listCustomers->where('ward_id', $dataAddress['ward_id']);
-        }
-
-        $listCustomers = $listCustomers->paginate($limit);
-
-        if (isset($request->keyword)) {
-            $listCustomers = $listCustomers->withPath("?keyword = $keyword");
-        }
-        $countAvailable = $listCustomers->count();
-
-        return view('admin.customer.list', compact('listCustomers', 'keyword', 'page', 'limit', 'countAvailable', 'dataAddress'));
+        $this->customerRepository = $customerRepository;
+        $this->provinceRepository = $provinceRepository;
+        $this->districtRepository = $districtRepository;
+        $this->wardRepository = $wardRepository;
     }
 
-    public function add()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        $allProvince = Province::all();
-        $dataAddress = [
-            'allProvince' => $allProvince
-        ];
-        $model = new Customer();
-        return view('admin.customer.form')->with(['model' => $model, 'dataAddress' => $dataAddress]);
+        $customers = $this->customerRepository->getCustomers($request);
+        $allProvinces = $this->provinceRepository->all();
+        $districts = $this->districtRepository->getDistrictsByProvince($request->province_id);
+        $wards = $this->wardRepository->getWardsByDistrict($request->district_id);
+        return view('admin.customer.index',compact('customers','allProvinces','districts','wards'));
     }
 
-    public function edit(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $model = Customer::find($request->id);
-        $allProvince = Province::all();
-        $dataAddress = [
-            'allProvince' => $allProvince
-        ];
-        if ($model->province_id > 0) {
-            $dataAddress['province_id'] = $model->province_id;
-            $dataAddress['listDistrict'] = District::where('province_id', $dataAddress['province_id'])->get();
-        }
-        if ($model->district_id > 0) {
-            $dataAddress['district_id'] = $model->district_id;
-            $dataAddress['listWard'] = Ward::where('district_id', $dataAddress['district_id'])->get();
-        }
-        if ($model->ward_id > 0) {
-            $dataAddress['ward_id'] = $model->ward_id;
-        }
-        return view('admin.customer.form')->with(['model' => $model, 'dataAddress' => $dataAddress]);
+        $allProvinces = $this->provinceRepository->all();
+        return view('admin.customer.create',compact('allProvinces'));
     }
 
-    public function remove(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $customerId = $request->id;
-        $model = Customer::find($customerId);
-        $model->delete();
-        return redirect()->route('admin.customer.list');
-    }
-
-    public function save(CustomerRequest $request)
-    {
-        if (!isset($request->id)) {
-            $model = new Customer();
-            $model->code = 'KH' . time();
-        } else {
-            $model = Customer::find($request->id);
+        if($this->customerRepository->store($request)) {
+            return Redirect()->route('customers.index')->with('alert-success','Thêm khách hàng thành công');
         }
-        $model->fill($request->all());
-        $model->address = $request->street . ', ' . $model->ward->name . ', ' . $model->district->name . ', ' . $model->province->name;
-        $model->save();
-        return redirect()->route('admin.customer.list');
+        return Redirect()->route('customers.index')->with('alert-success','Thêm khách hàng thất bại');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $allProvinces = $this->provinceRepository->all();
+        $customer = $this->customerRepository->getCustomerById($id);
+        $districts = $this->districtRepository->getDistrictsByProvince($customer->province_id);
+        $wards = $this->wardRepository->getWardsByDistrict($customer->district_id);
+        return view('admin.customer.edit',compact('customer','allProvinces','districts','wards'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        if($this->customerRepository->update($request,$id)) {
+            return Redirect()->route('customers.index')->with('alert-success','Cập nhật khách hàng thành công');
+        }
+        return Redirect()->route('customers.index')->with('alert-success','Cập nhật khách hàng thất bại');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if($this->customerRepository->destroy($id)) {
+            return Redirect()->route('customers.index')->with('alert-success','Xóa khách hàng thành công');
+        }
+        return Redirect()->route('customers.index')->with('alert-success','Xóa khách hàng thất bại');
+    }
+
+    /**
+     * Check phone exist.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function checkPhoneExist(Request $request)
     {
-        $phone = $request->phone;
-        $customerId = $request->id;
-        if (isset($customerId)) {
-            $count = Customer::where('phone', $phone)->where('id', '<>', $customerId)->count();
-        } else {
-            $count = Customer::where('phone', $phone)->count();
+        if($this->customerRepository->checkExist('phone',$request->phone,$request->id)) {
+            return Response()->json(true);
         }
-        if ($count > 0) {
-            echo json_encode(false);
-        } else {
-            echo json_encode(true);
-        }
+        return Response()->json(false);
 
     }
 
+    /**
+     * Check email exist.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function checkEmailExist(Request $request)
     {
-        $email = $request->email;
-        $customerId = $request->id;
-        if (isset($customerId)) {
-            $count = Customer::where('email', $email)->where('id', '<>', $customerId)->count();
-        } else {
-            $count = Customer::where('email', $email)->count();
+        if($this->customerRepository->checkExist('email',$request->email,$request->id)) {
+            return Response()->json(true);
         }
-        if ($count > 0) {
-            echo json_encode(false);
-        } else {
-            echo json_encode(true);
-        }
-
+        return Response()->json(false);
     }
 }

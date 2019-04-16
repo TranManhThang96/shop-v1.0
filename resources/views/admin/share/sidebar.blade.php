@@ -85,7 +85,7 @@
             </li>
 
             <li>
-                <a href="{{route('admin.customer.list')}}">
+                <a href="{{route('customers.index')}}">
                     <i class="fa fa-th"></i> <span>Khách hàng</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countCustomer']}}</small>

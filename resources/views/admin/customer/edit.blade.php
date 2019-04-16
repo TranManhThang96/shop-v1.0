@@ -1,26 +1,27 @@
 @extends('admin.layout')
 @section('title','Khách Hàng')
 @section('module','Khách hàng')
-@section('method','Thêm mới')
+@section('method','Sửa')
 
 @section('content')
-    <form action="{{route('admin.customer.save')}}" method="post" id="frm">
+    <form action="{{route('customers.update',['id' => $customer->id])}}" method="post" id="frm">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <input type="hidden" name="id" value="{{$model->id}}" id="id">
             @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$customer->id}}" id="id">
             <div class="form-group">
-                <label for="name">Tên KH</label>
+                <label for="name">Tên KH <span class="text-danger"> (*) </span></label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên KH"
-                       value="{{old('name',$model->name)}}">
+                       value="{{old('name', $customer->name)}}">
                 @if($errors->has('name'))
                     <span class="text-danger">{{$errors->first('name')}}</span>
                 @endif
             </div>
 
             <div class="form-group">
-                <label for="phone">SĐT</label>
+                <label for="phone">SĐT <span class="text-danger"> (*) </span></label>
                 <input type="text" class="form-control" id="phone" name="phone" placeholder="Nhập SĐT"
-                       value="{{old('phone',$model->phone)}}">
+                       value="{{old('phone', $customer->phone)}}">
                 @if($errors->has('phone'))
                     <span class="text-danger">{{$errors->first('phone')}}</span>
                 @endif
@@ -29,7 +30,7 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                       value="{{old('email',$model->email)}}">
+                       value="{{old('email', $customer->email)}}">
                 @if($errors->has('email'))
                     <span class="text-danger">{{$errors->first('email')}}</span>
                 @endif
@@ -38,7 +39,7 @@
             <div class="form-group">
                 <label for="age">Tuổi</label>
                 <input type="text" class="form-control" id="age" name="age" placeholder="Nhập tuổi"
-                       value="{{old('age',$model->age)}}">
+                       value="{{old('age',$customer->age)}}">
                 @if($errors->has('age'))
                     <span class="text-danger">{{$errors->first('age')}}</span>
                 @endif
@@ -46,19 +47,19 @@
 
             <div class="form-group">
                 <label for="sex">Giới tính</label>
-                <input type="radio" name="sex" value="1" checked>Nam
-                <input type="radio" name="sex" value="2">Nữ
+                <input type="radio" name="sex" value="1" checked {{$customer->sex == 1 ? 'checked' : ''}}>Nam
+                <input type="radio" name="sex" value="2" {{$customer->sex == 2 ? 'checked' : ''}}>Nữ
             </div>
 
         </div>
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="form-group">
-                <label for="province">Tỉnh/Thành Phố</label>
+                <label for="province">Tỉnh/Thành Phố <span class="text-danger"> (*) </span></label>
                 <select name="province_id" id="province" class="form-control">
                     <option value="0">-Chọn tỉnh/thành phố-</option>
-                    @foreach($dataAddress['allProvince'] as $province)
-                        <option value="{{$province->id}}" {{(isset($dataAddress['province_id']) && $province->id == $dataAddress['province_id']) ? 'selected':''}}>{{$province->name}}</option>
+                    @foreach($allProvinces as $province)
+                        <option value="{{$province->id}}" {{$province->id == $customer->province_id ? 'selected':''}}>{{$province->name}}</option>
                     @endforeach
                 </select>
                 @if($errors->has('province_id'))
@@ -67,12 +68,12 @@
             </div>
 
             <div class="form-group">
-                <label for="district">Quận/Huyện</label>
+                <label for="district">Quận/Huyện <span class="text-danger"> (*) </span></label>
                 <select name="district_id" id="district" class="form-control">
                     <option value="0">-Chọn quận/huyện-</option>
-                    @isset($dataAddress['listDistrict'])
-                        @foreach($dataAddress['listDistrict'] as $district)
-                            <option value="{{$district->id}}" {{$district->id == $dataAddress['district_id'] ? 'selected':''}}>{{$district->name}}</option>
+                    @isset($districts)
+                        @foreach($districts as $district)
+                            <option value="{{$district->id}}" {{$district->id == $customer->district_id ? 'selected':''}}>{{$district->name}}</option>
                         @endforeach
                     @endisset
                 </select>
@@ -82,12 +83,12 @@
             </div>
 
             <div class="form-group">
-                <label for="ward">Xã/Phường</label>
+                <label for="ward">Xã/Phường <span class="text-danger"> (*) </span></label>
                 <select name="ward_id" id="ward" class="form-control">
                     <option value="0">-Chọn xã/phường-</option>
-                    @isset($dataAddress['listWard'])
-                        @foreach($dataAddress['listWard'] as $ward)
-                            <option value="{{$ward->id}}" {{$ward->id == $dataAddress['ward_id'] ? 'selected':''}}>{{$ward->name}}</option>
+                    @isset($wards)
+                        @foreach($wards as $ward)
+                            <option value="{{$ward->id}}" {{$ward->id == $customer->ward_id ? 'selected':''}}>{{$ward->name}}</option>
                         @endforeach
                     @endisset
                 </select>
@@ -96,9 +97,9 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="street">Số nhà/thôn xóm</label>
+                <label for="street">Số nhà/thôn xóm <span class="text-danger"> (*) </span></label>
                 <input type="text" class="form-control" id="street" name="street" placeholder="Nhập số nhà/thôn xóm"
-                       value="{{$model->street}}">
+                       value="{{old('street')}}">
                 @if($errors->has('street'))
                     <span class="text-danger">{{$errors->first('street')}}</span>
                 @endif
@@ -106,7 +107,7 @@
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-            <a class="btn btn-primary" title="Danh sách" href="{{route('admin.customer.list')}}"><i
+            <a class="btn btn-primary" title="Danh sách" href="{{route('customers.index')}}"><i
                         class="glyphicon glyphicon-share-alt"></i></a>
             <button type="submit" class="btn btn-success">Lưu lại</button>
         </div>
@@ -126,7 +127,7 @@
                         required: true,
                         digits: true,
                         remote: {
-                            url: "{{route('admin.customer.checkPhoneExist')}}",
+                            url: "{{route('customers.checkPhoneExist')}}",
                             type: "post",
                             data: {
                                 phone: function () {
@@ -144,7 +145,7 @@
                     email: {
                         email: true,
                         remote: {
-                            url: "{{route('admin.customer.checkEmailExist')}}",
+                            url: "{{route('customers.checkEmailExist')}}",
                             type: "post",
                             data: {
                                 email: function () {

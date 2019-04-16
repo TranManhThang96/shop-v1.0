@@ -19,16 +19,6 @@ Route::group(['prefix'=>'product'],function (){
     Route::post('store','ProductController@store')->name('admin.product.store');
 });
 
-Route::group(['prefix'=>'customer'],function (){
-    Route::any('list','CustomerController@list')->name('admin.customer.list');
-    Route::get('add','CustomerController@add')->name('admin.customer.add');
-    Route::get('edit/{id}','CustomerController@edit')->name('admin.customer.edit');
-    Route::post('save','CustomerController@save')->name('admin.customer.save');
-    Route::get('remove/{id}','CustomerController@remove')->name('admin.customer.remove');
-    Route::post('check-phone-exist','CustomerController@checkPhoneExist')->name('admin.customer.checkPhoneExist');
-    Route::post('check-email-exist','CustomerController@checkEmailExist')->name('admin.customer.checkEmailExist');
-});
-
 Route::group(['prefix' => 'district'],function (){
    Route::get('get-list-district-by-province','DistrictController@getListDistrictByProvince')->name('admin.district.getListDistrictByProvince');
 });
@@ -55,11 +45,14 @@ Route::post('/suppliers/checkExist','SupplierController@checkExist')->name('supp
 Route::post('/brands/checkExist','BrandController@checkExist')->name('brands.checkExist');
 Route::post('/categories/changeStatus','CategoryController@changeStatus')->name('categories.changeStatus');
 Route::post('/categories/checkExist','CategoryController@checkExist')->name('categories.checkExist');
+Route::post('/customers/check-phone-exist','CustomerController@checkPhoneExist')->name('customers.checkPhoneExist');
+Route::post('/customers/check-email-exist','CustomerController@checkEmailExist')->name('customers.checkEmailExist');
 
 Route::resources([
     'brands' => 'BrandController',
     'posts' => 'PostController',
     'suppliers' => 'SupplierController',
     'categories' => 'CategoryController',
-    'discounts' => 'DiscountController'
+    'discounts' => 'DiscountController',
+    'customers' => 'CustomerController'
 ]);

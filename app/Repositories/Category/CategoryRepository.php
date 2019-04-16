@@ -101,6 +101,7 @@ class CategoryRepository extends RepositoryAbstract implements CategoryRepositor
     {
         $this->model->fill($request->all());
         $this->model->slug = Str::slug($request->name);
+        $this->model->active = 1;
         return $this->model->save();
     }
 
