@@ -94,6 +94,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Ward\WardRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\ProductItem\ProductItemRepositoryInterface::class,
+            \App\Repositories\ProductItem\ProductItemRepository::class
+        );
+
     }
 
 }

@@ -66,7 +66,7 @@
                     <div class="show-tooltip">
                         <p>Giảm
                             giá: {{number_format($product->discount->discount)}} {{$product->discount->type == 1 ? '$' : '%'}}</p>
-                        <p>Áp dụng cho: {{$product->discount->type_by == 1 ? 'ĐH' : 'SP'}}</p>
+                        <p>Áp dụng cho: {{$product->discount->type_by == 1 ? 'SP' : 'ĐH'}}</p>
                         <p>Thời gian: {{formatDate("d/m",$product->discount->start,"Y-m-d H:i:s")}}
                             - {{formatDate("d/m",$product->discount->end,"Y-m-d H:i:s")}}</p>
                     </div>
@@ -89,15 +89,15 @@
                         <div class="panel-heading">Chi Tiết</div>
                         <div class="panel-body">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <p>Mã KH: {{$product->code}}</p>
-                                <p>Tên KH: {{$product->name}}</p>
-                                <p>SĐT: {{$product->phone}}</p>
-                                <p>Giới tính: {{$product->sex == 1 ? 'Nam' : 'Nữ' }}</p>
+                                <p>Tên SP: {{$product->name}}</p>
+                                <p>SKU: {{$product->sku}}</p>
+                                <p>Barcode: {{$product->barcode}}</p>
+                                <p>Danh mục: {{$product->category->name }}</p>
                             </div>
 
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <p>Email: {{$product->email}}</p>
-                                <p>Địa chỉ: {{$product->address}}</p>
+                                <p>Giá Nhập: {{$product->iprice}}</p>
+                                <p>Giá bán: {{$product->price}}</p>
                                 <p>Tạo bởi: {{$product->name}}</p>
                             </div>
                         </div>

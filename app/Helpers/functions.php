@@ -95,3 +95,9 @@ function substringIfLength($str, $len = 100) {
     }
     return $str;
 }
+
+function getAmount($money)
+{
+    $cleanString = str_replace('.','',$money);
+    return (int)$cleanString;
+}

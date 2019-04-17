@@ -37,7 +37,7 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
      */
     public function getProductByRequest($request)
     {
-        $products = $this->model->orderBy('id', 'desc');
+        $products = $this->model->orderBy('id', 'desc')->with('category');
 
         if (!empty($request['search'])) {
             $products->where('name', 'LIKE', '%' . $request['search'] . '%')
@@ -62,5 +62,12 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
     public function store($request)
     {
         $this->model->fill($request->all());
+        $this->model->sku = 'SP'.time();
+        $this->model->price = getAmount($this->model->price);
+        $this->model->iprice =getAmount($this->model->iprice);
+        if ($this->model->save()) {
+            return $this->model;
+        }
+        return null;
     }
 }

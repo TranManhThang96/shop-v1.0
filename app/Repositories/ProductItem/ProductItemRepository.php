@@ -62,4 +62,16 @@ class ProductItemRepository extends RepositoryAbstract implements ProductItemRep
             return false;
         }
     }
+
+    public function addItem($items, $productId, $productCode)
+    {
+        foreach ($items as $key => $item) {
+            $items[$key]['product_id'] = $productId;
+            $items[$key]['sku_item'] = $productCode .'-' .$key;
+            $items[$key]['price'] = getAmount($items[$key]['price']);
+            $items[$key]['iprice'] = getAmount($items[$key]['iprice']);
+        }
+        return $this->model->insert($items);
+
+    }
 }

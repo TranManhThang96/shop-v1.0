@@ -40,4 +40,6 @@ class ProvinceRepository extends RepositoryAbstract implements ProvinceRepositor
         $provinces = $this->model->all();
         return $provinces;
     }
+
+
 }

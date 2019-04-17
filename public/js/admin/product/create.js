@@ -1,31 +1,74 @@
 var form = $('#frm');
 form.validate();
 
-function validateInput() {
-    var check = 1;
-    $.getScript('../../js/admin/product/validation.js', function () {
-        for (key in validation) {
-            $('[name="' + key + '"]').rules('add', validation[key]);
+var validation = {
+    name: {
+        required: true,
+        messages: {
+            required: 'bắt buộc phải điền tên sản phẩm'
         }
-        $('#product-item').find('tr').each(function () {
-            let id = $(this).data('id');
-            $("[name='items[" + id + "][iprice]']").rules("add", validation['items[idx][iprice]']);
-            $("[name='items[" + id + "][price]']").rules("add", validation['items[idx][price]']);
-            $("[name='items[" + id + "][quantity]']").rules("add", validation['items[idx][quantity]']);
-        });
-    }).done(function () {
-        if (form.valid())
-            check =  true;
-        else
-            check = false;
-        check = 2;
-        console.log(check);
-    },check);
-    return check;
+    },
+    price: {
+        required: true,
+        messages: {
+            required: 'bắt buộc phải điền giá niêm yết'
+        }
+    },
+    iprice: {
+        required: true,
+        messages: {
+            required: 'bắt buộc phải điền giá nhập để tính lợi nhuận'
+        }
+    },
+
+    cat_id: {
+        min: 1,
+        messages: {
+            min: 'Vui lòng chọn danh mục'
+        }
+    },
+
+    "items[idx][iprice]": {
+        required: true,
+        messages: {
+            required: 'Vui lòng nhập giá nhập để tính lợi nhuận'
+        }
+    },
+
+    "items[idx][price]": {
+        required: true,
+        messages: {
+            required: 'Vui lòng nhập giá nhập để tính lợi nhuận'
+        }
+    },
+
+    "items[idx][quantity]": {
+        min: 1,
+        messages: {
+            min: 'Giá trị nhỏ nhất bằng 1'
+        }
+    },
+
+
+};
+
+function validateInput() {
+    for (key in validation) {
+        $('[name="' + key + '"]').rules('add', validation[key]);
+    }
+    $('#product-item').find('tr').each(function () {
+        let id = $(this).data('id');
+        $("[name='items[" + id + "][iprice]']").rules("add", validation['items[idx][iprice]']);
+        $("[name='items[" + id + "][price]']").rules("add", validation['items[idx][price]']);
+        $("[name='items[" + id + "][quantity]']").rules("add", validation['items[idx][quantity]']);
+    });
 }
 
 $("#submit-template").click(function () {
-    console.log(validateInput());
+   validateInput();
+   if(form.valid()) {
+       return true;
+   }
     return false;
 })
 

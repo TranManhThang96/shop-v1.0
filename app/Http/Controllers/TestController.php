@@ -25,10 +25,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $test = Product::find(1);
-        foreach ($test->categories as $cate) {
-            echo $cate->pivot;
-        }
+        dd(getAmount("160.000"));
     }
 
     /**

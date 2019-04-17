@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <label for="category">Danh mục <span class="text-danger" title="Trường bắt buộc"> (*) </span></label>
-                <select class="form-control" name="category" id="category">
+                <select class="form-control" name="cat_id" id="category">
                     <option value="0">--VUI LÒNG CHỌN DANH MỤC--</option>
                     @if ($categories->count() > 0)
                         {!! showCategories($categories,0,'',0) !!}}
@@ -31,7 +31,7 @@
 
             <div class="form-group">
                 <label for="brand">Thương Hiệu</label>
-                <select class="form-control" id="brand" name="brand">
+                <select class="form-control" id="brand" name="brand_id">
                     <option value="0">--VUI LÒNG CHỌN THƯƠNG HIỆU--</option>
                     @if ($brands->count() > 0)
                         @foreach ($brands as $brand)
@@ -64,6 +64,7 @@
             <div class="form-group">
                 <label for="discount">Chương Trình khuyến mại</label>
                 <select class="form-control" id="discount" name="discount_id">
+                    <option value="0">--CHỌN KM--</option>
                     @if ($discounts->count() > 0)
                         @foreach ($discounts as $discount)
                             <option value="{{$discount->id}}">
@@ -123,7 +124,17 @@
                             <td>1</td>
                             <td><input type="text" class="form-control item-price" name="items[1][iprice]"/></td>
                             <td><input type="text" class="form-control item-iprice" name="items[1][price]"/></td>
-                            <td><input type="text" class="form-control item-discount_id" name="items[1][discount_id]"/>
+                            <td>
+                                <select class="form-control discount" name="items[1][discount_id]">
+                                    <option value="0">--CHỌN KM--</option>
+                                    @if ($discounts->count() > 0)
+                                        @foreach ($discounts as $discount)
+                                            <option value="{{$discount->id}}">
+                                                {{$discount->name}} ({{number_format($discount->discount,0,',','.')}}{{($discount->type == 1) ? '$' : '%'}})
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </td>
                             <td><input type="text" class="form-control item-length" name="items[1][length]"/></td>
                             <td><input type="text" class="form-control item-width" name="items[1][width]"/></td>
@@ -167,7 +178,18 @@
                 <td>idx</td>
                 <td><input type="text" class="form-control item-price" name="items[idx][iprice]"/></td>
                 <td><input type="text" class="form-control item-iprice" name="items[idx][price]"/></td>
-                <td><input type="text" class="form-control item-discount_id" name="items[idx][discount_id]"/></td>
+                <td>
+                    <select class="form-control discount" name="items[idx][discount_id]">
+                        <option value="0">--CHỌN KM--</option>
+                        @if ($discounts->count() > 0)
+                            @foreach ($discounts as $discount)
+                                <option value="{{$discount->id}}">
+                                    {{$discount->name}} ({{number_format($discount->discount,0,',','.')}}{{($discount->type == 1) ? '$' : '%'}})
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                </td>
                 <td><input type="text" class="form-control item-length" name="items[idx][length]"/></td>
                 <td><input type="text" class="form-control item-width" name="items[idx][width]"/></td>
                 <td><input type="text" class="form-control item-height" name="items[idx][height]"/></td>
@@ -241,7 +263,7 @@
         //xoa product item
         $(document).on('click', '.remove-item', function () {
             var lenTr = $('#product-item tr').length;
-            if (lenTr > 2) {
+            if (lenTr > 1) {
                 //nêu xoa phan tu cuoi cung thì them nut them vao phan tu ngay truoc do xong ms xoa
                 let lastId = $('#product-item').find('tr').last().data('id');
                 let parentTr = $(this).parent().parent();
@@ -259,15 +281,21 @@
 
         $('#price').on('keyup', function (event) {
             _formatNumber(event);
-            $("[name='item[idx][price]']").attr('value', $(this).val());
-            $("[name='item[1][price]']").val($(this).val());
+            $("[name='items[idx][price]']").attr('value', $(this).val());
+            $("[name='items[1][price]']").val($(this).val());
 
         })
 
         $('#iprice').on('keyup', function (event) {
             _formatNumber(event);
-            $("[name='item[idx][iprice]']").attr('value', $(this).val());
-            $("[name='item[1][iprice]']").val($(this).val());
+            $("[name='items[idx][iprice]']").attr('value', $(this).val());
+            $("[name='items[1][iprice]']").val($(this).val());
+        })
+
+        $(document).on('change','#discount',function () {
+            let val = $(this).val();
+            console.log(val);
+            $('.discount option[value='+val+']').attr('selected','selected');
         })
 
         //giam so luong
