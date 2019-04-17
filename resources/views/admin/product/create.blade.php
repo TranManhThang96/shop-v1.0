@@ -121,20 +121,20 @@
 
                         <tr data-id="1">
                             <td>1</td>
-                            <td><input type="text" class="form-control item-price" name="item[1][iprice]"/></td>
-                            <td><input type="text" class="form-control item-iprice" name="item[1][price]"/></td>
-                            <td><input type="text" class="form-control item-discount_id" name="item[1][discount_id]"/>
+                            <td><input type="text" class="form-control item-price" name="items[1][iprice]"/></td>
+                            <td><input type="text" class="form-control item-iprice" name="items[1][price]"/></td>
+                            <td><input type="text" class="form-control item-discount_id" name="items[1][discount_id]"/>
                             </td>
-                            <td><input type="text" class="form-control item-length" name="item[1][length]"/></td>
-                            <td><input type="text" class="form-control item-width" name="item[1][width]"/></td>
-                            <td><input type="text" class="form-control item-height" name="item[1][height]"/></td>
-                            <td><input type="text" class="form-control item-weight" name="item[1][weight]"/></td>
-                            <td><input type="text" class="form-control item-color" name="item[1][color]"/></td>
-                            <td><input type="text" class="form-control item-size" name="item[1][size]"/></td>
+                            <td><input type="text" class="form-control item-length" name="items[1][length]"/></td>
+                            <td><input type="text" class="form-control item-width" name="items[1][width]"/></td>
+                            <td><input type="text" class="form-control item-height" name="items[1][height]"/></td>
+                            <td><input type="text" class="form-control item-weight" name="items[1][weight]"/></td>
+                            <td><input type="text" class="form-control item-color" name="items[1][color]"/></td>
+                            <td><input type="text" class="form-control item-size" name="items[1][size]"/></td>
                             <td>
                                 <div class="input-group">
                                     <div class="input-group-addon sub-quantity"> -</div>
-                                    <input type="text" class="form-control item-quantity" name="item_quantity"
+                                    <input type="text" class="form-control item-quantity" name="items[1][quantity]"
                                            value="0"/>
                                     <div class="input-group-addon plus-quantity"> +</div>
                                 </div>
@@ -157,7 +157,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
             <a class="btn btn-primary" title="Danh sách" href="{{route('products.index')}}"><i
                         class="glyphicon glyphicon-share-alt"></i></a>
-            <button type="submit" class="btn btn-success">Lưu lại</button>
+            <button type="submit" class="btn btn-success" id="submit-template">Lưu lại</button>
         </div>
     </form>
 
@@ -165,19 +165,19 @@
         <table>
             <tr data-id="idx" id="tr-hidden">
                 <td>idx</td>
-                <td><input type="text" class="form-control item-price" name="item[idx][iprice]"/></td>
-                <td><input type="text" class="form-control item-iprice" name="item[idx][price]"/></td>
-                <td><input type="text" class="form-control item-discount_id" name="item[idx][discount_id]"/></td>
-                <td><input type="text" class="form-control item-length" name="item[idx][length]"/></td>
-                <td><input type="text" class="form-control item-width" name="item[idx][width]"/></td>
-                <td><input type="text" class="form-control item-height" name="item[idx][height]"/></td>
-                <td><input type="text" class="form-control item-weight" name="item[idx][weight]"/></td>
-                <td><input type="text" class="form-control item-color" name="item[idx][color]"/></td>
-                <td><input type="text" class="form-control item-size" name="item[idx][size]"/></td>
+                <td><input type="text" class="form-control item-price" name="items[idx][iprice]"/></td>
+                <td><input type="text" class="form-control item-iprice" name="items[idx][price]"/></td>
+                <td><input type="text" class="form-control item-discount_id" name="items[idx][discount_id]"/></td>
+                <td><input type="text" class="form-control item-length" name="items[idx][length]"/></td>
+                <td><input type="text" class="form-control item-width" name="items[idx][width]"/></td>
+                <td><input type="text" class="form-control item-height" name="items[idx][height]"/></td>
+                <td><input type="text" class="form-control item-weight" name="items[idx][weight]"/></td>
+                <td><input type="text" class="form-control item-color" name="items[idx][color]"/></td>
+                <td><input type="text" class="form-control item-size" name="items[idx][size]"/></td>
                 <td>
                     <div class="input-group">
                         <div class="input-group-addon sub-quantity"> -</div>
-                        <input type="text" class="form-control item-quantity" name="item_quantity" value="0"/>
+                        <input type="text" class="form-control item-quantity" name="items[idx][quantity]" value="0"/>
                         <div class="input-group-addon plus-quantity"> +</div>
                     </div>
                 </td>
