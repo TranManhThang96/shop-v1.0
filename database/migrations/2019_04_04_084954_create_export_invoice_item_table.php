@@ -23,8 +23,7 @@ class CreateExportInvoiceItemTable extends Migration
             $table->integer('quantity')->comment('so luong');
             $table->string('image')->comment('hinh anh san pham');
             $table->softDeletes();
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamps();
         });
     }
 

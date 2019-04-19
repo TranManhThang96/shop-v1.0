@@ -31,8 +31,7 @@ class CreateCustomersTable extends Migration
             $table->integer('created_by')->nullable()->comment('tao boi ai');
             $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
             $table->softDeletes();
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamps();
         });
     }
 
