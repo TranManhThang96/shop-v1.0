@@ -25,7 +25,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        dd(getAmount("160.000"));
+        echo 'Test Controller';
     }
 
     /**
