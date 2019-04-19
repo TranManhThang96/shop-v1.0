@@ -20,20 +20,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-//        if(!app()->runningInConsole() ){
+//        if (!app()->runningInConsole()) {
 //            $shareData = [
-//                'countCate' => \App\Models\Category::count() ?? 0,
 //                'countPro' => \App\Models\Product::count() ?? 0,
+//                'countCate' => \App\Models\Category::count() ?? 0,
 //                'countCustomer' => \App\Models\Customer::count() ?? 0,
 //                'countDiscount' => \App\Models\Discount::count() ?? 0,
 //                'countBrand' => \App\Models\Brand::count() ?? 0,
 //                'countSupplier' => \App\Models\Supplier::count() ?? 0
 //            ];
-//            View::share('shareData',$shareData);
+//            View::share('shareData', $shareData);
 //        }
 
-        DB::listen(function ($query){
-            Log::info('thực thi câu lệnh '.$query->sql. ' mất '.$query->time);
+        DB::listen(function ($query) {
+            Log::info('thực thi câu lệnh ' . $query->sql . ' mất ' . $query->time);
         });
     }
 
