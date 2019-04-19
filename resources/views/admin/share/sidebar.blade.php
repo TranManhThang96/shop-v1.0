@@ -38,96 +38,96 @@
                 </ul>
             </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('categories.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Danh Mục</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countCate']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('categories.index')}}">
+                    <i class="fa fa-th"></i> <span>Danh Mục</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countCate']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('products.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Sản phẩm</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countPro']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('products.index')}}">
+                    <i class="fa fa-th"></i> <span>Sản phẩm</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countPro']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('brands.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Đơn hàng</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('brands.index')}}">
+                    <i class="fa fa-th"></i> <span>Đơn hàng</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('brands.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Hóa đơn nhập</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('brands.index')}}">
+                    <i class="fa fa-th"></i> <span>Hóa đơn nhập</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>
+            </span>
+                </a>
+            </li>
 
 
-            {{--<li>--}}
-                {{--<a href="{{route('brands.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Hóa đơn xuất</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('brands.index')}}">
+                    <i class="fa fa-th"></i> <span>Hóa đơn xuất</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('customers.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Khách hàng</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countCustomer']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('customers.index')}}">
+                    <i class="fa fa-th"></i> <span>Khách hàng</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countCustomer']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('discounts.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Khuyến mại</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countDiscount']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('discounts.index')}}">
+                    <i class="fa fa-th"></i> <span>Khuyến mại</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countDiscount']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('brands.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Thương hiệu</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('brands.index')}}">
+                    <i class="fa fa-th"></i> <span>Thương hiệu</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('suppliers.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Nhà cung cấp</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countSupplier']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('suppliers.index')}}">
+                    <i class="fa fa-th"></i> <span>Nhà cung cấp</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countSupplier']}}</small>
+            </span>
+                </a>
+            </li>
 
-            {{--<li>--}}
-                {{--<a href="{{route('posts.index')}}">--}}
-                    {{--<i class="fa fa-th"></i> <span>Bài viết</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">{{$shareData['countDiscount']}}</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li>
+                <a href="{{route('posts.index')}}">
+                    <i class="fa fa-th"></i> <span>Bài viết</span>
+                    <span class="pull-right-container">
+              <small class="label pull-right bg-green">{{$shareData['countDiscount']}}</small>
+            </span>
+                </a>
+            </li>
 
 
             <li class="header">LABELS</li>
