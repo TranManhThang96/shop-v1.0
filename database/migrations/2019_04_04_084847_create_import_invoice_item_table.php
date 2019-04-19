@@ -23,8 +23,8 @@ class CreateImportInvoiceItemTable extends Migration
             $table->integer('quantity')->comment('so luong');
             $table->string('image')->comment('hinh anh san pham');
             $table->softDeletes();
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 

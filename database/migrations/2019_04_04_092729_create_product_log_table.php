@@ -21,7 +21,7 @@ class CreateProductLogTable extends Migration
             $table->integer('old_quantity')->default(0)->comment('so luong ban dau');
             $table->integer('new_quantity')->comment('so luong sau khi tac dong');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at');
         });
     }
 

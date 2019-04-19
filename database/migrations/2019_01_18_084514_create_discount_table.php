@@ -25,8 +25,8 @@ class CreateDiscountTable extends Migration
             $table->softDeletes();
             $table->timestamp('start')->nullable()->comment('thoi gian bat dau');
             $table->timestamp('end')->nullable()->comment('thoi gian ket thuc');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 

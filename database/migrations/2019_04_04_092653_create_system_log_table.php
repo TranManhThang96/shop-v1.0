@@ -19,7 +19,7 @@ class CreateSystemLogTable extends Migration
             $table->string('action')->nullable()->comment('hanh dong');
             $table->text('content')->comment('chi tiet log');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at');
 
         });
     }

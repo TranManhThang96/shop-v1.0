@@ -21,8 +21,8 @@ class CreateCommentTable extends Migration
             $table->integer('relationship_id')->comment('id khoa ngoai san pham hoac bai viet');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
             $table->softDeletes();
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 
