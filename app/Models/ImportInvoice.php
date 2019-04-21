@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class ImportInvoice extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'import_invoice';
+
     protected $fillable = [
         'code',
         'supplier_id',

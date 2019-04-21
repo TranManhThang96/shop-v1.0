@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     const PER_PAGE = 10;
 
     const ACTIVE = 1;
@@ -17,18 +20,22 @@ class Product extends Model
     protected $fillable = [
         'cat_id',
         'name',
+        'slug',
         'sku',
         'price',
         'iprice',
         'barcode',
         'discount_id',
-        'img_link',
         'img_list',
         'brand',
         'short_description',
         'description',
         'status',
         'created_by'
+    ];
+
+    protected $casts = [
+        'img_list' => 'array',
     ];
 
     protected $timestamp = true;
@@ -67,5 +74,10 @@ class Product extends Model
     public function image()
     {
         return $this->morphMany(\App\Models\Image::class,'imageable');
+    }
+
+    public function getImgListAttribute($value)
+    {
+        return (!empty($value)) ? json_decode($value) : [];
     }
 }

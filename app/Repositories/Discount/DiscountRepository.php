@@ -142,7 +142,7 @@ class DiscountRepository extends RepositoryAbstract implements DiscountRepositor
        if ($type_by != 0) {
            $discounts = $discounts->where('type_by',$type_by);
        }
-       if (!empty($id)) {
+       if (!empty($discountId)) {
            $discounts = $discounts->orWhere('id',$discountId);
        }
        return $discounts->get();

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Http\Requests\ProductRequest;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Brand\BrandRepositoryInterface;
@@ -46,7 +47,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = $this->productRepository->getProductByRequest($request->all());
-        return view('admin.product.index', compact('products'));
+        $discounts = $this->discountRepository->getDiscountsAvailable(Discount::TYPE_BY_PRODUCT);
+        return view('admin.product.index', compact('products','discounts'));
     }
 
     /**
@@ -68,7 +70,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -110,7 +112,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = $this->categoryRepository->getAllCategories();
+        $brands = $this->brandRepository->getAllBrands();
+        $discounts = $this->discountRepository->getDiscountsAvailable(Discount::TYPE_BY_PRODUCT,$id);
+        $product = $this->productRepository->getProductById($id);
+        return view('admin.product.edit', compact('product','categories', 'brands', 'discounts'));
     }
 
     /**
@@ -120,9 +126,27 @@ class ProductController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $product = $this->productRepository->update($request,$id);
+            if (!empty($product)) {
+                if ($this->productItemRepository->updateItem($request->items,$product->id, $product->sku)) {
+                    DB::commit();
+                    return redirect()->route('products.index')->with('alert-success','Cập nhật sản phẩm thành công');
+                } else {
+                    return redirect()->route('products.index')->with('alert-danger','Cập nhật sản phẩm thất bại');
+                }
+
+            } else {
+                throw new \Exception('Không thể cập nhật');
+            }
+
+        } catch (Exception $e) {
+            return redirect()->route('products.index')->with('alert-danger',$e->getMessage());
+            DB::rollback();
+        }
     }
 
     /**
@@ -133,6 +157,25 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($this->productRepository->destroy($id)) {
+            return redirect()->route('products.index')->with('alert-success','Xóa sản phẩm thành công');
+        } else {
+            return redirect()->route('products.index')->with('alert-danger','Xóa sản phẩm thất bại');
+        }
+    }
+
+    /**
+     * Check post exist.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkExist(Request $request)
+    {
+        if ($this->productRepository->checkExist($request->name, $request->productId)) {
+            return Response()->json(true);
+        } else {
+            return Response()->json(false);
+        }
     }
 }

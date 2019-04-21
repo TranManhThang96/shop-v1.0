@@ -23,6 +23,7 @@ class CreateOrderDetailTable extends Migration
             $table->string('product_img')->nullable()->comment('anh san pham');
             $table->double('product_price',10,2)->nullable()->comment('gia niem yet');
             $table->double('product_iprice',10,2)->nullable()->comment('gia nhap');
+            $table->softDeletes();
         });
     }
 

@@ -4,8 +4,24 @@ form.validate();
 var validation = {
     name: {
         required: true,
+        remote: {
+            url: "/products/checkExist",
+            type: "post",
+            data: {
+                name: function () {
+                    return $('#name').val()
+                },
+                productId: function () {
+                    return $('#id').val()
+                },
+                _token: function () {
+                    return "{{csrf_token()}}"
+                }
+            }
+        },
         messages: {
-            required: 'bắt buộc phải điền tên sản phẩm'
+            required: 'bắt buộc phải điền tên sản phẩm',
+            remote: 'Sản phẩm đã tồn tại'
         }
     },
     price: {
@@ -65,10 +81,10 @@ function validateInput() {
 }
 
 $("#submit-template").click(function () {
-   validateInput();
-   if(form.valid()) {
-       return true;
-   }
+    validateInput();
+    if (form.valid()) {
+        return true;
+    }
     return false;
 })
 

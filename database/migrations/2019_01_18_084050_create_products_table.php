@@ -17,9 +17,9 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('cat_id')->nullable()->comment('id category');
             $table->string('name','255')->comment('ten san pham');
+            $table->string('slug')->nullable()->comment('ten chuan seo');
             $table->string('sku',32)->comment('sku tu sinh cua san pham');
             $table->string('barcode',32)->nullable()->comment('barcode san pham');
-            $table->string('alias')->nullable()->comment('ten chuan seo');
             $table->double('price',10,2)->nullable()->comment('gia niem yet');
             $table->double('iprice',10,2)->nullable()->comment('gia nhap');
             $table->integer('discount_id')->nullable()->comment('giam gia theo bang discount');

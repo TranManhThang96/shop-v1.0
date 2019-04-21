@@ -10,7 +10,7 @@ $factory->define(App\Models\Product::class, function (Faker $faker) {
         'name' => $faker->name,
         'sku' => Str::random(8),
         'barcode' => Str::random(8),
-        'alias' => Str::slug($faker->name),
+        'slug' => Str::slug($faker->name),
         'discount_id' => Arr::random([1,2,3]),
         'img_link' => Str::random(40),
         'img_list' => Str::random(40),

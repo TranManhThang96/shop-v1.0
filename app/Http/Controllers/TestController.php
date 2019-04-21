@@ -25,7 +25,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        echo 'Test Controller';
+       $img_list = Product::find(10)->img_list;
+       dd(count($img_list));
     }
 
     /**
