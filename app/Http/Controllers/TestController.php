@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Cache\FileStore;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use App\Models\ProductCategory;
 use App\Models\Product;
+use App\Http\Resources\Category as CateogyResource;
 
 class TestController extends Controller
 {
@@ -27,8 +29,12 @@ class TestController extends Controller
      */
     public function index()
     {
-       $img_list = Product::find(10)->img_list;
-       dd(count($img_list));
+//        CateogyResource::withoutWrapping();
+//        return new CateogyResource(Category::find(2));
+//        $product = Product::find(151);
+//        dd((string)$product);
+        $customer = Customer::all();
+        dd($customer->toArray());
     }
 
     /**

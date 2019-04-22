@@ -20,7 +20,7 @@ define('LARAVEL_START', microtime(true));
 | loading any of our classes later on. It feels great to relax.
 |
 */
-
+//khởi tạo auto loader để load các package được install từ composer
 require __DIR__.'/../vendor/autoload.php';
 
 /*
@@ -34,7 +34,7 @@ require __DIR__.'/../vendor/autoload.php';
 | the responses back to the browser and delight our users.
 |
 */
-
+//tạo ứng dụng app
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 /*

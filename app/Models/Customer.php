@@ -28,6 +28,12 @@ class Customer extends Model
         'created_by'
     ];
 
+    protected $appends = ['age_add'];
+
+    //protected $hidden = ['password','name'];
+
+    //protected $visible = ['password','name'];
+
     protected $timestamp = true;
 
     public function order()
@@ -54,4 +60,11 @@ class Customer extends Model
     {
         return $this->morphOne('App\Models\Image','imageable');
     }
+
+    public function getAgeAddAttribute()
+    {
+        return $this->attributes['age'] > 50;
+    }
+
+
 }

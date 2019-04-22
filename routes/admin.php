@@ -40,7 +40,7 @@ Route::post('/categories/changeStatus','CategoryController@changeStatus')->name(
 Route::post('/categories/checkExist','CategoryController@checkExist')->name('categories.checkExist');
 Route::post('/customers/check-phone-exist','CustomerController@checkPhoneExist')->name('customers.checkPhoneExist');
 Route::post('/customers/check-email-exist','CustomerController@checkEmailExist')->name('customers.checkEmailExist');
-Route::post('/products/checkExist','ProductController@checkEmailExist')->name('products.checkExist');
+Route::post('/products/checkExist','ProductController@checkExist')->name('products.checkExist');
 
 Route::resources([
     'brands' => 'BrandController',

@@ -258,7 +258,7 @@
 <script src="{{asset('js/admin/admin.js')}}"></script>
 @yield('script')
 <script>
-    $('.flash-message').show().delay(2000).fadeOut();
+    $('.flash-message').show().delay(5000).fadeOut();
 </script>
 </body>
 </html>

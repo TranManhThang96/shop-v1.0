@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Http\Requests\ProductRequest;
+use App\Http\Resources\Product as ProductResource;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Brand\BrandRepositoryInterface;
@@ -101,7 +102,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        ProductResource::withoutWrapping();
+        return ProductResource::collection($this->productRepository->getAll());
     }
 
     /**

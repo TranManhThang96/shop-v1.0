@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Resources\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Customer\CustomerRepositoryInterface;
@@ -9,6 +10,7 @@ use App\Repositories\Province\ProvinceRepositoryInterface;
 use App\Repositories\District\DistrictRepositoryInterface;
 use App\Repositories\Ward\WardRepositoryInterface;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Resources\CustomerCollection;
 
 class CustomerController extends Controller
 {
@@ -87,7 +89,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        return (new CustomerCollection(\App\Models\Customer::all()))->response()
+            ->header('X-Value', 'True');;
     }
 
     /**

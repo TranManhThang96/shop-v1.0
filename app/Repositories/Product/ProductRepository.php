@@ -50,6 +50,16 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
     }
 
     /**
+     * Return all products.
+     *
+     * @return Product[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+
+    /**
      * get a product set by id.
      * @param $id
      * @return object

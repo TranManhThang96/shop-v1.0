@@ -5,7 +5,7 @@ var validation = {
     name: {
         required: true,
         remote: {
-            url: "/products/checkExist",
+            url: "./../products/checkExist",
             type: "post",
             data: {
                 name: function () {
@@ -15,7 +15,7 @@ var validation = {
                     return $('#id').val()
                 },
                 _token: function () {
-                    return "{{csrf_token()}}"
+                    return $('meta[name="csrf-token"]').attr('content')
                 }
             }
         },
