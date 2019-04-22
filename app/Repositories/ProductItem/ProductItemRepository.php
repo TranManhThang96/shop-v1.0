@@ -7,8 +7,10 @@
  */
 
 namespace App\Repositories\ProductItem;
+
 use App\Repositories\RepositoryAbstract;
 use App\Models\ProductItem;
+use Illuminate\Support\Arr;
 
 class ProductItemRepository extends RepositoryAbstract implements ProductItemRepositoryInterface
 {
@@ -67,11 +69,49 @@ class ProductItemRepository extends RepositoryAbstract implements ProductItemRep
     {
         foreach ($items as $key => $item) {
             $items[$key]['product_id'] = $productId;
-            $items[$key]['sku_item'] = $productCode .'-' .$key;
+            $items[$key]['sku_item'] = $productCode . '-' . $key;
             $items[$key]['price'] = getAmount($items[$key]['price']);
             $items[$key]['iprice'] = getAmount($items[$key]['iprice']);
+            $items[$key]['created_at'] = date('Y-m-d H:i:s');
         }
         return $this->model->insert($items);
 
+    }
+
+    public function updateItem($items, $productId, $productCode)
+    {
+        $ids = [];
+        $ids_update = [];
+        $last_key = 0;
+        $item_list = $this->model->where('product_id', $productId)->orderBy('id', 'DESC')->get();
+        if (!empty($item_list)) {
+            $ids = $item_list->pluck('id')->toArray();
+            $sku_item = $item_list->pluck('sku_item')->toArray()[0];
+            $pos = strpos($sku_item, '-');
+            $last_key = (int)substr($sku_item, $pos + 1);
+        }
+
+        foreach ($items as $key => $item) {
+            if (!empty($item['id'])) {
+                $items[$key]['price'] = getAmount($item['price']);
+                $items[$key]['iprice'] = getAmount($item['iprice']);
+                $items[$key]['updated_at'] = date('Y-m-d H:i:s');
+                $this->model->where('id', $item['id'])->update($items[$key]);
+                $ids_update[] = $item['id'];
+            } else {
+                $items[$key]['product_id'] = $productId;
+                $items[$key]['sku_item'] = $productCode . '-' . ($last_key + $key);
+                $items[$key]['price'] = getAmount($item['price']);
+                $items[$key]['iprice'] = getAmount($item['iprice']);
+                $items[$key]['created_at'] = date('Y-m-d H:i:s');
+                $this->model->insert($items[$key]);
+            }
+        }
+
+        //xoa phan tu bi xoa
+        if (count(array_diff($ids, $ids_update))) {
+            $this->model->whereIn('id', array_diff($ids, $ids_update))->delete();
+        }
+        return true;
     }
 }

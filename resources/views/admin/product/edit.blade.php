@@ -1,18 +1,21 @@
 @extends('admin.layout')
 @section('title','Sản Phẩm')
 @section('module','Sản Phẩm')
-@section('method','Thêm mới')
+@section('method','Sửa')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/admin/product/create.css') }}">
 @endsection
 @section('content')
-    <form action="{{route('products.store')}}" method="post" id="frm" enctype="multipart/form-data">
+    <form action="{{route('products.update',['id' => $product->id])}}" method="post" id="frm"
+          enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="id" id="id">
+        @method('PUT')
+        <input type="hidden" name="id" id="id" value="{{$product->id}}">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="name">Tên SP <span class="text-danger" title="Trường bắt buộc"> (*) </span></label>
-                <input type="text" class="form-control" id="name" placeholder="Nhập tên sp" name="name" value="{{old('name')}}">
+                <input type="text" class="form-control" id="name" placeholder="Nhập tên sp" name="name"
+                       value="{{$product->name}}">
                 @if($errors->has('name'))
                     <span class="text-danger">
                         {{$errors->first('name')}}
@@ -25,7 +28,7 @@
                 <select class="form-control" name="cat_id" id="category">
                     <option value="0">--VUI LÒNG CHỌN DANH MỤC--</option>
                     @if ($categories->count() > 0)
-                        {!! showCategories($categories,0,'',old('cat_id',0)) !!}}
+                        {!! showCategories($categories,0,'',$product->cat_id) !!}}
                     @endif
                 </select>
                 @if($errors->has('cat_id'))
@@ -37,7 +40,8 @@
 
             <div class="form-group">
                 <label for="barcode">Barcode</label>
-                <input type="text" class="form-control" id="barcode" placeholder="Nhập barcode để quet" name="barcode" value="{{old('barcode')}}">
+                <input type="text" class="form-control" id="barcode" placeholder="Nhập barcode để quet" name="barcode"
+                       value="{{$product->barcode}}">
             </div>
 
             <div class="form-group">
@@ -46,7 +50,7 @@
                     <option value="0">--VUI LÒNG CHỌN THƯƠNG HIỆU--</option>
                     @if ($brands->count() > 0)
                         @foreach ($brands as $brand)
-                            <option value="{{$brand->id}}" {{$brand->id == old('brand_id') ? 'selected' : ''}}>{{$brand->name}}</option>
+                            <option value="{{$brand->id}}" {{$brand->id == $product->brand_id ? 'selected' : ''}}>{{$brand->name}}</option>
                         @endforeach
                     @endif
                 </select>
@@ -55,7 +59,7 @@
             <div class="form-group">
                 <label for="short_description">Mô tả ngắn</label>
                 <textarea rows="5" name="short_description" class="form-control" id="short_description"
-                          placeholder="Mô tả ngắn">{{old('short_description')}}</textarea>
+                          placeholder="Mô tả ngắn">{{$product->short_description}}</textarea>
             </div>
 
         </div>
@@ -64,7 +68,8 @@
 
             <div class="form-group">
                 <label for="iprice">Giá Nhập <span class="text-danger" title="Trường bắt buộc"> (*) </span></label>
-                <input type="text" class="form-control" id="iprice" placeholder="Giá nhập" name="iprice" value="{{old('iprice')}}">
+                <input type="text" class="form-control" id="iprice" placeholder="Giá nhập" name="iprice"
+                       value="{{number_format($product->iprice,0,',','.')}}">
                 @if($errors->has('iprice'))
                     <span class="text-danger">
                         {{$errors->first('iprice')}}
@@ -74,7 +79,8 @@
 
             <div class="form-group">
                 <label for="price">Giá Niêm Yết <span class="text-danger" title="Trường bắt buộc"> (*) </span></label>
-                <input type="text" class="form-control" id="price" placeholder="Giá niêm yết" name="price" value="{{old('price')}}">
+                <input type="text" class="form-control" id="price" placeholder="Giá niêm yết" name="price"
+                       value="{{number_format($product->price,0,',','.')}}">
                 @if($errors->has('price'))
                     <span class="text-danger">
                         {{$errors->first('price')}}
@@ -88,7 +94,7 @@
                     <option value="0">--CHỌN KM--</option>
                     @if ($discounts->count() > 0)
                         @foreach ($discounts as $discount)
-                            <option value="{{$discount->id}}" {{$discount->id == old('discount_id') ? 'selected' : ''}}>
+                            <option value="{{$discount->id}}" {{$discount->id == $product->discount_id ? 'selected' : ''}}>
                                 {{$discount->name}}
                                 ({{number_format($discount->discount,0,',','.')}}{{($discount->type == 1) ? '$' : '%'}})
                             </option>
@@ -99,29 +105,37 @@
 
             <div class="form-group">
                 <label for="img-link" class="label-upload">
-                    <img src="{{ asset('svg/upload.svg') }}" width="100%"/>
+                    <img src="{{ asset('storage/'.$product->img_link) }}"
+                         onerror="this.src = '{{ asset('svg/upload.svg') }}'" width="100%"/>
                 </label>
 
-                <input id="img-link" type="file" style="display: none" name="img_link"/>
-                @if($errors->has('img_link'))
-                    <span class="text-danger">
-                        {{$errors->first('img_link')}}
-                    </span>
-                @endif
+                <input id="img-link" type="file" style="display: none" name="img_link" value="{{$product->img_link}}"/>
             </div>
 
             <div class="row">
-                <div class="col-md-3 form-group img-list-item" data-id="0">
-                    <label for="img-list[0]" class="label-upload">
+                @if(count($product->img_list)>0)
+                    @foreach($product->img_list as $item)
+                        <div class="col-md-3 form-group img-list-item" data-id="{{$loop->index}}">
+                            <label for="img-list[{{$loop->index}}]" class="label-upload">
+                                <img src="{{ asset('storage/'.$item) }}" width="100%"/>
+                            </label>
+                            <input class="img-list" id="img-list[{{$loop->index}}]" type="file" style="display: none"
+                                   name="img_list[{{$loop->index}}]" data-id="{{$loop->index}}" value="{{$item}}"/>
+                            <i class="glyphicon glyphicon-remove-circle remove-img-item"></i>
+                            <input type="hidden" name="img_list_temp[{{$loop->index}}]" value="{{$item}}"/>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="col-md-3 form-group img-list-item" data-id="{{count($product->img_list)}}">
+                    <label for="img-list[{{count($product->img_list)}}]" class="label-upload">
                         <img src="{{ asset('svg/upload.svg') }}" width="100%"/>
                     </label>
-
-                    <input class="img-list" id="img-list[0]" type="file" style="display: none" name="img_list[0]"
-                           data-id="0"/>
+                    <input class="img-list" id="img-list[{{count($product->img_list)}}]" type="file"
+                           style="display: none" name="img_list[{{count($product->img_list)}}]"
+                           data-id="{{count($product->img_list)}}"/>
                     <i class="glyphicon glyphicon-remove-circle remove-img-item"></i>
                 </div>
-
-                <input type="hidden" id="img-list-last" value="0"/>
+                <input type="hidden" id="img-list-last" value="{{count($product->img_list)}}"/>
             </div>
 
         </div>
@@ -147,64 +161,63 @@
                         </thead>
                         <tbody id="product-item">
 
-                        <tr data-id="1">
-                            <td>1</td>
-                            <td>
-                                <input type="text" class="form-control item-iprice" name="items[1][iprice]"/>
-                                @if($errors->has('items.*.iprice'))
-                                    <span class="text-danger">
-                                        {{$errors->first('items.*.iprice')}}
-                                    </span>
-                                @endif
-                            </td>
-
-                            <td>
-                                <input type="text" class="form-control item-price" name="items[1][price]"/>
-                                @if($errors->has('items.*.price'))
-                                    <span class="text-danger">
-                                        {{$errors->first('items.*.price')}}
-                                    </span>
-                                @endif
-                            </td>
-
-                            <td>
-                                <select class="form-control discount" name="items[1][discount_id]">
-                                    <option value="0">--CHỌN KM--</option>
-                                    @if ($discounts->count() > 0)
-                                        @foreach ($discounts as $discount)
-                                            <option value="{{$discount->id}}">
-                                                {{$discount->name}}
-                                                ({{number_format($discount->discount,0,',','.')}}{{($discount->type == 1) ? '$' : '%'}}
-                                                )
-                                            </option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </td>
-                            <td><input type="text" class="form-control item-length" name="items[1][length]"/></td>
-                            <td><input type="text" class="form-control item-width" name="items[1][width]"/></td>
-                            <td><input type="text" class="form-control item-height" name="items[1][height]"/></td>
-                            <td><input type="text" class="form-control item-weight" name="items[1][weight]"/></td>
-                            <td><input type="text" class="form-control item-color" name="items[1][color]"/></td>
-                            <td><input type="text" class="form-control item-size" name="items[1][size]"/></td>
-                            <td>
-                                <div class="input-group">
-                                    <div class="input-group-addon sub-quantity"> -</div>
-                                    <input type="text" class="form-control item-quantity" name="items[1][quantity]"
-                                           value="0"/>
-                                    @if($errors->has('items.*.quantity'))
-                                        <span class="text-danger">
-                                            {{$errors->first('items.*.quantity')}}
-                                        </span>
-                                    @endif
-                                    <div class="input-group-addon plus-quantity"> +</div>
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger remove-item"> -</button>
-                                <button type="button" class="btn btn-success add-item"> +</button>
-                            </td>
-                        </tr>
+                        @if ($product->productItem->count() > 0)
+                            @foreach ($product->productItem as $item)
+                                <tr data-id="{{$loop->index}}">
+                                    <input type="hidden" name="items[{{$loop->index}}][id]" value="{{$item->id}}">
+                                    <td>1</td>
+                                    <td><input type="text" class="form-control item-iprice"
+                                               name="items[{{$loop->index}}][iprice]"
+                                               value="{{number_format($item->iprice,0,',','.')}}"/>
+                                    </td>
+                                    <td><input type="text" class="form-control item-price"
+                                               name="items[{{$loop->index}}][price]"
+                                               value="{{number_format($item->price,0,',','.')}}"/></td>
+                                    <td>
+                                        <select class="form-control discount"
+                                                name="items[{{$loop->index}}][discount_id]">
+                                            <option value="0">--CHỌN KM--</option>
+                                            @if ($discounts->count() > 0)
+                                                @foreach ($discounts as $discount)
+                                                    <option value="{{$discount->id}}" {{$discount->id == $product->discount_id ? 'selected' : ''}}>
+                                                        {{$discount->name}}
+                                                        ({{number_format($discount->discount,0,',','.')}}{{($discount->type == 1) ? '$' : '%'}}
+                                                        )
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="form-control item-length"
+                                               name="items[{{$loop->index}}][length]" value="{{$item->length}}"/>
+                                    </td>
+                                    <td><input type="text" class="form-control item-width"
+                                               name="items[{{$loop->index}}][width]" value="{{$item->width}}"/></td>
+                                    <td><input type="text" class="form-control item-height"
+                                               name="items[{{$loop->index}}][height]" value="{{$item->height}}"/>
+                                    </td>
+                                    <td><input type="text" class="form-control item-weight"
+                                               name="items[{{$loop->index}}][weight]" value="{{$item->weight}}"/>
+                                    </td>
+                                    <td><input type="text" class="form-control item-color"
+                                               name="items[{{$loop->index}}][color]" value="{{$item->color}}"/></td>
+                                    <td><input type="text" class="form-control item-size"
+                                               name="items[{{$loop->index}}][size]" value="{{$item->size}}"/></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <div class="input-group-addon sub-quantity"> -</div>
+                                            <input type="text" class="form-control item-quantity"
+                                                   name="items[{{$loop->index}}][quantity]"
+                                                   value="{{$item->quantity}}"/>
+                                            <div class="input-group-addon plus-quantity"> +</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger remove-item">-</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -212,7 +225,7 @@
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <textarea name="description">{{old('description')}}</textarea>
+            <textarea name="description"></textarea>
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
@@ -225,22 +238,17 @@
     <div class="hidden">
         <table>
             <tr data-id="idx" id="tr-hidden">
+                <input type="hidden" name="items[idx][id]">
                 <td>idx</td>
-                <td>
-                    <input type="text" class="form-control item-iprice" name="items[idx][iprice]"/>
-                    @if($errors->has('items.*.iprice'))
-                        <span class="text-danger">
-                                        {{$errors->first('items.*.iprice')}}
-                                    </span>
-                    @endif
+                <td><input type="text" class="form-control item-iprice" name="items[idx][iprice]" value="itemiprice"/>
                 </td>
-                <td><input type="text" class="form-control item-price" name="items[idx][price]"/></td>
+                <td><input type="text" class="form-control item-price" name="items[idx][price]" value="itemprice"/></td>
                 <td>
                     <select class="form-control discount" name="items[idx][discount_id]">
                         <option value="0">--CHỌN KM--</option>
                         @if ($discounts->count() > 0)
                             @foreach ($discounts as $discount)
-                                <option value="{{$discount->id}}">
+                                <option value="{{$discount->id}}" {{$discount->id == $product->discount_id ? 'selected' : ''}}>
                                     {{$discount->name}}
                                     ({{number_format($discount->discount,0,',','.')}}{{($discount->type == 1) ? '$' : '%'}}
                                     )
@@ -277,6 +285,7 @@
     <script src="{{ asset('js/admin/product/create.js') }}"></script>
     <script>
         CKEDITOR.replace('description');
+        $('#product-item').find('tr').last().find('td').last().append('<button type="button" class="btn btn-success add-item"> +</button>');
 
         $('#img-link').on('change', function (event) {
             $(this).prev().find('img').attr('src', URL.createObjectURL(event.target.files[0]));
@@ -310,11 +319,15 @@
 
         //them product item null
         $(document).on('click', '.add-item', function () {
+            let price = $('#price').val();
+            let iprice = $('#iprice').val();
             let element = $('#tr-hidden')[0].outerHTML;
             let lastId = $('#product-item').find('tr').last().data('id');
             lastId = parseInt(lastId) + 1;
             element = element.replace(/\idx/g, lastId);
             element = element.replace('id="tr-hidden"', '');
+            element = element.replace('itemprice', price);
+            element = element.replace('itemiprice', iprice);
             $('tr').not('#tr-hidden').find('.add-item').remove();
             $('#product-item').append(element);
         })
@@ -353,6 +366,7 @@
 
         $(document).on('change', '#discount', function () {
             let val = $(this).val();
+            console.log(val);
             $('.discount option[value=' + val + ']').attr('selected', 'selected');
         })
 

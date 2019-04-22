@@ -27,8 +27,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        $post = Post::find(102);
-        dd($post->content);
+       $img_list = Product::find(10)->img_list;
+       dd(count($img_list));
     }
 
     /**
