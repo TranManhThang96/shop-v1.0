@@ -49,5 +49,6 @@ Route::resources([
     'categories' => 'CategoryController',
     'discounts' => 'DiscountController',
     'customers' => 'CustomerController',
-    'products' => 'ProductController'
+    'products' => 'ProductController',
+    'import-invoice' => 'ImportInvoiceController'
 ]);

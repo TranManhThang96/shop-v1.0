@@ -66,7 +66,7 @@
             </li>
 
             <li>
-                <a href="{{route('brands.index')}}">
+                <a href="{{route('import-invoice.index')}}">
                     <i class="fa fa-th"></i> <span>Hóa đơn nhập</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>

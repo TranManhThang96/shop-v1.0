@@ -15,11 +15,18 @@ class ImportInvoice extends Model
         'supplier_id',
         'money_total',
         'quantity_total',
-        'note'
+        'note',
+        'created_by',
+        'updated_by'
     ];
 
     public function supplier()
     {
-        return $this->belongsTo('App\Models\Supplier','supplier_id','id');
+        return $this->hasOne(\App\Models\Supplier::class,'supplier_id','id');
+    }
+
+    public function importInvoiceItem()
+    {
+        return $this->hasMany(\App\Models\ImportInvoiceItem::class,'invoice_id','id');
     }
 }

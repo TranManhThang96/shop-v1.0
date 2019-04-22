@@ -99,6 +99,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ProductItem\ProductItemRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\ImportInvoice\ImportInvoiceRepositoryInterface::class,
+            \App\Repositories\ImportInvoice\ImportInvoiceRepository::class
+        );
+
     }
 
 }
