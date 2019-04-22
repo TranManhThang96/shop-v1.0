@@ -21,4 +21,9 @@ class Province extends Model
     {
         return $this->hasMany('App\Models\Order','province_id','id');
     }
+
+    public function getNameAttribute()
+    {
+        return mb_strtoupper($this->attributes['name']);
+    }
 }

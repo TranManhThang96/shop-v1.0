@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Image;
+use App\Models\Post;
+use Illuminate\Cache\FileStore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\District;
@@ -25,7 +27,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        echo 'Test Controller';
+        $post = Post::find(102);
+        dd($post->content);
     }
 
     /**

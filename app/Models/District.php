@@ -24,4 +24,9 @@ class District extends Model
     {
         return $this->hasMany('App\Models\Order','district_id','id');
     }
+
+    public function getNameAttribute($value)
+    {
+        return mb_strtoupper($value);
+    }
 }

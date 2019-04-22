@@ -16,4 +16,19 @@ class Post extends Model
         'short_description',
         'content'
     ];
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = mb_strtoupper($value);
+    }
+
 }
+
+
+
+
+
+
+
+
+

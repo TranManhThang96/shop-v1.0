@@ -19,4 +19,9 @@ class Ward extends Model
     {
         return $this->hasMany('App\Models\Customer','ward_id','id');
     }
+
+    public function getNameAttribute($value)
+    {
+        return mb_strtoupper($value);
+    }
 }
