@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="{{ asset('css/admin/product/create.css') }}">
 @endsection
 @section('content')
+    @foreach($errors as $error)
+        <span class="text text-danger">{{$error}}</span>
+    @endforeach
     <form action="{{route('products.update',['id' => $product->id])}}" method="post" id="frm"
           enctype="multipart/form-data">
         @csrf
@@ -58,8 +61,23 @@
 
             <div class="form-group">
                 <label for="short_description">Mô tả ngắn</label>
-                <textarea rows="5" name="short_description" class="form-control" id="short_description"
+                <textarea rows="3" name="short_description" class="form-control" id="short_description"
                           placeholder="Mô tả ngắn">{{$product->short_description}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Chiều dài (cm)" name="length" id="length" value="{{$product->length}}">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Chiều rộng (cm)" name="width" id="width" value="{{$product->width}}">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Chiều cao (cm)" name="height" id="height" value="{{$product->height}}">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Cân nặng (gam)" name="weight" id="weight" value="{{$product->weight}}">
+                </div>
             </div>
 
         </div>
@@ -150,10 +168,8 @@
                         <th>Giá Nhập</th>
                         <th>Giá Niêm Yết</th>
                         <th>Khuyến Mại</th>
-                        <th>Chiều dài (cm)</th>
-                        <th>Chiều rộng (cm)</th>
-                        <th>Chiều cao (cm)</th>
-                        <th>Cân nặng (g)</th>
+                        <th>Ram (GB)</th>
+                        <th>Rom (GB)</th>
                         <th>Màu sắc</th>
                         <th>Kích cỡ</th>
                         <th>Số Lượng</th>
@@ -188,16 +204,11 @@
                                             @endif
                                         </select>
                                     </td>
-                                    <td><input type="text" class="form-control item-length"
-                                               name="items[{{$loop->index}}][length]" value="{{$item->length}}"/>
+                                    <td><input type="text" class="form-control item-ram"
+                                               name="items[{{$loop->index}}][ram]" value="{{$item->ram}}"/>
                                     </td>
-                                    <td><input type="text" class="form-control item-width"
-                                               name="items[{{$loop->index}}][width]" value="{{$item->width}}"/></td>
-                                    <td><input type="text" class="form-control item-height"
-                                               name="items[{{$loop->index}}][height]" value="{{$item->height}}"/>
-                                    </td>
-                                    <td><input type="text" class="form-control item-weight"
-                                               name="items[{{$loop->index}}][weight]" value="{{$item->weight}}"/>
+                                    <td><input type="text" class="form-control item-rom"
+                                               name="items[{{$loop->index}}][rom]" value="{{$item->rom}}"/>
                                     </td>
                                     <td><input type="text" class="form-control item-color"
                                                name="items[{{$loop->index}}][color]" value="{{$item->color}}"/></td>

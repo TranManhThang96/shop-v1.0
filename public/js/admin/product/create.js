@@ -5,7 +5,7 @@ var validation = {
     name: {
         required: true,
         remote: {
-            url: "./../products/checkExist",
+            url: window.location.origin+"/admin/products/checkExist",
             type: "post",
             data: {
                 name: function () {
@@ -44,6 +44,34 @@ var validation = {
         }
     },
 
+    length: {
+        digits: true,
+        messages: {
+            digits: 'Chỉ chấp nhận số nguyên'
+        }
+    },
+
+    height: {
+        digits: true,
+        messages: {
+            digits: 'Chỉ chấp nhận số nguyên'
+        }
+    },
+
+    width: {
+        digits: true,
+        messages: {
+            digits: 'Chỉ chấp nhận số nguyên'
+        }
+    },
+
+    weight: {
+        digits: true,
+        messages: {
+            digits: 'Chỉ chấp nhận số nguyên'
+        }
+    },
+
     "items[idx][iprice]": {
         required: true,
         messages: {
@@ -57,15 +85,19 @@ var validation = {
             required: 'Vui lòng nhập giá nhập để tính lợi nhuận'
         }
     },
-
-    "items[idx][quantity]": {
-        min: 1,
+    "items[idx][ram]": {
+        digits: true,
         messages: {
-            min: 'Giá trị nhỏ nhất bằng 1'
+            digits: 'Chỉ chấp nhận số nguyên'
         }
     },
 
-
+    "items[idx][rom]": {
+        digits: true,
+        messages: {
+            digits: 'Chỉ chấp nhận số nguyên'
+        }
+    },
 };
 
 function validateInput() {

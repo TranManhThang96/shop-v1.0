@@ -54,8 +54,23 @@
 
             <div class="form-group">
                 <label for="short_description">Mô tả ngắn</label>
-                <textarea rows="5" name="short_description" class="form-control" id="short_description"
+                <textarea rows="3" name="short_description" class="form-control" id="short_description"
                           placeholder="Mô tả ngắn">{{old('short_description')}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Chiều dài (cm)" name="length" id="length">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Chiều rộng (cm)" name="width" id="width">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Chiều cao (cm)" name="height" id="height">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" placeholder="Cân nặng (gam)" name="weight" id="weight">
+                </div>
             </div>
 
         </div>
@@ -136,10 +151,8 @@
                         <th>Giá Nhập</th>
                         <th>Giá Niêm Yết</th>
                         <th>Khuyến Mại</th>
-                        <th>Chiều dài (cm)</th>
-                        <th>Chiều rộng (cm)</th>
-                        <th>Chiều cao (cm)</th>
-                        <th>Cân nặng (g)</th>
+                        <th>Ram (GB)</th>
+                        <th>Rom (GB)</th>
                         <th>Màu sắc</th>
                         <th>Kích cỡ</th>
                         <th>Số Lượng</th>
@@ -181,10 +194,8 @@
                                     @endif
                                 </select>
                             </td>
-                            <td><input type="text" class="form-control item-length" name="items[1][length]"/></td>
-                            <td><input type="text" class="form-control item-width" name="items[1][width]"/></td>
-                            <td><input type="text" class="form-control item-height" name="items[1][height]"/></td>
-                            <td><input type="text" class="form-control item-weight" name="items[1][weight]"/></td>
+                            <td><input type="text" class="form-control item-height" name="items[1][ram]"/></td>
+                            <td><input type="text" class="form-control item-weight" name="items[1][rom]"/></td>
                             <td><input type="text" class="form-control item-color" name="items[1][color]"/></td>
                             <td><input type="text" class="form-control item-size" name="items[1][size]"/></td>
                             <td>
@@ -249,10 +260,8 @@
                         @endif
                     </select>
                 </td>
-                <td><input type="text" class="form-control item-length" name="items[idx][length]"/></td>
-                <td><input type="text" class="form-control item-width" name="items[idx][width]"/></td>
-                <td><input type="text" class="form-control item-height" name="items[idx][height]"/></td>
-                <td><input type="text" class="form-control item-weight" name="items[idx][weight]"/></td>
+                <td><input type="text" class="form-control item-height" name="items[idx][ram]"/></td>
+                <td><input type="text" class="form-control item-weight" name="items[idx][rom]"/></td>
                 <td><input type="text" class="form-control item-color" name="items[idx][color]"/></td>
                 <td><input type="text" class="form-control item-size" name="items[idx][size]"/></td>
                 <td>

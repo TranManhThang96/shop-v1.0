@@ -28,6 +28,8 @@
                             <td>Tên Sản Phẩm</td>
                             <td>Màu Sắc</td>
                             <td>Kích Cỡ</td>
+                            <td>Ram</td>
+                            <td>Rom</td>
                             <td>SL</td>
                             <td>Giá Nhập</td>
                             <td>Thành Tiền</td>
@@ -49,6 +51,7 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <label for="quantity_total">Số sản phẩm </label>
+                        <span id="quantity_total">0</span>
                         <input type="hidden" class="form-control" id="quantity_total" name="quantity_total"
                                value="{{old('quantity_total')}}">
                         @if($errors->has('quantity_total'))
@@ -60,6 +63,7 @@
 
                     <div class="form-group">
                         <label for="money_total">Tổng tiền </label>
+                        <span id="money_total">0</span>
                         <input type="hidden" class="form-control" id="money_total" name="money_total"
                                value="{{old('money_total')}}">
                         @if($errors->has('money_total'))
@@ -81,7 +85,9 @@
 
                     <div class="form-group">
                         <label for="created_by">Nhà cung cấp </label>
-                        <input type="hidden" class="form-control" id="created_by" name="created_by">
+                        <select>
+                            
+                        </select>
                         @if($errors->has('created_by'))
                             <span class="text-danger">
                                 {{$errors->first('created_by')}}
@@ -180,72 +186,47 @@
             let tr = '';
             if (data.product_item != undefined) {
                 for (let item of data.product_item) {
-                    console.log(item);
                     tr += '<tr data-id="' + item.id + '">';
                     tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][id]" value="' + item.id + '"/>';
-                    tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][sku]" value="'+item.sku_item+'"/></td>';
-                    tr += '<td><input type="text" class="form-control item-price" name="items[' + item.id +'][name]" value="'+ data.name +'"/></td>';
-                    tr += '<td><input type="text" class="form-control item-price" name="items['+ item.id +'][color]" value="'+ item.color+'"/></td>';
-                    tr += '<td><input type="text" class="form-control item-length" name="items['+ item.id +'][size]" value="'+ item.size+'"/></td>';
+                    tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][image]" value="' + data.img_link + '"/>';
+                    tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][sku]" value="'+item.sku_item+'" readonly/></td>';
+                    tr += '<td><input type="text" class="form-control" name="items[' + item.id +'][name]" value="'+ data.name +'" readonly/></td>';
+                    tr += '<td><input type="text" class="form-control" name="items['+ item.id +'][color]" value="'+ item.color+'" readonly/></td>';
+                    tr += '<td><input type="text" class="form-control" name="items['+ item.id +'][size]" value="'+ item.size+'" readonly/></td>';
+                    tr += '<td><input type="text" class="form-control" name="items['+ item.id +'][ram]" value="'+ item.ram+'" readonly/></td>';
+                    tr += '<td><input type="text" class="form-control" name="items['+ item.id +'][rom]" value="'+ item.rom+'" readonly/></td>';
                     tr += '<td>';
                     tr += '<div class="input-group">';
                     tr += '<div class="input-group-addon sub-quantity"> - </div>';
                     tr += '<input type="text" class="form-control item-quantity" name="items['+ item.id +'][quantity]" value="0"/>';
                     tr += '<div class="input-group-addon plus-quantity"> + </div></div> </td>';
-                    tr += '<td><input type="text" class="form-control item-height" name="items[' + item.id +'][iprice]" value="'+ item.iprice+'"/></td>';
-                    tr += '<td><input type="text" class="form-control item-weight" name="items[' + item.id +'][money]" value="0"/></td>';
+                    tr += '<input type="hidden" class="form-control item-iprice" name="items[' + item.id +'][iprice]" value="'+ item.iprice+'"/>';
+                    tr += '<td><input type="text" class="form-control item-iprice_temp" name="items[' + item.id +'][iprice_temp]" value="'+ _formatNumberToMoney(item.iprice)+'"/></td>';
+                    tr += '<td><input type="text" class="form-control item-money" name="items[' + item.id +'][money]" value="0" readonly/></td>';
                     tr += '<td><button type="button" class="btn btn-danger remove-item"> -</button></td> </tr>';
                 }
             }
             $('#product').append(tr);
         }
-
-        //them product item null
-        $(document).on('click', '.add-item', function () {
-            let element = $('#tr-hidden')[0].outerHTML;
-            let lastId = $('#product-item').find('tr').last().data('id');
-            lastId = parseInt(lastId) + 1;
-            element = element.replace(/\idx/g, lastId);
-            element = element.replace('id="tr-hidden"', '');
-            $('tr').not('#tr-hidden').find('.add-item').remove();
-            $('#product-item').append(element);
-        })
-
+        
         //xoa product item
         $(document).on('click', '.remove-item', function () {
-            var lenTr = $('#product-item tr').length;
-            if (lenTr > 1) {
-                //nêu xoa phan tu cuoi cung thì them nut them vao phan tu ngay truoc do xong ms xoa
-                let lastId = $('#product-item').find('tr').last().data('id');
-                let parentTr = $(this).parent().parent();
-                if (lastId == parentTr.data('id')) {
-                    let prevTr = parentTr.prev();
-                    prevTr.find('td').last().append('<button type="button" class="btn btn-success add-item"> + </button>');
-                }
-                parentTr.remove();
+            $(this).parent().parent().remove();
+            _quantityTotal();
+            _moneyTotal();
+        })
+
+        $(document).on('keyup', '.item-iprice_temp', function (event) {
+            let str = event.target.value;
+            str = str.replace('.', '').trim();
+            if (str == '0') {
+                str = '1'
             }
-        })
-
-        $(document).on('keyup', '.item-price, .item-iprice', function (event) {
-            _formatNumber(event);
-        })
-
-        $('#price').on('keyup', function (event) {
-            _formatNumber(event);
-            $("[name='items[idx][price]']").attr('value', $(this).val());
-            $("[name='items[1][price]']").val($(this).val());
-
-        })
-
-        $('#iprice').on('keyup', function (event) {
-            _formatNumber(event);
-            $("[name='items[idx][iprice]']").attr('value', $(this).val());
-            $("[name='items[1][iprice]']").val($(this).val());
-        })
-
-        $(document).on('change', '#discount', function () {
-            let val = $(this).val();
-            $('.discount option[value=' + val + ']').attr('selected', 'selected');
+            let value = str.replace(/ |\D/gi, '');
+            $(this).parent().prev().val(value);
+            let format = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+            event.target.value = format;
+            _changeIpriceEvent($(this))
         })
 
         //giam so luong
@@ -255,6 +236,7 @@
             if (value > 0) {
                 inputQty.val(value - 1);
             }
+            _changeQuantityEvent($(this));
         })
 
         //tang so luong
@@ -262,6 +244,7 @@
             let inputQty = $(this).prev();
             let value = parseInt(inputQty.val());
             inputQty.val(value + 1);
+            _changeQuantityEvent($(this));
         })
 
         //chuyen so luong
@@ -276,7 +259,55 @@
                 }
             }
             $(this).val(retValue);
+            _changeQuantityEvent($(this));
         })
+
+        //thay doi so luong
+        function _changeQuantityEvent(_this) {
+            let id = _this.parent().parent().parent().data('id');
+            let qty = $('[name="items['+ id +'][quantity]"]').val();
+            let iprice = $('[name="items['+ id +'][iprice]"]').val();
+            $('[name="items['+ id +'][money]"]').val(_formatNumberToMoney(qty * iprice));
+            _quantityTotal();
+            _moneyTotal();
+        }
+
+        //thay doi gia nhap
+        function _changeIpriceEvent(_this) {
+            let id = _this.parent().parent().data('id');
+            let qty = $('[name="items['+ id +'][quantity]"]').val();
+            let iprice = $('[name="items['+ id +'][iprice]"]').val();
+            $('[name="items['+ id +'][money]"]').val(_formatNumberToMoney(qty * iprice));
+            _quantityTotal();
+            _moneyTotal();
+        }
+        
+        //tinh tong so phan tu
+        function _quantityTotal() {
+            let total = 0;
+            $('#product').find('tr').each(function (key,tr) {
+                let id = $(this).data('id');
+                total+= parseInt($('[name="items['+ id +'][quantity]"]').val());
+            })
+            $('#quantity_total').text(total);
+            $('[name="quantity_total"]').val(total);
+            return total;
+        }
+
+        //tinh tong tien
+        function _moneyTotal() {
+            let total = 0;
+            $('#product').find('tr').each(function (key,tr) {
+                let id = $(this).data('id');
+                let qty = $('[name="items['+ id +'][quantity]"]').val();
+                let iprice = $('[name="items['+ id +'][iprice]"]').val();
+                total += parseInt(qty * iprice)
+            })
+            $('#money_total').text(_formatNumberToMoney(total));
+            $('[name="money_total"]').val(total);
+            return total;
+        }
+
     </script>
 
 @endsection

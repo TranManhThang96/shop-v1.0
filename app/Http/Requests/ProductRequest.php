@@ -32,7 +32,6 @@ class ProductRequest extends FormRequest
 //            'img_link' => 'required|file|image',
             'items.*.price' => 'required',
             'items.*.iprice' => 'required',
-            'items.*.quantity' => 'required|min:1',
         ];
     }
 
@@ -54,8 +53,6 @@ class ProductRequest extends FormRequest
             'items.*.iprice.required' => 'Vui lòng nhập giá nhập',
             'items.*.iprice.numeric' => 'Giá nhập chưa đúng',
             'items.*.quantity.required' => 'Vui lòng nhập số lượng',
-            'items.*.quantity.integer' => 'Số lượng chưa đúng',
-            'items.*.quantity.min' => 'Giá trị nhỏ nhất là 1',
         ];
     }
 }

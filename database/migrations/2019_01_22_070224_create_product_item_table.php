@@ -17,10 +17,6 @@ class CreateProductItemTable extends Migration
             $table->increments('id');
             $table->integer('product_id')->comment('id sản phẩm');
             $table->integer('quantity')->comment('so luong');
-            $table->integer('length')->nullable()->comment('chieu dai(cm)');
-            $table->integer('width')->nullable()->comment('chieu rong (cm)');
-            $table->integer('height')->nullable()->comment('chieu cao (cm)');
-            $table->integer('weight')->nullable()->comment('can nang (gam)');
             $table->string('color')->nullable()->comment('màu sắc');
             $table->string('size')->nullable()->comment('kích cỡ (M,L,31,32)');
             $table->integer('ram')->nullable()->comment('ram theo GB');

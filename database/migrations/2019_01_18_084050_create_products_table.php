@@ -22,6 +22,10 @@ class CreateProductsTable extends Migration
             $table->string('barcode',32)->nullable()->comment('barcode san pham');
             $table->double('price',10,2)->nullable()->comment('gia niem yet');
             $table->double('iprice',10,2)->nullable()->comment('gia nhap');
+            $table->integer('length')->nullable()->comment('chieu dai(cm)');
+            $table->integer('width')->nullable()->comment('chieu rong (cm)');
+            $table->integer('height')->nullable()->comment('chieu cao (cm)');
+            $table->integer('weight')->nullable()->comment('can nang (gam)');
             $table->integer('discount_id')->nullable()->comment('giam gia theo bang discount');
             $table->text('img_link')->nullable()->comment('anh chinh de hien thi');
             $table->text('img_list')->nullable()->comment('anh di kem');

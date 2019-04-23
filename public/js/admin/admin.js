@@ -92,3 +92,7 @@ function _formatNumber(event) {
     let format = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
     event.target.value = format;
 }
+
+function _formatNumberToMoney(value) {
+    return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+}
