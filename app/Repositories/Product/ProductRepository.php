@@ -66,7 +66,7 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
      */
     public function getProductById($id)
     {
-        return $this->model->find($id);
+        return $this->model->with('productItem')->find($id);
     }
 
 
@@ -154,5 +154,10 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
         }
 
         return true;
+    }
+
+    public function getProductByQuery($request)
+    {
+        return  $this->model->select('id','name')->where("name","LIKE","%{$request->input('query')}%")->get();
     }
 }

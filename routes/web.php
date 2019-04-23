@@ -23,4 +23,3 @@ Route::group(['prefix'=>'admin'],function (){
 });
 
 Route::resource('test','TestController');
-Route::get('autocomplete', 'TestController@autocomplete')->name('test.autocomplete');

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             WardTableSeeder::class,
             CategoriesTableSeeder::class,
             DiscountTableSeeder::class,
-            ProductTableSeeder::class,
+            //ProductTableSeeder::class,
             ProductItemTableSeeder::class,
             CustomerTableSeeder::class,
             PostTableSeeder::class

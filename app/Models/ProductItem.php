@@ -12,6 +12,7 @@ class ProductItem extends Model
 
     protected $fillable = [
         'product_id',
+        'name',
         'sku_item',
         'quantity',
         'price',
@@ -23,20 +24,15 @@ class ProductItem extends Model
         'weight',
         'color',
         'size',
+        'ram',
+        'rom',
         'created_by'
     ];
 
     protected $timestamp = true;
 
-    protected $appends = ['name'];
-
     public function product()
     {
         return $this->belongsTo('App\Models\Product','product_id','id');
-    }
-
-    public function getNameAttribute()
-    {
-        return $this->attributes['name'] = $this->product->name.' , màu '.$this->color.' ,size '.$this->size;
     }
 }

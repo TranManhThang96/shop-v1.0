@@ -27,12 +27,12 @@ class ProductRequest extends FormRequest
         return [
             'name' => ['required', 'max:255', Rule::unique('products')->ignore($this->id)],
             'cat_id' => 'numeric|min:1',
-            'price' => 'required|numeric',
-            'iprice' => 'required|numeric',
+            'price' => 'required',
+            'iprice' => 'required',
 //            'img_link' => 'required|file|image',
-            'items.*.price' => 'required|numeric',
-            'items.*.iprice' => 'required|numeric',
-            'items.*.quantity' => 'required|integer|min:1',
+            'items.*.price' => 'required',
+            'items.*.iprice' => 'required',
+            'items.*.quantity' => 'required|min:1',
         ];
     }
 

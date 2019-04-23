@@ -23,6 +23,8 @@ class CreateProductItemTable extends Migration
             $table->integer('weight')->nullable()->comment('can nang (gam)');
             $table->string('color')->nullable()->comment('màu sắc');
             $table->string('size')->nullable()->comment('kích cỡ (M,L,31,32)');
+            $table->integer('ram')->nullable()->comment('ram theo GB');
+            $table->integer('rom')->nullable()->comment('bo nho trong theo GB');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
             $table->integer('updated_by')->nullable()->comment('cap nhat boi ai');
             $table->softDeletes();

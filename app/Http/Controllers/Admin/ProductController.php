@@ -180,4 +180,16 @@ class ProductController extends Controller
             return Response()->json(false);
         }
     }
+
+    public function autocomplete(Request $request)
+    {
+        $data = $this->productRepository->getProductByQuery($request);
+        return response()->json($data);
+    }
+
+    public function getProductById(Request $request)
+    {
+        $data = $this->productRepository->getProductById($request->id);
+        return response()->json($data);
+    }
 }

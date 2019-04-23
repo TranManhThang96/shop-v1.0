@@ -97,10 +97,4 @@ class TestController extends Controller
     {
         //
     }
-
-    public function autocomplete(Request $request)
-    {
-        $data = \App\Models\ProductItem::append('name')->select('name')->where("name","LIKE","%{$request->input('query')}%")->get();
-        return response()->json($data);
-    }
 }

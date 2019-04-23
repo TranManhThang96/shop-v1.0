@@ -41,6 +41,9 @@ Route::post('/categories/checkExist','CategoryController@checkExist')->name('cat
 Route::post('/customers/check-phone-exist','CustomerController@checkPhoneExist')->name('customers.checkPhoneExist');
 Route::post('/customers/check-email-exist','CustomerController@checkEmailExist')->name('customers.checkEmailExist');
 Route::post('/products/checkExist','ProductController@checkExist')->name('products.checkExist');
+Route::get('/products/autocomplete', 'ProductController@autocomplete')->name('products.autocomplete');
+Route::get('/products/get-by-id', 'ProductController@getProductById')->name('products.getById');
+
 
 Route::resources([
     'brands' => 'BrandController',
