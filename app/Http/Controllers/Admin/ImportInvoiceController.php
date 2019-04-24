@@ -5,14 +5,20 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\ImportInvoice\ImportInvoiceRepositoryInterface;
+use App\Repositories\Supplier\SupplierRepositoryInterface;
 
 class ImportInvoiceController extends Controller
 {
     protected $importInvoiceRepository;
+    protected $supplierRepository;
 
-    public function __construct(ImportInvoiceRepositoryInterface $importInvoiceRepository)
+    public function __construct(
+        ImportInvoiceRepositoryInterface $importInvoiceRepository,
+        SupplierRepositoryInterface $supplierRepository
+    )
     {
         $this->importInvoiceRepository = $importInvoiceRepository;
+        $this->supplierRepository = $supplierRepository;
     }
 
     /**
@@ -32,7 +38,8 @@ class ImportInvoiceController extends Controller
      */
     public function create()
     {
-        return view('admin.import_invoice.create');
+        $suppliers = $this->supplierRepository->getAllSuppliers();
+        return view('admin.import_invoice.create',compact('suppliers'));
     }
 
     /**
@@ -43,7 +50,7 @@ class ImportInvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd ($request->all());
     }
 
     /**

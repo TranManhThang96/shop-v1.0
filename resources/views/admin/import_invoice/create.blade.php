@@ -84,23 +84,28 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="created_by">Nhà cung cấp </label>
-                        <select>
-                            
+                        <label for="supplier">Nhà cung cấp </label>
+                        <select class="form-control" name="supplier_id">
+                            <option value="">--Chọn nhà cung cấp--</option>
+                            @if ($suppliers->count() > 0)
+                                @foreach ($suppliers as $supplier)
+                                    <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                @endforeach
+                            @endif
                         </select>
-                        @if($errors->has('created_by'))
+                        @if($errors->has('supplier_id'))
                             <span class="text-danger">
-                                {{$errors->first('created_by')}}
+                                {{$errors->first('supplier_id')}}
                             </span>
                         @endif
                     </div>
 
                     <div class="form-group">
-                        <label for="created_by">Thời gian </label>
-                        <input type="hidden" class="form-control" id="created_by" name="created_by">
-                        @if($errors->has('created_by'))
+                        <label for="created_at">Thời gian </label>
+                        <input type="text" class="form-control" data-provide="datepicker" id="created_at" name="created_at" data-date-format="dd/mm/yyyy 00:00:00" placeholder="Mặc định hiện tại ...">
+                        @if($errors->has('created_at'))
                             <span class="text-danger">
-                                {{$errors->first('created_by')}}
+                                {{$errors->first('created_at')}}
                             </span>
                         @endif
                     </div>

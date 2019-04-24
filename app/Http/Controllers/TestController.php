@@ -29,7 +29,7 @@ class TestController extends Controller
      */
     public function index()
     {
-
+        dd(formatDate("Y-m-d H:i:s","17/04/2019","d/m/Y"));
     }
 
     /**
