@@ -20,6 +20,7 @@ class CreateProductLogTable extends Migration
             $table->integer('product_item_id')->comment('product item');
             $table->integer('old_quantity')->default(0)->comment('so luong ban dau');
             $table->integer('new_quantity')->comment('so luong sau khi tac dong');
+            $table->string('note')->nullable()->comment('note');
             $table->integer('created_by')->nullable()->comment('tao boi ai');
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ class CreateExportInvoiceItemTable extends Migration
         Schema::create('export_invoice_item', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('invoice_id')->comment('id hoa don nhap');
-            $table->integer('product_id')->comment('id san pham');
+            $table->integer('product_item_id')->comment('id san pham');
             $table->string('code',32)->comment('ma code san pham');
             $table->string('name','255')->comment('ten san pham');
             $table->double('price',10,2)->comment('gia xuat');

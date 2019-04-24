@@ -12,8 +12,8 @@ class ImportInvoiceItem extends Model
 
     protected $fillable = [
         'invoice_id',
-        'product_id',
-        'code',
+        'product_item_id',
+        'sku',
         'name',
         'iprice',
         'quantity',

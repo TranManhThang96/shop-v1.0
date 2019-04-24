@@ -59,7 +59,7 @@ function showCategories($categories, $parent_id = 0, $symbol = '',$select = 0)
 }
 
 /**
- * 3/7/2019 3:17PM format date
+ * 3/7/2019 3:17 PM format date
  */
 
 function formatDate($format="d/m/Y",$input,$inputFormat)

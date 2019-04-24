@@ -46,6 +46,11 @@ class SupplierRepository extends RepositoryAbstract implements SupplierRepositor
         return $suppliers->paginate($per)->appends($request);
     }
 
+    public function getAllSuppliers()
+    {
+        return $this->model->all();
+    }
+
     /**
      * Get supplier by id.
      *
