@@ -86,7 +86,7 @@
                     <div class="form-group">
                         <label for="created_by">Nhà cung cấp </label>
                         <select>
-                            
+
                         </select>
                         @if($errors->has('created_by'))
                             <span class="text-danger">
