@@ -56,4 +56,9 @@ class Order extends Model
             ->withPivot('quantity');
     }
 
+    public function orderDetail()
+    {
+        return $this->hasMany(\App\Models\OrderItem::class,'order_id','id');
+    }
+
 }

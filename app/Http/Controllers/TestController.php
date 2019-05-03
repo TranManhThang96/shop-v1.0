@@ -30,8 +30,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        //dd(formatDate("Y-m-d H:i:s","17/04/2019","d/m/Y"));
-        echo trans_choice('auth.test', 5, ['value' => 5]);
+        $invoice = \App\Models\ExportInvoice::find(1);
+        dd($invoice->exportInvoiceItem);
     }
 
     /**

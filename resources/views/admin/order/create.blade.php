@@ -1,12 +1,12 @@
 @extends('admin.layout')
-@section('title','Hóa Đơn Nhập')
-@section('module','Hóa Đơn Nhập')
+@section('title','Đơn Hàng')
+@section('module','Đơn Hàng')
 @section('method','Thêm mới')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/admin/product/create.css') }}">
 @endsection
 @section('content')
-    <form action="{{route('import-invoice.store')}}" method="post" id="frm" enctype="multipart/form-data">
+    <form action="{{route('orders.store')}}" method="post" id="frm" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="id" id="id">
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -84,23 +84,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="supplier">Nhà cung cấp </label>
-                        <select class="form-control" name="supplier_id">
-                            <option value="">--Chọn nhà cung cấp--</option>
-                            @if ($suppliers->count() > 0)
-                                @foreach ($suppliers as $supplier)
-                                    <option value="{{$supplier->id}}">{{$supplier->name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        @if($errors->has('supplier_id'))
-                            <span class="text-danger">
-                                {{$errors->first('supplier_id')}}
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
                         <label for="created_at">Thời gian </label>
                         <input type="text" class="form-control" data-provide="datepicker" id="created_at" name="created_at" data-date-format="dd/mm/yyyy 00:00:00" placeholder="Mặc định hiện tại ...">
                         @if($errors->has('created_at'))
@@ -122,7 +105,7 @@
                     </div>
 
                     <div class="text-center">
-                        <a class="btn btn-primary" title="Danh sách" href="{{route('import-invoice.index')}}"><i
+                        <a class="btn btn-primary" title="Danh sách" href="{{route('export-invoice.index')}}"><i
                                     class="glyphicon glyphicon-share-alt"></i></a>
                         <button type="submit" class="btn btn-success" id="submit-template">Lưu lại</button>
                     </div>
@@ -131,32 +114,6 @@
         </div>
         </div>
     </form>
-
-    <div class="hidden">
-        <table>
-            <tr data-id="idx" id="tr-hidden">
-                <td><input type="hidden" class="form-control" name="items[idx][id]"/></td>
-                <td><input type="text" class="form-control" name="items[idx][sku]"/></td>
-                <td><input type="text" class="form-control item-price" name="items[idx][color]"/></td>
-                <td><input type="text" class="form-control item-length" name="items[idx][size]"/></td>
-                <td>
-                    <div class="input-group">
-                        <div class="input-group-addon sub-quantity"> -</div>
-                        <input type="text" class="form-control item-quantity" name="items[idx][quantity]" value="0"/>
-                        <div class="input-group-addon plus-quantity"> +</div>
-                    </div>
-                </td>
-                <td><input type="text" class="form-control item-height" name="items[idx][iprice]"/></td>
-                <td><input type="text" class="form-control item-weight" name="items[idx][money]"/></td>
-                <td><input type="text" class="form-control item-color" name="items[idx][color]"/></td>
-                <td><input type="text" class="form-control item-size" name="items[idx][size]"/></td>
-                <td>
-                    <button type="button" class="btn btn-danger remove-item"> -</button>
-                    <button type="button" class="btn btn-success add-item"> +</button>
-                </td>
-            </tr>
-        </table>
-    </div>
 
 @endsection
 
@@ -210,9 +167,12 @@
                         tr += '<div class="input-group">';
                         tr += '<div class="input-group-addon sub-quantity"> - </div>';
                         tr += '<input type="text" class="form-control item-quantity" name="items[' + item.id + '][quantity]" value="0"/>';
-                        tr += '<div class="input-group-addon plus-quantity"> + </div></div> </td>';
+                        tr += '<div class="input-group-addon plus-quantity"> + </div>';
+                        tr += '<input type="hidden" class="form-control limit" value="'+ item.quantity +'"/></div>';
+                        tr += '<p>( Chỉ còn '+ item.quantity +' sản phẩm)</p></td>'
                         tr += '<input type="hidden" class="form-control item-iprice" name="items[' + item.id + '][iprice]" value="' + item.iprice + '"/>';
-                        tr += '<td><input type="text" class="form-control item-iprice_temp" name="items[' + item.id + '][iprice_temp]" value="' + _formatNumberToMoney(item.iprice) + '"/></td>';
+                        tr += '<input type="hidden" class="form-control item-price" name="items[' + item.id + '][price]" value="' + item.price + '"/>';
+                        tr += '<td><input type="text" class="form-control item-price_temp" name="items[' + item.id + '][price_temp]" value="' + _formatNumberToMoney(item.price) + '"/></td>';
                         tr += '<td><input type="text" class="form-control item-money" name="items[' + item.id + '][money]" value="0" readonly/></td>';
                         tr += '<td><button type="button" class="btn btn-danger remove-item"> -</button></td> </tr>';
                     }
@@ -220,7 +180,7 @@
             }
             $('#product').append(tr);
         }
-        
+
         //xoa product item
         $(document).on('click', '.remove-item', function () {
             $(this).parent().parent().remove();
@@ -228,17 +188,18 @@
             _moneyTotal();
         })
 
-        $(document).on('keyup', '.item-iprice_temp', function (event) {
+        //thay doi gia
+        $(document).on('keyup', '.item-price_temp', function (event) {
             let str = event.target.value;
             str = str.replace('.', '').trim();
-            if (str == '0') {
+            if (str == '0' || str == '') {
                 str = '1'
             }
             let value = str.replace(/ |\D/gi, '');
             $(this).parent().prev().val(value);
             let format = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
             event.target.value = format;
-            _changeIpriceEvent($(this))
+            _changePriceEvent($(this))
         })
 
         //giam so luong
@@ -254,14 +215,18 @@
         //tang so luong
         $(document).on('click', '.plus-quantity', function () {
             let inputQty = $(this).prev();
+            let limit = parseInt($(this).next().val());
             let value = parseInt(inputQty.val());
-            inputQty.val(value + 1);
-            _changeQuantityEvent($(this));
+            if (value < limit) {
+                inputQty.val(value + 1);
+                _changeQuantityEvent($(this));
+            }
         })
 
         //chuyen so luong
         $(document).on('keyup', '.item-quantity', function () {
             let retValue = 0;
+            let limit = parseInt($(this).next().next().val());
             let str = $(this).val();
             if (str !== null) {
                 if (str.length > 0) {
@@ -270,30 +235,35 @@
                     }
                 }
             }
+            if (retValue > limit) {
+                retValue = 0;
+            }
+
             $(this).val(retValue);
             _changeQuantityEvent($(this));
+
         })
 
         //thay doi so luong
         function _changeQuantityEvent(_this) {
             let id = _this.parent().parent().parent().data('id');
             let qty = $('[name="items['+ id +'][quantity]"]').val();
-            let iprice = $('[name="items['+ id +'][iprice]"]').val();
-            $('[name="items['+ id +'][money]"]').val(_formatNumberToMoney(qty * iprice));
+            let price = $('[name="items['+ id +'][price]"]').val();
+            $('[name="items['+ id +'][money]"]').val(_formatNumberToMoney(qty * price));
             _quantityTotal();
             _moneyTotal();
         }
 
         //thay doi gia nhap
-        function _changeIpriceEvent(_this) {
+        function _changePriceEvent(_this) {
             let id = _this.parent().parent().data('id');
             let qty = $('[name="items['+ id +'][quantity]"]').val();
-            let iprice = $('[name="items['+ id +'][iprice]"]').val();
-            $('[name="items['+ id +'][money]"]').val(_formatNumberToMoney(qty * iprice));
+            let price = $('[name="items['+ id +'][price]"]').val();
+            $('[name="items['+ id +'][money]"]').val(_formatNumberToMoney(qty * price));
             _quantityTotal();
             _moneyTotal();
         }
-        
+
         //tinh tong so phan tu
         function _quantityTotal() {
             let total = 0;
@@ -312,8 +282,8 @@
             $('#product').find('tr').each(function (key,tr) {
                 let id = $(this).data('id');
                 let qty = $('[name="items['+ id +'][quantity]"]').val();
-                let iprice = $('[name="items['+ id +'][iprice]"]').val();
-                total += parseInt(qty * iprice)
+                let price = $('[name="items['+ id +'][price]"]').val();
+                total += parseInt(qty * price)
             })
             $('#money_total').text(_formatNumberToMoney(total));
             $('[name="money_total"]').val(total);

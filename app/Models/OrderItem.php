@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class OrderDetail extends Model
+class OrderItem extends Model
 {
     use SoftDeletes;
 
@@ -22,4 +22,9 @@ class OrderDetail extends Model
     ];
 
     protected $timestamp = true;
+
+    public function order()
+    {
+        return $this->belongsTo(\App\Models\Order::class,'order_id', 'id');
+    }
 }

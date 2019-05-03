@@ -57,10 +57,10 @@
             </li>
 
             <li>
-                <a href="{{route('brands.index')}}">
+                <a href="{{route('orders.index')}}">
                     <i class="fa fa-th"></i> <span>Đơn hàng</span>
                     <span class="pull-right-container">
-              <small class="label pull-right bg-green">{{$shareData['countBrand']}}</small>
+              <small class="label pull-right bg-green">{{$shareData['countOrder']}}</small>
             </span>
                 </a>
             </li>
@@ -76,7 +76,7 @@
 
 
             <li>
-                <a href="{{route('brands.index')}}">
+                <a href="{{route('export-invoice.index')}}">
                     <i class="fa fa-th"></i> <span>Hóa đơn xuất</span>
                     <span class="pull-right-container">
               <small class="label pull-right bg-green">{{$shareData['countExportInvoice']}}</small>

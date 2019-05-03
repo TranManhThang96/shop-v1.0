@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
                 'countBrand' => \App\Models\Brand::count() ?? 0,
                 'countSupplier' => \App\Models\Supplier::count() ?? 0,
                 'countImportInvoice' => \App\Models\ImportInvoice::count() ?? 0,
-                'countExportInvoice' => 0
+                'countExportInvoice' => \App\Models\ExportInvoice::count() ?? 0,
+                'countOrder' => \App\Models\Order::count() ?? 0
             ];
             View::share('shareData', $shareData);
         }
@@ -109,6 +110,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\ImportInvoiceItem\ImportInvoiceItemRepositoryInterface::class,
             \App\Repositories\ImportInvoiceItem\ImportInvoiceItemRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\ExportInvoice\ExportInvoiceRepositoryInterface::class,
+            \App\Repositories\ExportInvoice\ExportInvoiceRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\ExportInvoiceItem\ExportInvoiceItemRepositoryInterface::class,
+            \App\Repositories\ExportInvoiceItem\ExportInvoiceItemRepository::class
         );
 
     }
