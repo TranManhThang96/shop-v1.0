@@ -8,23 +8,27 @@
 
 namespace App\Repositories\ImportInvoiceItem;
 
+use App\Repositories\Province\ProvinceRepositoryInterface;
 use App\Repositories\RepositoryAbstract;
 use Validator;
 use DB;
 use App\Models\ImportInvoiceItem;
+use App\Repositories\ProductItem\ProductItemRepositoryInterface;
 
 class ImportInvoiceItemRepository extends RepositoryAbstract implements ImportInvoiceItemRepositoryInterface
 {
+    protected $productItemRepository;
     /**
      * Construct
      *
      * @return void
      */
-    public function __construct(ImportInvoiceItem $ImportInvoiceItem)
+    public function __construct(ImportInvoiceItem $ImportInvoiceItem, ProductItemRepositoryInterface $productItemRepository)
     {
         parent::__construct();
         $this->model = $ImportInvoiceItem;
         $this->table = 'import_invoice_item';
+        $this->productItemRepository = $productItemRepository;
     }
 
     /**
@@ -47,6 +51,7 @@ class ImportInvoiceItemRepository extends RepositoryAbstract implements ImportIn
                 'image' => $items[$key]['image'],
                 'quantity' => $items[$key]['quantity']
             ];
+            $this->productItemRepository->updateQuantityAndPrice($items[$key]['id'], $items[$key]['quantity'], getAmount($items[$key]['iprice']), '+');
         }
         return $this->model->insert($invoiceItems);
     }

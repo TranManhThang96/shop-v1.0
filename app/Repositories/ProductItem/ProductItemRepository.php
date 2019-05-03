@@ -114,4 +114,14 @@ class ProductItemRepository extends RepositoryAbstract implements ProductItemRep
         }
         return true;
     }
+
+    public function updateQuantityAndPrice($productItemId, $quantity, $iprice = 0, $operator = '+')
+    {
+        $productItem = $this->model->find($productItemId);
+        if ($iprice > 0) {
+            $productItem->iprice = floor(($productItem->quantity * $productItem->iprice + $quantity * $iprice) / ($productItem->quantity + $quantity));
+        }
+        $productItem->quantity = ($operator == '+') ? $productItem->quantity + $quantity : $productItem->quantity - $quantity;
+        $productItem->save();
+    }
 }

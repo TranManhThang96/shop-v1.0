@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             CategoriesTableSeeder::class,
             DiscountTableSeeder::class,
             //ProductTableSeeder::class,
-            ProductItemTableSeeder::class,
+            //ProductItemTableSeeder::class,
             CustomerTableSeeder::class,
             PostTableSeeder::class
 

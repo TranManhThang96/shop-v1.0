@@ -19,6 +19,7 @@ use Illuminate\Http\File;
 use App\Models\ProductCategory;
 use App\Models\Product;
 use App\Http\Resources\Category as CateogyResource;
+use Illuminate\Support\Facades\App;
 
 class TestController extends Controller
 {
@@ -29,7 +30,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        dd(formatDate("Y-m-d H:i:s","17/04/2019","d/m/Y"));
+        //dd(formatDate("Y-m-d H:i:s","17/04/2019","d/m/Y"));
+        echo trans_choice('auth.test', 5, ['value' => 5]);
     }
 
     /**

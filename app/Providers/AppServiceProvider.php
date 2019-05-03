@@ -27,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
                 'countCustomer' => \App\Models\Customer::count() ?? 0,
                 'countDiscount' => \App\Models\Discount::count() ?? 0,
                 'countBrand' => \App\Models\Brand::count() ?? 0,
-                'countSupplier' => \App\Models\Supplier::count() ?? 0
+                'countSupplier' => \App\Models\Supplier::count() ?? 0,
+                'countImportInvoice' => \App\Models\ImportInvoice::count() ?? 0,
+                'countExportInvoice' => 0
             ];
             View::share('shareData', $shareData);
         }

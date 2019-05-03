@@ -25,4 +25,9 @@ class ImportInvoiceItem extends Model
         return $this->belongsTo(\App\Models\ImportInvoice::class,'invoice_id','id');
     }
 
+    public function productItem()
+    {
+        return $this->belongsTo(\App\Models\ProductItem::class,'product_item_id','id');
+    }
+
 }
