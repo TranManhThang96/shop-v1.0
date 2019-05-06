@@ -6,9 +6,9 @@
  * Time: 12:34 AM
  */
 
-namespace App\Repositories\ExportInvoice;
+namespace App\Repositories\Order;
 use App\Repositories\RepositoryInterface;
 
-interface ExportInvoiceRepositoryInterface extends RepositoryInterface {
+interface OrderRepositoryInterface extends RepositoryInterface {
 
 }

@@ -6,16 +6,15 @@
  * Time: 12:33 AM
  */
 
-namespace App\Repositories\ExportInvoiceItem;
+namespace App\Repositories\OrderItem;
 
-use App\Repositories\Province\ProvinceRepositoryInterface;
 use App\Repositories\RepositoryAbstract;
 use Validator;
 use DB;
-use App\Models\ExportInvoiceItem;
+use App\Models\OrderItem;
 use App\Repositories\ProductItem\ProductItemRepositoryInterface;
 
-class ExportInvoiceItemRepository extends RepositoryAbstract implements ExportInvoiceItemRepositoryInterface
+class OrderItemRepository extends RepositoryAbstract implements OrderItemRepositoryInterface
 {
     protected $productItemRepository;
     /**
@@ -23,27 +22,27 @@ class ExportInvoiceItemRepository extends RepositoryAbstract implements ExportIn
      *
      * @return void
      */
-    public function __construct(ExportInvoiceItem $exportInvoiceItem, ProductItemRepositoryInterface $productItemRepository)
+    public function __construct(OrderItem $orderItem, ProductItemRepositoryInterface $productItemRepository)
     {
         parent::__construct();
-        $this->model = $exportInvoiceItem;
-        $this->table = 'export_invoice_item';
+        $this->model = $orderItem;
+        $this->table = 'order_item';
         $this->productItemRepository = $productItemRepository;
     }
 
     /**
-     * Get ExportInvoiceItems by province.
+     * Get OrderItems by province.
      *
      * @param $filter
      * @return array object
      */
 
-    public function addItem($items, $invoiceId)
+    public function addItem($items, $orderId)
     {
-        $invoiceItems = [];
+        $orderItems = [];
         foreach ($items as $key => $item) {
-            $invoiceItems[] = [
-                'invoice_id' => $invoiceId,
+            $orderItems[] = [
+                'order_id' => $orderId,
                 'product_item_id' => $items[$key]['id'],
                 'sku' => $items[$key]['sku'],
                 'name' => $items[$key]['name'],
@@ -52,9 +51,7 @@ class ExportInvoiceItemRepository extends RepositoryAbstract implements ExportIn
                 'image' => $items[$key]['image'],
                 'quantity' => $items[$key]['quantity']
             ];
-            $this->productItemRepository->updateQuantityAndPrice($items[$key]['id'], $items[$key]['quantity'], 0, '-');
         }
-        return $this->model->insert($invoiceItems);
+        return $this->model->insert($orderItems);
     }
-
 }

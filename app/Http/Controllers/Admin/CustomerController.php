@@ -165,4 +165,16 @@ class CustomerController extends Controller
         }
         return Response()->json(false);
     }
+
+    public function autocomplete(Request $request)
+    {
+        $data = $this->customerRepository->getCustomerByQuery($request);
+        return response()->json($data);
+    }
+
+    public function getCustomerById(Request $request)
+    {
+        $data = $this->customerRepository->getCustomerById($request->id);
+        return response()->json($data);
+    }
 }

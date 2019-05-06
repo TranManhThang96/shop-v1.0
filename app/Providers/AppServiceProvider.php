@@ -122,6 +122,16 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ExportInvoiceItem\ExportInvoiceItemRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\Order\OrderRepositoryInterface::class,
+            \App\Repositories\Order\OrderRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\OrderItem\OrderItemRepositoryInterface::class,
+            \App\Repositories\OrderItem\OrderItemRepository::class
+        );
+
     }
 
 }

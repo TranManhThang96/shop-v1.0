@@ -16,13 +16,12 @@ class CreateOrderItemTable extends Migration
         Schema::create('order_item', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->comment('id don hang');
-            $table->integer('product_id')->nullable()->comment('id san pham');
+            $table->integer('product_item_id')->nullable()->comment('id san pham');
             $table->integer('quantity')->nullable()->comment('so luong');
-            $table->string('product_name')->nullable()->comment('ten san pham');
-            $table->string('product_code')->nullable()->comment('ma san pham');
-            $table->string('product_img')->nullable()->comment('anh san pham');
-            $table->double('product_price',10,2)->nullable()->comment('gia niem yet');
-            $table->double('product_iprice',10,2)->nullable()->comment('gia nhap');
+            $table->string('name')->nullable()->comment('ten san pham');
+            $table->string('sku')->nullable()->comment('ma san pham');
+            $table->string('img')->nullable()->comment('anh san pham');
+            $table->double('price',10,2)->nullable()->comment('gia niem yet');
             $table->softDeletes();
         });
     }

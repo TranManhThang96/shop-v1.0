@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <label class="sr-only" for="product">Nhập Hàng</label>
                         <div class="input-group">
-                            <input type="text" class="typeahead form-control" id="suggest"
+                            <input type="text" class="form-control" id="suggest"
                                    placeholder="Quét barcode sản phẩm hoặc nhập gợi ý (tên sp, sku)">
                             <div class="input-group-addon">+</div>
                         </div>
@@ -82,6 +82,54 @@
                             </span>
                         @endif
                     </div>
+                    <input type="hidden" id="customer_id" name="customer_id" />
+                    <div class="form-group">
+                        <label for="customer_name">Tên KH <span class="text-danger"> (*) </span></label>
+                        <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Nhập tên KH"
+                               value="{{old('customer_name')}}">
+                        @if($errors->has('customer_name'))
+                            <span class="text-danger">{{$errors->first('customer_name')}}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer_phone">SĐT <span class="text-danger"> (*) </span></label>
+                        <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="Nhập SĐT"
+                               value="{{old('customer_phone')}}">
+                        @if($errors->has('customer_phone'))
+                            <span class="text-danger">{{$errors->first('customer_phone')}}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <select name="province_id" id="province" class="form-control">
+                            <option value="0">-Chọn tỉnh/thành phố-</option>
+                            @foreach($allProvinces as $province)
+                                <option value="{{$province->id}}" {{$province->id == app('request')->get('province_id') ? 'selected':''}}>{{$province->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select name="district_id" id="district" class="form-control">
+                            <option value="0">-Chọn quận/huyện-</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select name="ward_id" id="ward" class="form-control">
+                            <option value="0">-Chọn xã/phường-</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="street">Số nhà/thôn xóm <span class="text-danger"> (*) </span></label>
+                        <input type="text" class="form-control" id="street" name="street" placeholder="Nhập số nhà/thôn xóm"
+                               value="{{old('street')}}">
+                        @if($errors->has('street'))
+                            <span class="text-danger">{{$errors->first('street')}}</span>
+                        @endif
+                    </div>
 
                     <div class="form-group">
                         <label for="created_at">Thời gian </label>
@@ -121,10 +169,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
     <script>
 
-        var path = "{{ route('products.autocomplete') }}";
-        $('input.typeahead').typeahead({
+        var productSuggestPath = "{{ route('products.autocomplete') }}";
+        //product autocomplete
+        $('#suggest').typeahead({
             source: function (query, process) {
-                return $.get(path, {query: query}, function (data) {
+                return $.get(productSuggestPath, {query: query}, function (data) {
                     return process(data);
                 });
             },
@@ -142,7 +191,32 @@
                     })
                 }
             }
-        });
+        })
+
+        var customerSuggestPath = "{{ route('customers.autocomplete') }}";
+        //customer autocomplete
+        $('#customer-name').typeahead({
+            source: function (query, process) {
+                return $.get(customerSuggestPath, {query: query}, function (data) {
+                    return process(data);
+                });
+            },
+            updater: function (customer) {
+                if (customer.id != undefined) {
+                    $.ajax({
+                        url: "{{ route('customers.getById') }}",
+                        method: "GET",
+                        data: {
+                            id: customer.id,
+                        },
+                        success: function (data) {
+                            _generate(data);
+                        }
+                    })
+                }
+            }
+        })
+
 
         function _generate(data) {
             let tr = '';

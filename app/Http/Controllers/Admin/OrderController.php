@@ -4,17 +4,38 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderItem\OrderItemRepositoryInterface;
+use App\Repositories\Province\ProvinceRepositoryInterface;
 
 class OrderController extends Controller
 {
+    protected $orderRepository;
+    protected $orderItemRepository;
+    protected $provinceRepository;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function __construct(
+        OrderRepositoryInterface $orderRepository,
+        OrderItemRepositoryInterface $orderItemRepository,
+        ProvinceRepositoryInterface $provinceRepository
+    )
     {
-        //
+        $this->orderRepository = $orderRepository;
+        $this->orderItemRepository = $orderItemRepository;
+        $this->provinceRepository = $provinceRepository;
+    }
+
+
+    public function index(Request $request)
+    {
+        $orders = $this->orderRepository->getOrders($request);
+        return view('admin.export_invoice.index',compact('orders'));
     }
 
     /**
@@ -24,7 +45,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('admin.order.create');
+        $allProvinces = $this->provinceRepository->all();
+        return view('admin.order.create',compact('allProvinces'));
     }
 
     /**
@@ -35,7 +57,25 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $order = $this->orderRepository->store($request);
+            if (!empty($order)) {
+                if ($this->orderItemRepository->addItem($request->items,$order->id)) {
+                    DB::commit();
+                    return redirect()->route('orders.index')->with('alert-success','Thêm đơn hàng thành công');
+                } else {
+                    return redirect()->route('orders..index')->with('alert-danger','Thêm đơn hàng thất bại');
+                }
+
+            } else {
+                throw new \Exception('Không thể thêm');
+            }
+
+        } catch (Exception $e) {
+            return redirect()->route('orders.index')->with('alert-danger',$e->getMessage());
+            DB::rollback();
+        }
     }
 
     /**

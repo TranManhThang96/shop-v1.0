@@ -136,4 +136,9 @@ class CustomerRepository extends RepositoryAbstract implements CustomerRepositor
         return true;
     }
 
+    public function getCustomerByQuery($request)
+    {
+        return  $this->model->select('id','name')->where("name","LIKE","%{$request->input('query')}%")->get();
+    }
+
 }

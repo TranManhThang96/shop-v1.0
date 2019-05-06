@@ -43,6 +43,8 @@ Route::post('/customers/check-email-exist','CustomerController@checkEmailExist')
 Route::post('/products/checkExist','ProductController@checkExist')->name('products.checkExist');
 Route::get('/products/autocomplete', 'ProductController@autocomplete')->name('products.autocomplete');
 Route::get('/products/get-by-id', 'ProductController@getProductById')->name('products.getById');
+Route::get('/customers/autocomplete', 'Customer@autocomplete')->name('customers.autocomplete');
+Route::get('/customers/get-by-id', 'Customer@getProductById')->name('customers.getById');
 
 
 Route::resources([
