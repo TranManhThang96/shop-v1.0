@@ -1,0 +1,75 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: shop-nginx
+    volumes:
+      - .:/usr/src/www
+      - ./ssl:/ssl
+      - ./docker/nginx/default.template:/etc/nginx/conf.d/default.template
+    ports:
+      - 8000:80
+      - 8001:443
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+    command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    depends_on:
+      - php
+      - mysql
+      - ssl
+
+  ssl:
+    image: paulczar/omgwtfssl
+    container_name: shop-ssl
+    volumes:
+      - ./ssl:/certs
+    environment:
+      - SSL_SUBJECT=${NGINX_HOST}
+
+  php:
+    image: minhbkpro/php:${PHP_VERSION}
+    container_name: shop-php
+    volumes:
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - .:/usr/src/www
+      
+
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    container_name: shop-mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - 3300:3306
+    volumes:
+      - ./home/user/mysql:/var/lib/mysql
+    command:
+      - --innodb-flush-method=O_DSYNC
+      - --innodb-use-native-aio=0
+      - --character-set-server=utf8
+      - --collation-server=utf8_unicode_ci
+      - --skip-character-set-client-handshake
+      - --sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: shop-phpmyadmin
+    ports:
+      - 8088:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${MYSQL_HOST}
+    depends_on:
+      - mysql
+
+  utils:
+    image: minhbkpro/utils
+    container_name: shop-utils
+    volumes:
+      - .:/usr/src/www
+    stdin_open: true
+    tty: true
