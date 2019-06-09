@@ -68,8 +68,8 @@
                             <p>Giảm
                                 giá: {{number_format($product->discount->discount)}} {{$product->discount->type == 1 ? '$' : '%'}}</p>
                             <p>Áp dụng cho: {{$product->discount->type_by == 1 ? 'SP' : 'ĐH'}}</p>
-                            <p>Thời gian: {{formatDate("d/m",$product->discount->start,"Y-m-d H:i:s")}}
-                                - {{formatDate("d/m",$product->discount->end,"Y-m-d H:i:s")}}</p>
+                            <p>Thời gian: {{formatDate($product->discount->start,"Y-m-d H:i:s", "d/m")}}
+                                - {{formatDate($product->discount->end,"Y-m-d H:i:s", "d/m")}}</p>
                         </div>
                     @endif
                 </td>

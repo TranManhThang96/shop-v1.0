@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/product/create.css') }}">
 @endsection
 @section('content')
-    <form action="{{route('import-invoice.store')}}" method="post" id="frm" enctype="multipart/form-data">
+    <form action="{{route('import-invoice.store')}}" method="post" id="frm">
         @csrf
         <input type="hidden" name="id" id="id">
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -24,16 +24,12 @@
                     <table class="table table-striped table-hover table-condensed table-responsive">
                         <thead>
                         <tr class="success">
-                            <td>SKU</td>
-                            <td>Tên Sản Phẩm</td>
-                            <td>Màu Sắc</td>
-                            <td>Kích Cỡ</td>
-                            <td>Ram</td>
-                            <td>Rom</td>
-                            <td>SL</td>
-                            <td>Giá Nhập</td>
-                            <td>Thành Tiền</td>
-                            <td>Xóa</td>
+                            <td width="15%">SKU</td>
+                            <td width="30%">Sản Phẩm</td>
+                            <td width="20%">SL</td>
+                            <td width="15%">Giá Nhập</td>
+                            <td width="15%">Thành Tiền</td>
+                            <td width="5%">Xóa</td>
                         </tr>
                         </thead>
                         <tbody id="product">
@@ -132,38 +128,11 @@
         </div>
     </form>
 
-    <div class="hidden">
-        <table>
-            <tr data-id="idx" id="tr-hidden">
-                <td><input type="hidden" class="form-control" name="items[idx][id]"/></td>
-                <td><input type="text" class="form-control" name="items[idx][sku]"/></td>
-                <td><input type="text" class="form-control item-price" name="items[idx][color]"/></td>
-                <td><input type="text" class="form-control item-length" name="items[idx][size]"/></td>
-                <td>
-                    <div class="input-group">
-                        <div class="input-group-addon sub-quantity"> -</div>
-                        <input type="text" class="form-control item-quantity" name="items[idx][quantity]" value="0"/>
-                        <div class="input-group-addon plus-quantity"> +</div>
-                    </div>
-                </td>
-                <td><input type="text" class="form-control item-height" name="items[idx][iprice]"/></td>
-                <td><input type="text" class="form-control item-weight" name="items[idx][money]"/></td>
-                <td><input type="text" class="form-control item-color" name="items[idx][color]"/></td>
-                <td><input type="text" class="form-control item-size" name="items[idx][size]"/></td>
-                <td>
-                    <button type="button" class="btn btn-danger remove-item"> -</button>
-                    <button type="button" class="btn btn-success add-item"> +</button>
-                </td>
-            </tr>
-        </table>
-    </div>
-
 @endsection
 
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
     <script>
-
         var path = "{{ route('products.autocomplete') }}";
         $('input.typeahead').typeahead({
             source: function (query, process) {
@@ -193,19 +162,20 @@
             $('#product').find('tr').each(function (key,tr) {
                 arrId.push($(this).data('id'));
             });
-
             if (data.product_item != undefined) {
                 for (let item of data.product_item) {
                     if (!arrId.includes(data.id)) {
+                        let fullName = data.name + ' - Color: ' + item.color + '- Size: '+ item.size + '- Ram: '+ item.ram + '- Rom: ' + item.rom;
                         tr += '<tr data-id="' + item.id + '">';
                         tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][id]" value="' + item.id + '"/>';
                         tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][image]" value="' + data.img_link + '"/>';
                         tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][sku]" value="' + item.sku_item + '" readonly/></td>';
-                        tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][name]" value="' + data.name + '" readonly/></td>';
-                        tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][color]" value="' + item.color + '" readonly/></td>';
-                        tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][size]" value="' + item.size + '" readonly/></td>';
-                        tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][ram]" value="' + item.ram + '" readonly/></td>';
-                        tr += '<td><input type="text" class="form-control" name="items[' + item.id + '][rom]" value="' + item.rom + '" readonly/></td>';
+                        tr += '<td><p>Sản phẩm: ' + data.name +'</p><p>Màu sắc: '+ item.color + '</p><p>Ram: ' + item.ram + '</p><p> Rom: '+ item.rom +'</p></td>';
+                        tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][name]" value="' + data.name + '" readonly/>';
+                        tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][color]" value="' + item.color + '" readonly/>';
+                        tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][size]" value="' + item.size + '" readonly/>';
+                        tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][ram]" value="' + item.ram + '" readonly/>';
+                        tr += '<input type="hidden" class="form-control" name="items[' + item.id + '][rom]" value="' + item.rom + '" readonly/>';
                         tr += '<td>';
                         tr += '<div class="input-group">';
                         tr += '<div class="input-group-addon sub-quantity"> - </div>';
@@ -220,6 +190,23 @@
             }
             $('#product').append(tr);
         }
+
+        $('#suggest').on('keypress', function (event) {
+            if (event.keyCode == 13) {
+                $.ajax({
+                    url: '{{ route('products.getProductItemBySku') }}',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        sku: $(this).val()
+                    },
+                    success(data){
+                        _generate(data);
+                    }
+                })
+                return false;
+            }
+        })
         
         //xoa product item
         $(document).on('click', '.remove-item', function () {
@@ -243,7 +230,7 @@
 
         //giam so luong
         $(document).on('click', '.sub-quantity', function () {
-            let inputQty = $(this).next();
+            let inputQty = $(this).parent().find('.item-quantity');
             let value = parseInt(inputQty.val());
             if (value > 0) {
                 inputQty.val(value - 1);
@@ -253,7 +240,7 @@
 
         //tang so luong
         $(document).on('click', '.plus-quantity', function () {
-            let inputQty = $(this).prev();
+            let inputQty = $(this).parent().find('.item-quantity');
             let value = parseInt(inputQty.val());
             inputQty.val(value + 1);
             _changeQuantityEvent($(this));
@@ -321,5 +308,5 @@
         }
 
     </script>
-
+    <script src="{{ asset('js/admin/import_invoice/validate.js') }}"></script>
 @endsection

@@ -61,7 +61,7 @@
                 <label for="start">Thời gian bắt đầu <span class="text-danger"> (*) </span></label>
                 <input type="text" data-provide="datepicker" class="form-control" name="start" id="start"
                        data-date-format="dd/mm/yyyy"
-                       value="{{old('start',formatDate("d/m/Y",$discount->start,"Y-m-d H:i:s"))}}"
+                       value="{{old('start',formatDate($discount->start,"Y-m-d H:i:s", "d/m/Y"))}}"
                        data-date-autoclose="true">
                 @if($errors->has('start'))
                     <span class="text-danger">
@@ -74,7 +74,7 @@
                 <label for="end">Thời gian kết thúc <span class="text-danger"> (*) </span></label>
                 <input type="text" data-provide="datepicker" class="form-control" name="end" id="end"
                        data-date-format="dd/mm/yyyy"
-                       value="{{old('end',formatDate("d/m/Y",$discount->end,"Y-m-d H:i:s"))}}"
+                       value="{{old('end',formatDate($discount->end,"Y-m-d H:i:s","d/m/Y"))}}"
                        data-date-autoclose="true">
                 @if($errors->has('end'))
                     <span class="text-danger">

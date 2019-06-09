@@ -64,8 +64,8 @@
                 <td>{{$supplier->phone}}</td>
                 <td>{{$supplier->import_invoice_count ?? 0}}</td>
                 <td>{{number_format($supplier->importInvoice->sum('money_total'),0,',','.')}}</td>
-                <td>{{formatDate("d/m/Y H:i:s",$supplier->created_at,"Y-m-d H:i:s")}}</td>
-                <td>{{formatDate("d/m/Y H:i:s",$supplier->updated_at,"Y-m-d H:i:s")}}</td>
+                <td>{{formatDate($supplier->created_at,"Y-m-d H:i:s", "d/m/Y H:i:s")}}</td>
+                <td>{{formatDate($supplier->updated_at,"Y-m-d H:i:s", "d/m/Y H:i:s")}}</td>
                 <td>
                     <a class="col-md-4 customer-edit btn btn-info"
                        href="{{route('suppliers.edit',['id' => $supplier->id])}}"> <i
@@ -143,7 +143,7 @@
                                                             <span data-toggle="modal" data-target="#myModal" class="invoice-code">{{$importInvoice->code}}</span>
                                                         </td>
                                                         <td>
-                                                            <span>{{formatDate("d/m/Y H:i:s",$importInvoice->created_at,"Y-m-d H:i:s")}}</span>
+                                                            <span>{{formatDate($importInvoice->created_at,"Y-m-d H:i:s","d/m/Y H:i:s")}}</span>
                                                         </td>
                                                         <td></td>
                                                         <td><span>{{$importInvoice->quantity_total}}</span></td>

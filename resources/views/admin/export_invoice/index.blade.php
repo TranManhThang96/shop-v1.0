@@ -59,7 +59,7 @@
                 <td>{{$invoice->quantity_total}}</td>
                 <td>{{number_format($invoice->money_total,0,',','.')}}</td>
                 <td>{{$invoice->note}}</td>
-                <td>{{formatDate("d/m/Y H:i:s",$invoice->created_at,"Y-m-d H:i:s")}}</td>
+                <td>{{formatDate($invoice->created_at,"Y-m-d H:i:s", "d/m/Y H:i:s")}}</td>
                 <td>
                     {{--<div class="col-sm-6">--}}
                     {{--<button class="btn btn-info"><a href="{{route('import-invoice.edit',['id' => $invoice->id])}}">--}}

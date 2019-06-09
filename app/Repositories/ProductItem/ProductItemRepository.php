@@ -11,6 +11,7 @@ namespace App\Repositories\ProductItem;
 use App\Repositories\RepositoryAbstract;
 use App\Models\ProductItem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class ProductItemRepository extends RepositoryAbstract implements ProductItemRepositoryInterface
 {
@@ -39,11 +40,11 @@ class ProductItemRepository extends RepositoryAbstract implements ProductItemRep
     }
 
     /**
-     * get a product set by id.
+     * get a product item by id.
      * @param $id
      * @return object
      */
-    public function getProductById($id)
+    public function getProductItemById($id)
     {
         return $this->model->find($id);
     }
@@ -124,4 +125,5 @@ class ProductItemRepository extends RepositoryAbstract implements ProductItemRep
         $productItem->quantity = ($operator == '+') ? $productItem->quantity + $quantity : $productItem->quantity - $quantity;
         $productItem->save();
     }
+
 }

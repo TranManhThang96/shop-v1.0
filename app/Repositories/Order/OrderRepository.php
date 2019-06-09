@@ -54,7 +54,7 @@ class OrderRepository extends RepositoryAbstract implements OrderRepositoryInter
         $this->model->fill($request->all());
         $this->model->code = 'DH'.time();
         if (!empty($this->model->creted_at)) {
-            $this->model->creted_at = formatDate("Y-m-d H:i:s", $this->model->creted_at, "d/m/Y");
+            $this->model->creted_at = formatDate($this->model->creted_at, "d/m/Y", "Y-m-d H:i:s");
         } else {
             $this->model->created_at = date('Y-m-d H:i:s');
         }

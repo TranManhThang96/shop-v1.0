@@ -90,8 +90,8 @@
                 <td>{{$discount->code}}</td>
                 <td>{{($discount->type_by == 1) ? 'SP' : 'ĐH'}}</td>
                 <td>{{number_format($discount->discount,0,',','.')}}({{($discount->type == 1) ? '$' : '%'}})</td>
-                <td>{{formatDate("d/m/Y",$discount->start,"Y-m-d H:i:s")}}</td>
-                <td>{{formatDate("d/m/Y",$discount->end,"Y-m-d H:i:s")}}</td>
+                <td>{{formatDate($discount->start,"Y-m-d H:i:s", "d/m/Y")}}</td>
+                <td>{{formatDate($discount->end,"Y-m-d H:i:s", "d/m/Y")}}</td>
                 <td style="width: 8%">
                     <button class="btn btn-info"><a href="{{route('discounts.edit',['id' => $discount->id])}}"> <i
                                 class="glyphicon glyphicon-pencil" title="Sửa"></i></a></button>
@@ -118,8 +118,8 @@
                                 <p>Giá trị: {{number_format($discount->discount,0,',','.')}}({{($discount->type == 1) ? '$' : '%'}})</p>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <p>TG bắt đầu: {{formatDate("d/m/Y H:i:s",$discount->start,"Y-m-d H:i:s")}}</p>
-                                <p>TG kết thúc: {{formatDate("d/m/Y H:i:s",$discount->end,"Y-m-d H:i:s")}}</p>
+                                <p>TG bắt đầu: {{formatDate($discount->start,"Y-m-d H:i:s", "d/m/Y H:i:s")}}</p>
+                                <p>TG kết thúc: {{formatDate($discount->end,"Y-m-d H:i:s", "d/m/Y H:i:s")}}</p>
                                 <p>Mô tả: {{$discount->description}}</p>
                                 <p>Giới hạn: {{number_format($discount->limit,0,',','.')}}($)</p>
                             </div>

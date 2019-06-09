@@ -160,4 +160,18 @@ class ProductRepository extends RepositoryAbstract implements ProductRepositoryI
     {
         return  $this->model->select('id','name')->where("name","LIKE","%{$request->input('query')}%")->get();
     }
+
+    public function getProductItemBySku($sku)
+    {
+        $data = [];
+        $data = $this->model->with('productItem')->where('sku', $sku)->orWhere('barcode', $sku)->first();
+        if (empty($data)) {
+            $data = $this->model->with(
+                                    ['productItem' => function($query) use ($sku) {
+                                        $query = $query->where('sku_item', $sku);
+                                    }])
+                                ->first();
+        }
+        return $data;
+    }
 }

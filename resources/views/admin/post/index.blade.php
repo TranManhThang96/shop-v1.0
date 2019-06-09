@@ -58,8 +58,8 @@
                 <td>
                     {{substringIfLength($post->short_description)}}
                 </td>
-                <td>{{formatDate("d/m/Y H:i:s",$post->created_at,"Y-m-d H:i:s")}}</td>
-                <td>{{formatDate("d/m/Y H:i:s",$post->updated_at,"Y-m-d H:i:s")}}</td>
+                <td>{{formatDate($post->created_at,"Y-m-d H:i:s", "d/m/Y H:i:s")}}</td>
+                <td>{{formatDate($post->updated_at,"Y-m-d H:i:s","d/m/Y H:i:s")}}</td>
                 <td>
                     <a class="col-md-4 customer-edit btn btn-info"
                        href="{{route('posts.edit',['id' => $post->id])}}"> <i

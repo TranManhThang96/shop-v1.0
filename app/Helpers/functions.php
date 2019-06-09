@@ -62,7 +62,7 @@ function showCategories($categories, $parent_id = 0, $symbol = '',$select = 0)
  * 3/7/2019 3:17 PM format date
  */
 
-function formatDate($format="d/m/Y",$input,$inputFormat)
+function formatDate($input, $inputFormat="Y-m-d H:i:s", $format="d/m/Y H:i:s")
 {
     if($input != null && $input != '') {
         $date = DateTime::createFromFormat($inputFormat, $input);

@@ -192,4 +192,10 @@ class ProductController extends Controller
         $data = $this->productRepository->getProductById($request->id);
         return response()->json($data);
     }
+
+    public function getProductItemBySku(Request $request)
+    {
+        $data = $this->productRepository->getProductItemBySku($request->sku);
+        return response()->json($data);
+    }
 }
